@@ -114,6 +114,12 @@ def main():
         action="store_true",
         help="Skip the 3-minute schedule execution wait",
     )
+    parser.add_argument(
+        "--scale-concurrency",
+        type=int,
+        default=20,
+        help="Concurrent requests for scale dimension (default: 20)",
+    )
     args = parser.parse_args()
 
     config = BenchConfig(
@@ -126,6 +132,7 @@ def main():
         timeout_ceiling_secs=args.timeout_ceiling,
         timeout_multiplier=args.timeout_multiplier,
         timeout_grace_secs=args.timeout_grace,
+        scale_concurrency=args.scale_concurrency,
         schedule_wait_secs=0 if args.skip_schedule_wait else 180,
     )
 

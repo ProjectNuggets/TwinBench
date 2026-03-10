@@ -100,3 +100,26 @@ class BenchConfig:
             "latency_ewma_ms": round(self._latency_ewma_ms, 1),
             "latency_samples": self._latency_samples,
         }
+
+    def clone_for_user(self, user_id: str) -> "BenchConfig":
+        """Create a per-user clone preserving harness behavior settings."""
+        return BenchConfig(
+            base_url=self.base_url,
+            token=self.token,
+            user_id=user_id,
+            timeout=self.timeout,
+            timeout_dynamic=self.timeout_dynamic,
+            timeout_floor_secs=self.timeout_floor_secs,
+            timeout_ceiling_secs=self.timeout_ceiling_secs,
+            timeout_multiplier=self.timeout_multiplier,
+            timeout_grace_secs=self.timeout_grace_secs,
+            chat_endpoint=self.chat_endpoint,
+            health_endpoint=self.health_endpoint,
+            ready_endpoint=self.ready_endpoint,
+            diagnostics_endpoint=self.diagnostics_endpoint,
+            metrics_endpoint=self.metrics_endpoint,
+            memory_sample_size=self.memory_sample_size,
+            scale_concurrency=self.scale_concurrency,
+            latency_requests=self.latency_requests,
+            schedule_wait_secs=self.schedule_wait_secs,
+        )
