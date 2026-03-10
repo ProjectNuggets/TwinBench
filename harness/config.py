@@ -10,7 +10,12 @@ class BenchConfig:
     base_url: str = "http://localhost:8080"
     token: str = ""
     user_id: str = "1"
-    timeout: int = 90  # seconds per chat request (LLM can be slow)
+    timeout: int = 90  # seconds per chat request; 0 disables per-chat timeout
+    timeout_dynamic: bool = True
+    timeout_floor_secs: int = 90
+    timeout_ceiling_secs: int = 3600
+    timeout_multiplier: float = 4.0
+    timeout_grace_secs: int = 30
 
     # Endpoints
     chat_endpoint: str = "/api/v1/chat/stream"
@@ -24,6 +29,11 @@ class BenchConfig:
     scale_concurrency: int = 20  # concurrent requests for scale test
     latency_requests: int = 10  # requests for latency measurement
     schedule_wait_secs: int = 180  # wait time for schedule execution test
+
+    # Adaptive timeout state (runtime-only; not user inputs)
+    _latency_ewma_ms: float = field(default=0.0, init=False, repr=False)
+    _latency_samples: int = field(default=0, init=False, repr=False)
+    _last_timeout_used_secs: int | None = field(default=None, init=False, repr=False)
 
     @property
     def headers(self) -> dict:
@@ -45,3 +55,48 @@ class BenchConfig:
 
     def metrics_url(self) -> str:
         return f"{self.base_url}{self.metrics_endpoint}"
+
+    def resolve_chat_timeout_secs(self) -> int | None:
+        """Resolve per-chat timeout. None means unbounded."""
+        if self.timeout <= 0:
+            self._last_timeout_used_secs = None
+            return None
+
+        if (not self.timeout_dynamic) or self._latency_samples == 0:
+            resolved = int(self.timeout)
+            self._last_timeout_used_secs = resolved
+            return resolved
+
+        predicted = int(
+            (self._latency_ewma_ms / 1000.0) * self.timeout_multiplier
+            + self.timeout_grace_secs
+        )
+        resolved = max(self.timeout_floor_secs, min(self.timeout_ceiling_secs, predicted))
+        self._last_timeout_used_secs = resolved
+        return resolved
+
+    def record_chat_latency(self, latency_ms: float, had_error: bool) -> None:
+        """Update timeout model using successful turns only."""
+        if had_error:
+            return
+        if self._latency_samples == 0:
+            self._latency_ewma_ms = latency_ms
+        else:
+            alpha = 0.3
+            self._latency_ewma_ms = (
+                alpha * latency_ms + (1.0 - alpha) * self._latency_ewma_ms
+            )
+        self._latency_samples += 1
+
+    def timeout_state(self) -> dict:
+        return {
+            "dynamic_enabled": self.timeout_dynamic,
+            "base_timeout_secs": self.timeout,
+            "last_timeout_used_secs": self._last_timeout_used_secs,
+            "timeout_floor_secs": self.timeout_floor_secs,
+            "timeout_ceiling_secs": self.timeout_ceiling_secs,
+            "timeout_multiplier": self.timeout_multiplier,
+            "timeout_grace_secs": self.timeout_grace_secs,
+            "latency_ewma_ms": round(self._latency_ewma_ms, 1),
+            "latency_samples": self._latency_samples,
+        }

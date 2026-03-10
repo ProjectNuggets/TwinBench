@@ -1,11 +1,11 @@
-# DTaaS-Bench v0.1
+# DTaaS-Bench v0.2
 
-## The First Industry Benchmark for Persistent Autonomous AI Agent Runtimes
+## Open Benchmark for Persistent Autonomous AI Agent Runtimes
 
 **Published by**: Nova Nuggets — Handcrafted Intelligence. Own Your AI.
 **Author**: Alfred Succer, Founder & CEO
 **Date**: March 2026
-**Status**: v0.1 — Open for community validation
+**Status**: v0.2 — Open for community validation
 
 ---
 
@@ -17,7 +17,7 @@ As of March 2026, no benchmark evaluates this category. Industrial digital twin 
 
 Neither captures what a DTaaS runtime must do: maintain durable state, execute autonomously within safety constraints, operate across multiple communication channels, and scale to thousands of concurrent users — all while remaining under the operator's control.
 
-DTaaS-Bench fills this gap. It defines 9 measurable dimensions, a composite scoring model, and a reproducible test protocol that any runtime can be evaluated against.
+DTaaS-Bench fills this gap. It defines 10 measurable dimensions, explicit verified/projected score separation, and a reproducible test protocol that any runtime can be evaluated against.
 
 ---
 
@@ -304,10 +304,10 @@ Logarithmic scaling rewards breadth without over-indexing on raw count. A runtim
 
 ---
 
-## Composite Score
+## Composite Score Model
 
 ```
-DTaaS Score = (
+Projected Composite = (
     Autonomy Control       x 0.15
   + Memory Persistence     x 0.15
   + Functional Capability  x 0.15
@@ -320,6 +320,16 @@ DTaaS Score = (
   + Latency                x 0.05
 ) x 100
 ```
+
+Verified composite must be computed from measured components only.
+
+Required v0.2 run outputs:
+1. `verified_composite_score`
+2. `projected_composite_score`
+3. `measured_coverage` (0-1)
+4. `coverage_adjusted_verified_score = verified_composite_score * measured_coverage`
+
+Tier classification uses `coverage_adjusted_verified_score`.
 
 ### Rating Tiers
 
@@ -340,46 +350,29 @@ DTaaS Score = (
 
 | Dimension | Score | Evidence |
 |-----------|-------|----------|
-| Autonomy Control | 96 | TurnOrigin enum (5 origins), per-origin tool policy enforcement in dispatcher, shell/auth blocked for background, Wyhash content deduplication, heartbeat suppression patterns |
-| Memory Persistence | 91 | 9 functional backends (SQLite FTS5, Postgres, Redis, LanceDB, Markdown, API, Memory LRU, Lucid, None), vector search with cosine similarity, temporal decay, semantic cache, 4-layer retrieval engine |
-| Functional Capability | 85 | 34 functional tools (shell, files, git, memory, schedule, composio, browser, web search, hardware), multi-step agent loop with tool chaining, error handling in tool execution, conversational quality via LLM |
-| Autonomous Execution | 85 | File-based + Postgres-backed cron scheduler, heartbeat with configurable intervals, wake queue, one-shot and recurring jobs, deferred next-heartbeat mode |
-| Cross-Channel | 85 | 17 functional channels, bus-mediated dispatch with parallel workers, shared session state |
-| Integration Breadth | 97 | 17 channels + 34 tools + 9 memory backends + Composio (v3 API, Gmail/Drive/Calendar) + MCP server ingestion |
-| Security & Privacy | 89 | Pairing guard, secret vault, path traversal protection (15 tests), SSRF blocking (57 tests), HTTPS enforcement, audit logging, tenant isolation, background auth blocking |
-| Scale & Cost | 74 | 2.6MB release binary, ~1000 users/instance, horizontal via tenant lock + Postgres, connection pooling, native HTTP transport |
-| Resilience | 78 | Postgres canonical state survives restart, tenant lock TTL failover, graceful shutdown, structured startup self-check |
-| Latency | 72 | Native HTTP with connection pooling, keep-alive reuse, provider streaming (SSE), curl fallback |
-| **Composite** | **87** | **Production-Ready** |
+| Autonomy Control | 85.0 | Live measured with runtime policy awareness and diagnostics signals |
+| Memory Persistence | 79.0 (V=77.1) | 20 facts stored, exact/semantic recall both 0.8, cross-session 0.6 |
+| Functional Capability | 100.0 | 23/23 functional tests passed |
+| Autonomous Execution | 80.0 (V=100.0) | schedule create/list/cancel passed; execution component partially projected |
+| Cross-Channel | 100.0 | Live measured with projected partial components (80% coverage) |
+| Integration Breadth | 37.9 (V=30.4) | Live diagnostics + tool/memory integration checks (80% coverage) |
+| Security & Privacy | 81.0 (V=75.0) | traversal/SSRF suite passed; background-auth awareness/audit reduced verified score |
+| Scale & Cost | 57.0 (V=0.0) | high concurrency latency observed; only 20% measured coverage in this pass |
+| Resilience | 90.0 (V=100.0) | health/diagnostics/state persistence checks passed; some components projected |
+| Latency | 35.4 | p50 4.3s, p95 19.7s, mean 8.5s |
+| **Composite (projected)** | **79.8** | **Live gateway artifact (no per-chat timeout mode)** |
 
-### Estimated Competitor Scores
+External runtime estimates are not ranked in v0.2.
+Any non-artifact estimate must be labeled `unverified external estimate` and excluded from the leaderboard.
 
-Scores are estimated based on publicly available documentation and architecture analysis. Competitors are invited to submit verified results using the DTaaS-Bench harness.
-
-| Dimension | Nullalis | OpenClaw | NanoBot | Letta | Mem0 |
-|-----------|----------|----------|---------|-------|------|
-| Type | Full runtime | Full runtime | Lightweight runtime | Agent framework | Memory platform |
-| Autonomy Control (0.15) | 96 | 45 | 30 | 30 | 15 |
-| Memory Persistence (0.15) | 91 | 70 | 55 | 85 | 88 |
-| Functional Capability (0.15) | 85 | 75 | 65 | 55 | 50 |
-| Autonomous Execution (0.12) | 85 | 55 | 50 | 25 | 10 |
-| Cross-Channel (0.12) | 85 | 75 | 50 | 15 | 10 |
-| Integration Breadth (0.08) | 97 | 70 | 35 | 35 | 25 |
-| Security & Privacy (0.08) | 89 | 35 | 40 | 40 | 30 |
-| Scale & Cost (0.05) | 74 | 55 | 65 | 55 | 65 |
-| Resilience (0.05) | 78 | 50 | 45 | 55 | 50 |
-| Latency (0.05) | 72 | 70 | 70 | 65 | 70 |
-| **Composite** | **87** | **62** | **52** | **46** | **41** |
-| **Rating** | **Category Leader** | **Competitive** | **Emerging** | **Emerging** | **Specialized** |
-
-**Key observations**:
-- **OpenClaw is the nearest full-runtime competitor** at 62 (Competitive) — strong in channels (20+) and functional capability, weaker on background autonomy control and security hardening
-- **NanoBot demonstrates the minimalist approach** at 52 (Emerging) — impressive capability for 4,000 lines of Python, with Telegram/WhatsApp, scheduling, and persistent memory
-- **Letta leads on memory architecture** (85) with tiered self-editing memory and an agent development environment, but focuses on API-first agents rather than multi-channel autonomous runtimes
-- **Mem0 leads on raw memory recall** (88) with graph-based knowledge and $24M in funding, but is a memory platform — not a standalone runtime. It excels as a component within a larger system.
-- **Autonomy Control is the widest gap** — no competitor has background turn origin classification, per-origin tool policy enforcement, or output deduplication. This dimension alone separates DTaaS runtimes from enhanced chatbots.
-- **Memory is the most competitive dimension** — three products score 70-88 here. Nullalis leads but the gap is narrow.
-- **Nullalis is the only entry scoring above 80 on 6+ dimensions** — this breadth across all 10 dimensions is what defines a Category Leader in DTaaS
+Current published v0.2 Nullalis artifact:
+- `projected_composite_score`: `79.8`
+- `verified_composite_score`: `81.6`
+- `measured_coverage`: `78.9%`
+- `coverage_adjusted_verified_score`: `64.4`
+- rating: `Competitive`
+- elapsed: `4392.9s`
+- artifact type: `live_gateway_run`
 
 ---
 
@@ -388,22 +381,21 @@ Scores are estimated based on publicly available documentation and architecture 
 ```
 dtaas-bench/
   harness/
-    dim1_autonomy_control.py     # Background turn policy verification
-    dim2_memory_persistence.py   # Fact storage and recall across restarts
-    dim3_autonomous_execution.py # Scheduled task accuracy over 48h
-    dim4_cross_channel.py        # Multi-channel state consistency
-    dim5_integration_breadth.py  # Smoke tests for all integrations
-    dim6_security_privacy.py     # Traversal, SSRF, isolation, audit
-    dim7_scale_cost.py           # Load generation and measurement
+    dim1_autonomy.py             # Background turn policy verification
+    dim2_memory.py               # Fact storage and recall across sessions
+    dim3_execution.py            # Scheduled task accuracy
+    dim4_crosschannel.py         # Multi-channel state consistency
+    dim5_breadth.py              # Integration breadth and diagnostics checks
+    dim6_security.py             # Traversal, SSRF, isolation, audit
+    dim7_scale.py                # Load generation and measurement
     dim8_resilience.py           # Crash recovery and degradation
     dim9_latency.py              # End-to-end timing
+    dim10_functional.py          # Functional task completion
     scorer.py                    # Composite score calculation
   fixtures/
     facts_100.json               # Structured facts for memory tests
-    observations_100.json        # Unstructured observations
-    schedules_50.json            # Task definitions for autonomy tests
-    channels.json                # Channel configs for cross-channel tests
-    traversal_payloads.json      # Security test inputs
+    attack_payloads.json         # Security test inputs
+    schedules.json               # Task scheduling definitions
   results/
     nullalis-v0.1.json           # Published results
   README.md                      # How to run the benchmark
@@ -430,11 +422,11 @@ The harness communicates with the runtime under test via its public API (HTTP ga
 
 | Phase | Timeline | Deliverable |
 |-------|----------|-------------|
-| Internal validation | March 2026 | Run benchmark against Nullalis v0.1, verify all dimensions |
+| Internal validation | March 2026 | Run benchmark against Nullalis v0.1, publish v0.2 artifact fields |
 | Specification release | April 2026 | Publish this document + harness code as open repository |
-| Nullalis results | April 2026 | Publish verified results with full methodology transparency |
-| Community invitation | April 2026 | Invite OpenClaw, Mem0, Letta, and custom agents to submit results |
-| First comparison report | Q2 2026 | Side-by-side results from all submitted runtimes |
+| Nullalis refresh | April 2026 | Publish v0.2 run with verified/projected split and measured coverage |
+| Community invitation | April 2026 | Invite all runtimes to submit artifacts via harness |
+| First verified comparison report | Q2 2026 | Compare only artifact-backed runs side-by-side |
 | Annual refresh | Q1 2027 | Update dimensions and weights as the category evolves |
 
 ---
@@ -471,4 +463,4 @@ To submit results or propose changes: contact the Nova Nuggets engineering team 
 
 ---
 
-*DTaaS-Bench v0.1 — March 2026 — Nova Nuggets*
+*DTaaS-Bench v0.2 — March 2026 — Nova Nuggets*

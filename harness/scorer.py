@@ -38,6 +38,36 @@ def composite_score(dimension_scores: dict[str, float]) -> float:
     return round(total, 1)
 
 
+def coverage_weighted_composite_score(
+    verified_scores: dict[str, float], measured_coverage: dict[str, float]
+) -> tuple[float, float]:
+    """Calculate composite score using per-dimension measured coverage.
+
+    Returns:
+        (verified_composite_score, overall_measured_coverage)
+    """
+    weighted_total = 0.0
+    weighted_coverage = 0.0
+
+    for dim, weight in WEIGHTS.items():
+        score = verified_scores.get(dim, 0.0)
+        coverage = measured_coverage.get(dim, 0.0)
+        if coverage < 0.0:
+            coverage = 0.0
+        if coverage > 1.0:
+            coverage = 1.0
+        effective_weight = weight * coverage
+        weighted_total += score * effective_weight
+        weighted_coverage += effective_weight
+
+    if weighted_coverage <= 0.0:
+        return 0.0, 0.0
+
+    verified = weighted_total / weighted_coverage
+    overall_coverage = weighted_coverage / sum(WEIGHTS.values())
+    return round(verified, 1), round(overall_coverage, 3)
+
+
 def rating_tier(score: float) -> str:
     if score >= 85:
         return "Category Leader"

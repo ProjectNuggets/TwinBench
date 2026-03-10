@@ -9,13 +9,14 @@ from .sse_client import chat, health_check, get_diagnostics
 def run(config: BenchConfig) -> dict:
     """Test operational resilience: health, state persistence, self-check."""
     results = {}
-    score = 0
+    measured_points = 0
+    projected_bonus_points = 0
 
     # Test 1: Health endpoint
     healthy = health_check(config)
     results["health_endpoint_ok"] = healthy
     if healthy:
-        score += 15
+        measured_points += 15
 
     # Test 2: Diagnostics available and structured
     diag = get_diagnostics(config)
@@ -27,19 +28,19 @@ def run(config: BenchConfig) -> dict:
         has_self_check = "startup_self_check" in diag_str or "self_check" in diag_str
         results["startup_self_check_present"] = has_self_check
         if has_self_check:
-            score += 10
+            measured_points += 10
 
         # Check for state backend info
         has_state_backend = "state_backend" in diag_str or "postgres" in diag_str
         results["state_backend_in_diagnostics"] = has_state_backend
         if has_state_backend:
-            score += 10
+            measured_points += 10
 
         # Check for degraded flag
         has_degraded = "degraded" in diag_str
         results["degraded_flag_present"] = has_degraded
         if has_degraded:
-            score += 5
+            measured_points += 5
     else:
         results["diagnostics_available"] = False
 
@@ -51,7 +52,7 @@ def run(config: BenchConfig) -> dict:
     persists = marker.lower() in r["content"].lower() or "5837" in r["content"]
     results["state_persists_across_turns"] = persists
     if persists:
-        score += 15
+        measured_points += 15
 
     # Test 4: Idempotency / dedup awareness
     r2 = chat(
@@ -71,7 +72,7 @@ def run(config: BenchConfig) -> dict:
     )
     results["idempotency_awareness"] = has_idempotency
     if has_idempotency:
-        score += 10
+        measured_points += 10
 
     # Test 5: Graceful shutdown awareness
     r3 = chat(
@@ -84,16 +85,29 @@ def run(config: BenchConfig) -> dict:
     )
     results["graceful_shutdown_awareness"] = graceful
     if graceful:
-        score += 10
+        measured_points += 10
 
     # Projected scores for tests requiring OS-level access
-    score += 10  # job_recovery: projected (cron file persistence)
-    score += 5  # cold_start: projected (<3s based on binary size)
+    projected_bonus_points += 10  # job_recovery: projected (cron file persistence)
+    projected_bonus_points += 5  # cold_start: projected (<3s based on binary size)
     results["projected_job_recovery"] = True
     results["projected_cold_start"] = True
     results["note"] = (
         "SIGKILL crash recovery and cold start timing require OS-level access, not testable via HTTP. Projected based on architecture."
     )
 
-    results["score"] = min(100, score)
-    return {"dimension": "resilience", "score": results["score"], "details": results}
+    projected_score = min(100, measured_points + projected_bonus_points)
+    verified_score = min(100, (measured_points / 75) * 100)
+
+    results["score"] = round(projected_score, 1)
+    results["verified_score"] = round(verified_score, 1)
+    results["projected_score"] = round(projected_score, 1)
+    results["measured_coverage"] = 0.75
+    return {
+        "dimension": "resilience",
+        "score": results["score"],
+        "verified_score": results["verified_score"],
+        "projected_score": results["projected_score"],
+        "measured_coverage": results["measured_coverage"],
+        "details": results,
+    }

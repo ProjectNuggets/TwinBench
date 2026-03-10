@@ -430,9 +430,15 @@ def run(config: BenchConfig) -> dict:
         "conversational": round(conversational_score * 100, 1),
     }
     results["score"] = round(min(100, score), 1)
+    results["verified_score"] = results["score"]
+    results["projected_score"] = results["score"]
+    results["measured_coverage"] = 1.0
 
     return {
         "dimension": "functional_capability",
         "score": results["score"],
+        "verified_score": results["verified_score"],
+        "projected_score": results["projected_score"],
+        "measured_coverage": results["measured_coverage"],
         "details": results,
     }

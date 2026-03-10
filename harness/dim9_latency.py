@@ -61,4 +61,14 @@ def run(config: BenchConfig) -> dict:
     )
 
     results["score"] = round(score, 1)
-    return {"dimension": "latency", "score": results["score"], "details": results}
+    results["verified_score"] = results["score"]
+    results["projected_score"] = results["score"]
+    results["measured_coverage"] = 1.0
+    return {
+        "dimension": "latency",
+        "score": results["score"],
+        "verified_score": results["verified_score"],
+        "projected_score": results["projected_score"],
+        "measured_coverage": results["measured_coverage"],
+        "details": results,
+    }

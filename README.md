@@ -1,11 +1,11 @@
 <p align="center">
   <h1 align="center">DTaaS-Bench</h1>
   <p align="center">
-    <strong>The first industry benchmark for persistent autonomous AI agent runtimes.</strong>
+    <strong>Open benchmark for persistent autonomous AI agent runtimes.</strong>
   </p>
   <p align="center">
     <a href="SPECIFICATION.md">Specification</a> &middot;
-    <a href="results/nullalis-v0.1-report.md">Results</a> &middot;
+    <a href="results/nullalis-v0.2-report.md">Results</a> &middot;
     <a href="CONTRIBUTING.md">Contribute</a> &middot;
     <a href="https://novanuggets.com">Nova Nuggets</a>
   </p>
@@ -17,39 +17,38 @@
 
 **None of them measure what a Digital Twin runtime must do: remember durably, act autonomously, operate across multiple channels, enforce safety on background turns, and scale to thousands of users — all at once.**
 
-DTaaS-Bench does. 10 dimensions. One composite score. Open harness. Run it against your runtime today.
+DTaaS-Bench does. 10 dimensions. Two explicit composites (`verified` + `projected`). Open harness. Run it against your runtime today.
 
 ---
 
-## Leaderboard (March 2026)
+## Verified Leaderboard (March 2026)
 
-| Runtime | Type | Score | Rating | Best Dimension |
-|---------|------|-------|--------|----------------|
-| **[Nullalis v0.1](results/nullalis-v0.1-report.md)** | Full runtime | **87** | **Category Leader** | Integration Breadth (97) |
-| [OpenClaw](https://github.com/openclaw) (est.) | Full runtime | 62 | Competitive | Channels (75) |
-| [NanoBot](https://github.com/hkuds/nanobot) (est.) | Lightweight runtime | 52 | Emerging | Latency (70) |
-| [Letta](https://github.com/letta-ai/letta) (est.) | Agent framework | 46 | Emerging | Memory (85) |
-| [Mem0](https://mem0.ai) (est.) | Memory platform | 41 | Specialized | Memory (88) |
+Only runs produced by this harness with raw artifacts are ranked here.
 
-> Estimated scores based on public documentation (March 2026). **Submit verified results to join the leaderboard.**
+| Runtime | Type | Verified (coverage-adjusted) | Coverage | Projected | Rating |
+|---------|------|------------------------------|----------|-----------|--------|
+| **[Nullalis v0.2 live artifact](results/nullalis-v0.2-report.md)** | Full runtime | **64.4** | **78.9%** | **79.8** | **Competitive** |
 
-<details>
-<summary><strong>Full dimension breakdown</strong></summary>
+## External Comparison (Unverified, not ranked)
 
-| Dimension (weight) | Nullalis | OpenClaw | NanoBot | Letta | Mem0 |
-|--------------------|----------|----------|---------|-------|------|
-| Autonomy Control (0.15) | 96 | 45 | 30 | 30 | 15 |
-| Memory Persistence (0.15) | 91 | 70 | 55 | 85 | 88 |
-| Functional Capability (0.15) | 85 | 75 | 65 | 55 | 50 |
-| Autonomous Execution (0.12) | 85 | 55 | 50 | 25 | 10 |
-| Cross-Channel (0.12) | 85 | 75 | 50 | 15 | 10 |
-| Integration Breadth (0.08) | 97 | 70 | 35 | 35 | 25 |
-| Security & Privacy (0.08) | 89 | 35 | 40 | 40 | 30 |
-| Scale & Cost (0.05) | 74 | 55 | 65 | 55 | 65 |
-| Resilience (0.05) | 78 | 50 | 45 | 55 | 50 |
-| Latency (0.05) | 72 | 70 | 70 | 65 | 70 |
+External runtime rows are reference estimates from public documentation and are intentionally excluded from the verified leaderboard.
 
-</details>
+| Runtime | Type | Status |
+|---------|------|--------|
+| OpenClaw | Full runtime | Unverified external estimate |
+| NanoBot | Lightweight runtime | Unverified external estimate |
+| Letta | Agent framework | Unverified external estimate |
+| Mem0 | Memory platform | Unverified external estimate |
+
+Submit a harness artifact to replace any estimate with a verified score.
+
+## v0.2 Integrity Highlights
+
+- Coverage-aware leaderboard scoring is now default.
+- Every run publishes both `verified` and `projected` composites.
+- External estimates are explicitly non-ranked.
+- CI now validates harness integrity and v0.2 artifact schema on every PR.
+- Latest live gateway run completed in 4392.9s (no per-chat timeout mode) and reports full measured timing metadata in the artifact.
 
 ---
 
@@ -95,6 +94,16 @@ A Digital Twin as a Service runtime is fundamentally different:
 | 25-39 | **Specialized** | Strong in specific dimensions, not full-stack |
 | <25 | **Early Stage** | Research or proof-of-concept |
 
+## Scoring Integrity Contract
+
+Every run reports:
+- `verified_composite_score` (measured components only)
+- `projected_composite_score` (includes projection assumptions)
+- `measured_coverage` (how much of scoring weight was actually measured)
+- `coverage_adjusted_verified_score` (used for tiering in v0.2)
+
+The benchmark never promotes an unverified external estimate to leaderboard status.
+
 ---
 
 ## Quick Start
@@ -102,24 +111,24 @@ A Digital Twin as a Service runtime is fundamentally different:
 ```bash
 git clone https://github.com/ProjectNuggets/DTaaS-benchmark.git
 cd DTaaS-benchmark
-pip install -r harness/requirements.txt
+python3.10 -m pip install -r harness/requirements.txt
 
 # Run all 10 dimensions
-python -m harness.runner \
+python3.10 -m harness.runner \
   --url http://localhost:8080 \
   --token YOUR_TOKEN \
   --user-id 1 \
   --name "My Runtime"
 
 # Run specific dimensions
-python -m harness.runner \
+python3.10 -m harness.runner \
   --url http://localhost:8080 \
   --token YOUR_TOKEN \
   --user-id 1 \
   --dimensions memory,security,functional
 
 # Full report suite (JSON + Markdown + HTML)
-python -m harness.runner \
+python3.10 -m harness.runner \
   --url http://localhost:8080 \
   --token YOUR_TOKEN \
   --user-id 1 \
@@ -130,6 +139,9 @@ python -m harness.runner \
 ```
 
 The harness produces a terminal summary table, a machine-readable JSON file, a Markdown report, and a self-contained HTML report with score bars and tier badges.
+
+Runtime requirement:
+- Python 3.10+ (the harness uses modern type syntax)
 
 ---
 
@@ -144,7 +156,7 @@ The harness talks to any runtime via HTTP:
 | `/internal/diagnostics` | GET | Runtime introspection | Yes |
 | `/metrics` | GET | Prometheus metrics | Optional |
 
-Each dimension script sends real requests to the runtime, parses responses, and scores based on the [SPECIFICATION](SPECIFICATION.md). No mocks. No synthetic benchmarks. Real agent behavior.
+Each dimension script sends real requests to the runtime, parses responses, and scores based on the [SPECIFICATION](SPECIFICATION.md). Measured and projected components are surfaced separately.
 
 ---
 
@@ -180,8 +192,10 @@ DTaaS-benchmark/
 │   ├── attack_payloads.json    Path traversal + SSRF inputs
 │   └── schedules.json          Task scheduling definitions
 └── results/
-    ├── nullalis-v0.1.json      Machine-readable reference results
-    └── nullalis-v0.1-report.md Human-readable reference report
+    ├── nullalis-v0.1.json      Legacy v0.1 reference artifact
+    ├── nullalis-v0.1-report.md Legacy v0.1 report
+    ├── nullalis-v0.2.json      v0.2 live gateway artifact
+    └── nullalis-v0.2-report.md v0.2 live gateway report
 ```
 
 ---
@@ -201,6 +215,5 @@ Apache-2.0 — See [LICENSE](LICENSE).
 <p align="center">
   <strong>Published by <a href="https://novanuggets.com">Nova Nuggets</a></strong><br>
   Handcrafted Intelligence. Own Your AI.<br><br>
-  <strong>Nullalis</strong> (ZAKI BOT) is the reference implementation for DTaaS-Bench<br>
-  and the first runtime to achieve <strong>Category Leader</strong> (87/100).
+  <strong>Nullalis</strong> (ZAKI BOT) is the current reference implementation for DTaaS-Bench.
 </p>

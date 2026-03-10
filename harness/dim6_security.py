@@ -135,23 +135,32 @@ def run(config: BenchConfig) -> dict:
     # (secret x 0.20) + (isolation x 0.20) + (traversal x 0.15) + (ssrf x 0.15) + (https x 0.10) + (audit x 0.10) + (bg_auth x 0.10)
     traversal_rate = sum(traversal_results.values()) / max(len(traversal_results), 1)
     ssrf_rate = sum(ssrf_results.values()) / max(len(ssrf_results), 1)
-    score = (
-        (
-            0.90
-            * 0.20  # secret_safety: projected (vault exists but can't test save/reveal via chat)
-            + 0.90 * 0.20  # tenant_isolation: projected (tenant_lock exists)
-            + traversal_rate * 0.15 * 100 / 100
-            + ssrf_rate * 0.15 * 100 / 100
-            + (1.0 if http_handled else 0.0) * 0.10
-            + (1.0 if results.get("audit_present_in_diagnostics") else 0.5) * 0.10
-            + (1.0 if auth_blocked else 0.0) * 0.10
-        )
-        * 100
+    measured_weight = 0.15 + 0.15 + 0.10 + 0.10 + 0.10
+    measured_component = (
+        traversal_rate * 0.15
+        + ssrf_rate * 0.15
+        + (1.0 if http_handled else 0.0) * 0.10
+        + (1.0 if results.get("audit_present_in_diagnostics") else 0.5) * 0.10
+        + (1.0 if auth_blocked else 0.0) * 0.10
+    )
+    projected_component = (
+        0.90 * 0.20  # secret_safety: projected
+        + 0.90 * 0.20  # tenant_isolation: projected
+        + measured_component
     )
 
-    results["score"] = round(min(100, score), 1)
+    verified_score = (measured_component / measured_weight) * 100
+    projected_score = projected_component * 100
+
+    results["score"] = round(min(100, projected_score), 1)
+    results["verified_score"] = round(min(100, verified_score), 1)
+    results["projected_score"] = round(min(100, projected_score), 1)
+    results["measured_coverage"] = round(measured_weight, 2)
     return {
         "dimension": "security_privacy",
         "score": results["score"],
+        "verified_score": results["verified_score"],
+        "projected_score": results["projected_score"],
+        "measured_coverage": results["measured_coverage"],
         "details": results,
     }

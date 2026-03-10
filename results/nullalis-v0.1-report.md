@@ -10,6 +10,9 @@
 **Platform**: macOS (darwin), Zig 0.15.2
 **Benchmark version**: DTaaS-Bench v0.1
 
+> v0.2 integrity note: This legacy report mixes measured and projected components in several dimensions.
+> Use the v0.2 harness output (`verified_composite_score`, `projected_composite_score`, `measured_coverage`) for leaderboard decisions.
+
 ---
 
 ## Baseline

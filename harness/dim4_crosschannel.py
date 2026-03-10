@@ -14,7 +14,8 @@ def run(config: BenchConfig) -> dict:
     session/memory). Scores are partially projected.
     """
     results = {}
-    score = 0
+    measured_points = 0
+    projected_bonus_points = 0
 
     # Test 1: Store a fact and recall it (same-user, same-session persistence)
     unique_marker = "CROSSCHAN_BENCH_8472"
@@ -26,7 +27,7 @@ def run(config: BenchConfig) -> dict:
     )
     results["same_session_recall"] = recall_works
     if recall_works:
-        score += 20
+        measured_points += 20
 
     # Test 2: Check shared state architecture from diagnostics
     diag = get_diagnostics(config)
@@ -39,11 +40,11 @@ def run(config: BenchConfig) -> dict:
         results["channels_in_diagnostics"] = has_channels
         results["session_in_diagnostics"] = has_session
         if has_bus:
-            score += 15
+            measured_points += 15
         if has_channels:
-            score += 10
+            measured_points += 10
         if has_session:
-            score += 5
+            measured_points += 5
     else:
         results["diagnostics_available"] = False
 
@@ -64,11 +65,11 @@ def run(config: BenchConfig) -> dict:
     )
     results["channels_agent_reports"] = channels_mentioned
     if channels_mentioned >= 5:
-        score += 15
+        measured_points += 15
     elif channels_mentioned >= 3:
-        score += 10
+        measured_points += 10
     elif channels_mentioned >= 1:
-        score += 5
+        measured_points += 5
 
     # Test 4: Ask about cross-channel behavior
     r3 = chat(
@@ -89,16 +90,28 @@ def run(config: BenchConfig) -> dict:
     )
     results["cross_channel_awareness"] = cross_aware
     if cross_aware:
-        score += 15
+        measured_points += 15
 
     # Projected scores for dimensions we can't test via single HTTP endpoint
-    score += 10  # timeline_consistency: projected (shared session architecture)
-    score += 10  # notification_routing: projected (bus dispatch)
+    projected_bonus_points += 10  # timeline_consistency: projected
+    projected_bonus_points += 10  # notification_routing: projected
     results["projected_timeline_consistency"] = True
     results["projected_notification_routing"] = True
     results["note"] = (
         "Full cross-channel test requires 2+ real channels. Projected components: timeline consistency, notification routing."
     )
 
-    results["score"] = min(100, score)
-    return {"dimension": "cross_channel", "score": results["score"], "details": results}
+    projected_score = min(100, measured_points + projected_bonus_points)
+    verified_score = min(100, (measured_points / 80) * 100)
+    results["score"] = round(projected_score, 1)
+    results["verified_score"] = round(verified_score, 1)
+    results["projected_score"] = round(projected_score, 1)
+    results["measured_coverage"] = 0.8
+    return {
+        "dimension": "cross_channel",
+        "score": results["score"],
+        "verified_score": results["verified_score"],
+        "projected_score": results["projected_score"],
+        "measured_coverage": results["measured_coverage"],
+        "details": results,
+    }

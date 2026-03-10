@@ -120,4 +120,14 @@ def run(config: BenchConfig) -> dict:
 
     final_score = min(100, score)
     results["score"] = final_score
-    return {"dimension": "autonomy_control", "score": final_score, "details": results}
+    results["verified_score"] = final_score
+    results["projected_score"] = final_score
+    results["measured_coverage"] = 1.0
+    return {
+        "dimension": "autonomy_control",
+        "score": final_score,
+        "verified_score": final_score,
+        "projected_score": final_score,
+        "measured_coverage": 1.0,
+        "details": results,
+    }

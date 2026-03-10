@@ -79,21 +79,25 @@ def run(config: BenchConfig) -> dict:
     cross_rate = cross_hits / cross_sample if cross_sample > 0 else 0
     results["cross_session_recall_rate"] = round(cross_rate, 3)
 
-    # Score calculation (matches spec weights)
-    score = (
-        exact_rate * 0.30
-        + semantic_rate * 0.30
-        + 0.80 * 0.20  # temporal stability projected (no restart test in automated run)
-        + 0.90 * 0.10  # conflict resolution projected
-        + cross_rate * 0.10
-    ) * 100
+    measured_weight = 0.30 + 0.30 + 0.10
+    measured_component = exact_rate * 0.30 + semantic_rate * 0.30 + cross_rate * 0.10
+    projected_component = measured_component + 0.80 * 0.20 + 0.90 * 0.10
 
-    results["score"] = round(min(100, score), 1)
+    verified_score = (measured_component / measured_weight) * 100
+    projected_score = projected_component * 100
+
+    results["score"] = round(min(100, projected_score), 1)
+    results["verified_score"] = round(min(100, verified_score), 1)
+    results["projected_score"] = round(min(100, projected_score), 1)
+    results["measured_coverage"] = round(measured_weight, 2)
     results["note"] = (
         "Temporal stability (0.20 weight) projected at 0.80; conflict resolution (0.10 weight) projected at 0.90. Full verification requires restart + 30-day test."
     )
     return {
         "dimension": "memory_persistence",
         "score": results["score"],
+        "verified_score": results["verified_score"],
+        "projected_score": results["projected_score"],
+        "measured_coverage": results["measured_coverage"],
         "details": results,
     }

@@ -102,7 +102,7 @@ def run(config: BenchConfig) -> dict:
     # inverse_rss (projected — can't measure from outside), inverse_p95, max_users, horizontal, inverse_cost
     p95_score = max(0, 100 - (p95 / 1000))  # 0ms = 100, 100s = 0
     success_score = success_rate * 100
-    score = (
+    projected_score = (
         0.70 * 0.25  # inverse_rss: projected (2.6MB binary, ~43MB test RSS)
         + p95_score / 100 * 0.20
         + 0.70 * 0.25  # max_users: projected (~1000/instance)
@@ -111,7 +111,18 @@ def run(config: BenchConfig) -> dict:
     ) * 100
 
     # Adjust based on actual success rate
-    score = score * success_rate
+    projected_score = projected_score * success_rate
+    verified_score = p95_score * success_rate
 
-    results["score"] = round(min(100, score), 1)
-    return {"dimension": "scale_cost", "score": results["score"], "details": results}
+    results["score"] = round(min(100, projected_score), 1)
+    results["verified_score"] = round(min(100, verified_score), 1)
+    results["projected_score"] = round(min(100, projected_score), 1)
+    results["measured_coverage"] = 0.2
+    return {
+        "dimension": "scale_cost",
+        "score": results["score"],
+        "verified_score": results["verified_score"],
+        "projected_score": results["projected_score"],
+        "measured_coverage": results["measured_coverage"],
+        "details": results,
+    }

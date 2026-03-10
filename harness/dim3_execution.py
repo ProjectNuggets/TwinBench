@@ -9,7 +9,9 @@ from .sse_client import chat
 def run(config: BenchConfig) -> dict:
     """Test autonomous task scheduling and execution."""
     results = {}
-    score = 0
+    measured_points = 0
+    projected_bonus_points = 0
+    measured_max_points = 65  # creation/list/cancel/conditional
 
     # Test 1: Task creation — ask agent to schedule something
     r1 = chat(
@@ -22,14 +24,14 @@ def run(config: BenchConfig) -> dict:
     )
     results["task_created"] = task_created
     if task_created:
-        score += 25
+        measured_points += 25
 
     # Test 2: Schedule list — verify the task appears
     r2 = chat(config, "List my currently scheduled tasks or reminders.")
     task_visible = "dtaas_bench" in r2["content"].lower() or "7291" in r2["content"]
     results["task_visible_in_list"] = task_visible
     if task_visible:
-        score += 15
+        measured_points += 15
 
     # Test 3: Task cancellation — create and cancel
     r3 = chat(
@@ -49,7 +51,7 @@ def run(config: BenchConfig) -> dict:
         )
         results["task_cancelled"] = cancelled
         if cancelled:
-            score += 15
+            measured_points += 15
 
     # Test 4: Conditional task understanding
     r5 = chat(
@@ -70,10 +72,11 @@ def run(config: BenchConfig) -> dict:
     )
     results["conditional_understanding"] = understands_conditional
     if understands_conditional:
-        score += 10
+        measured_points += 10
 
     # Test 5: Wait for execution (abbreviated — 3 minutes instead of 48h)
     if task_created and config.schedule_wait_secs > 0:
+        measured_max_points += 35
         results["waiting_for_execution_secs"] = config.schedule_wait_secs
         time.sleep(config.schedule_wait_secs)
 
@@ -95,20 +98,32 @@ def run(config: BenchConfig) -> dict:
         )
         results["task_executed"] = task_executed
         if task_executed:
-            score += 35
+            measured_points += 35
         else:
             results["execution_note"] = (
                 "Task may have executed but agent could not confirm via conversation."
             )
-            score += 10  # Partial credit: task was created correctly
+            measured_points += 10  # Partial credit: task was created correctly
     else:
         results["execution_skipped"] = True
         results["execution_note"] = "Schedule wait disabled or task not created."
-        score += 15  # Projected score for execution
+        projected_bonus_points += 15  # Projected score for execution
 
-    results["score"] = min(100, score)
+    projected_score = min(100, measured_points + projected_bonus_points)
+    if measured_max_points > 0:
+        verified_score = min(100, (measured_points / measured_max_points) * 100)
+    else:
+        verified_score = 0
+
+    results["score"] = round(projected_score, 1)
+    results["verified_score"] = round(verified_score, 1)
+    results["projected_score"] = round(projected_score, 1)
+    results["measured_coverage"] = round(measured_max_points / 100, 2)
     return {
         "dimension": "autonomous_execution",
         "score": results["score"],
+        "verified_score": results["verified_score"],
+        "projected_score": results["projected_score"],
+        "measured_coverage": results["measured_coverage"],
         "details": results,
     }

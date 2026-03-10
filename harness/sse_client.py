@@ -20,7 +20,7 @@ def chat(config: BenchConfig, message: str, timeout: int | None = None) -> dict:
             "tokens": int,          # number of token events received
         }
     """
-    timeout = timeout or config.timeout
+    resolved_timeout = timeout if timeout is not None else config.resolve_chat_timeout_secs()
     start = time.monotonic()
 
     result = {
@@ -30,15 +30,17 @@ def chat(config: BenchConfig, message: str, timeout: int | None = None) -> dict:
         "latency_ms": 0.0,
         "error": None,
         "tokens": 0,
+        "timeout_secs_used": resolved_timeout,
     }
 
     try:
+        request_timeout = (5, None) if resolved_timeout is None else (5, resolved_timeout)
         resp = requests.post(
             config.chat_url(),
             headers=config.headers,
             json={"message": message},
             stream=True,
-            timeout=timeout,
+            timeout=request_timeout,
         )
         resp.raise_for_status()
     except requests.RequestException as e:
@@ -48,18 +50,29 @@ def chat(config: BenchConfig, message: str, timeout: int | None = None) -> dict:
 
     content_parts = []
     current_event = None
+    saw_done = False
 
     try:
-        for line in resp.iter_lines(decode_unicode=True):
-            if line is None:
+        buffer = ""
+        for chunk in resp.iter_content(chunk_size=1024, decode_unicode=True):
+            if resolved_timeout is not None and (time.monotonic() - start) >= float(resolved_timeout):
+                result["error"] = f"chat stream exceeded {resolved_timeout}s wall-clock timeout"
+                break
+            if not chunk:
                 continue
-            line = line.strip()
+            buffer += chunk
 
-            if line.startswith("event:"):
-                current_event = line[6:].strip()
-                continue
+            while "\n" in buffer:
+                line, buffer = buffer.split("\n", 1)
+                line = line.strip()
 
-            if line.startswith("data:"):
+                if line.startswith("event:"):
+                    current_event = line[6:].strip()
+                    continue
+
+                if not line.startswith("data:"):
+                    continue
+
                 data_str = line[5:].strip()
                 if not data_str:
                     continue
@@ -89,15 +102,28 @@ def chat(config: BenchConfig, message: str, timeout: int | None = None) -> dict:
                 elif current_event == "done":
                     result["session_id"] = data.get("session_id", "")
                     result["message_id"] = data.get("message_id", "")
+                    saw_done = True
                     break
 
                 current_event = None
 
+            if saw_done:
+                break
+
     except Exception as e:
         result["error"] = f"SSE parse error: {e}"
+    finally:
+        try:
+            resp.close()
+        except Exception:
+            pass
+
+    if result["error"] is None and not saw_done:
+        result["error"] = "chat stream ended without done event"
 
     result["content"] = "".join(content_parts)
     result["latency_ms"] = (time.monotonic() - start) * 1000
+    config.record_chat_latency(result["latency_ms"], result["error"] is not None)
     return result
 
 

@@ -6,11 +6,17 @@ We welcome contributions from the community. Here's how you can help.
 
 The most impactful contribution is running DTaaS-Bench against your runtime and submitting verified results.
 
-1. Run the harness: `python -m harness.runner --url YOUR_URL --token YOUR_TOKEN --user-id 1 --name "Your Runtime" --output results/your-runtime.json`
+1. Run the harness: `python3.10 -m harness.runner --url YOUR_URL --token YOUR_TOKEN --user-id 1 --name "Your Runtime" --output results/your-runtime.json`
 2. Open an issue using the **Submit Results** template
 3. Attach your `results/your-runtime.json`
 
 We publish all verified results in the leaderboard.
+
+Required v0.2 fields for leaderboard eligibility:
+- `verified_composite_score`
+- `projected_composite_score`
+- `measured_coverage`
+- `coverage_adjusted_verified_score`
 
 ## Propose New Dimensions
 

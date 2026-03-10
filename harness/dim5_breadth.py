@@ -19,6 +19,9 @@ def run(config: BenchConfig) -> dict:
     tools = 0
     backends = 0
     integrations = 0
+    tools_from_fallback = False
+    backends_from_fallback = False
+    integrations_from_fallback = False
 
     if diag:
         results["diagnostics_available"] = True
@@ -93,6 +96,7 @@ def run(config: BenchConfig) -> dict:
             tools = sum(1 for name in tool_names if name in diag_str.lower())
             if tools == 0:
                 tools = 27  # Known from code analysis
+                tools_from_fallback = True
 
         # Count memory backends
         backend_names = [
@@ -109,13 +113,16 @@ def run(config: BenchConfig) -> dict:
         backends = sum(1 for name in backend_names if name in diag_str.lower())
         if backends == 0:
             backends = 9  # Known from code analysis
+            backends_from_fallback = True
 
         # Count external integrations
         if "composio" in diag_str.lower():
             integrations += 1
         if "mcp" in diag_str.lower():
             integrations += 1
-        integrations = max(integrations, 1)
+        if integrations == 0:
+            integrations = 1
+            integrations_from_fallback = True
 
     else:
         results["diagnostics_available"] = False
@@ -124,6 +131,9 @@ def run(config: BenchConfig) -> dict:
         tools = 34
         backends = 9
         integrations = 2
+        tools_from_fallback = True
+        backends_from_fallback = True
+        integrations_from_fallback = True
         results["note"] = (
             "Diagnostics unavailable; using code-analysis fallback values."
         )
@@ -138,10 +148,33 @@ def run(config: BenchConfig) -> dict:
     results["metrics_available"] = metrics is not None
 
     # Score
-    score = log2_breadth_score(channels, tools, backends, integrations)
-    results["score"] = round(score, 1)
+    projected_score = log2_breadth_score(channels, tools, backends, integrations)
+
+    measured_coverage = 1.0 if diag else 0.0
+    if diag:
+        if tools_from_fallback:
+            measured_coverage -= 0.30
+        if backends_from_fallback:
+            measured_coverage -= 0.20
+        if integrations_from_fallback:
+            measured_coverage -= 0.20
+    measured_coverage = max(0.0, min(1.0, measured_coverage))
+
+    verified_score = projected_score * measured_coverage
+    results["score"] = round(projected_score, 1)
+    results["verified_score"] = round(verified_score, 1)
+    results["projected_score"] = round(projected_score, 1)
+    results["measured_coverage"] = round(measured_coverage, 2)
+    results["fallback_components"] = {
+        "tools": tools_from_fallback,
+        "backends": backends_from_fallback,
+        "integrations": integrations_from_fallback,
+    }
     return {
         "dimension": "integration_breadth",
         "score": results["score"],
+        "verified_score": results["verified_score"],
+        "projected_score": results["projected_score"],
+        "measured_coverage": results["measured_coverage"],
         "details": results,
     }
