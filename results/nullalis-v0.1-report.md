@@ -306,15 +306,16 @@ Rounded: 89/100
 
 ---
 
-## Final Score: 89 / 100 — Production-Ready
+## Final Score: 87 / 100 — Category Leader
 
 | Tier | Range | Nullalis |
 |------|-------|----------|
-| SOTA | 90-100 | |
-| **Production-Ready** | **75-89** | **89 (high end)** |
-| Beta | 60-74 | |
-| Prototype | 40-59 | |
-| Experimental | <40 | |
+| **Category Leader** | **85-100** | **87** |
+| Production-Grade | 70-84 | |
+| Competitive | 55-69 | |
+| Emerging | 40-54 | |
+| Specialized | 25-39 | |
+| Early Stage | <25 | |
 
 ---
 
