@@ -3,20 +3,22 @@
 import math
 
 WEIGHTS = {
-    "autonomy_control": 0.20,
-    "memory_persistence": 0.20,
-    "autonomous_execution": 0.15,
-    "cross_channel": 0.15,
-    "integration_breadth": 0.10,
+    "autonomy_control": 0.15,
+    "memory_persistence": 0.15,
+    "functional_capability": 0.15,
+    "autonomous_execution": 0.12,
+    "cross_channel": 0.12,
+    "integration_breadth": 0.08,
     "security_privacy": 0.08,
     "scale_cost": 0.05,
     "resilience": 0.05,
-    "latency": 0.02,
+    "latency": 0.05,
 }
 
 DIMENSION_LABELS = {
     "autonomy_control": "Autonomy Control",
     "memory_persistence": "Memory Persistence",
+    "functional_capability": "Functional Capability",
     "autonomous_execution": "Autonomous Execution",
     "cross_channel": "Cross-Channel Consistency",
     "integration_breadth": "Integration Breadth",

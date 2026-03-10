@@ -16,19 +16,20 @@ Existing benchmarks miss this category:
 
 DTaaS-Bench measures what matters for a production digital twin: memory persistence, autonomy control, cross-channel consistency, security, scale, and resilience.
 
-## Dimensions (9)
+## Dimensions (10)
 
 | # | Dimension | Weight | What It Tests |
 |---|-----------|--------|---------------|
-| 1 | Autonomy Control | 0.20 | Safety constraints on background agent behavior |
-| 2 | Memory Persistence | 0.20 | Durable recall across restarts, sessions, and time |
-| 3 | Autonomous Execution | 0.15 | Scheduled and proactive task completion |
-| 4 | Cross-Channel Consistency | 0.15 | Coherent state across communication surfaces |
-| 5 | Integration Breadth | 0.10 | Functional channels, tools, backends, APIs |
-| 6 | Security & Privacy | 0.08 | Data isolation, secret handling, audit, sandboxing |
-| 7 | Scale & Cost Efficiency | 0.05 | Resource consumption per user, horizontal readiness |
-| 8 | Operational Resilience | 0.05 | Recovery from crashes, network failures, corruption |
-| 9 | Latency Profile | 0.02 | End-to-end responsiveness for critical paths |
+| 1 | Autonomy Control | 0.15 | Safety constraints on background agent behavior |
+| 2 | Memory Persistence | 0.15 | Durable recall across restarts, sessions, and time |
+| 3 | Functional Capability | 0.15 | End-to-end task completion, reasoning, error recovery |
+| 4 | Autonomous Execution | 0.12 | Scheduled and proactive task completion |
+| 5 | Cross-Channel Consistency | 0.12 | Coherent state across communication surfaces |
+| 6 | Integration Breadth | 0.08 | Functional channels, tools, backends, APIs |
+| 7 | Security & Privacy | 0.08 | Data isolation, secret handling, audit, sandboxing |
+| 8 | Scale & Cost Efficiency | 0.05 | Resource consumption per user, horizontal readiness |
+| 9 | Operational Resilience | 0.05 | Recovery from crashes, network failures, corruption |
+| 10 | Latency Profile | 0.05 | End-to-end responsiveness for critical paths |
 
 ## Rating Tiers
 

@@ -28,10 +28,12 @@ from . import dim6_security
 from . import dim7_scale
 from . import dim8_resilience
 from . import dim9_latency
+from . import dim10_functional
 
 DIMENSION_MAP = {
     "autonomy": ("autonomy_control", dim1_autonomy),
     "memory": ("memory_persistence", dim2_memory),
+    "functional": ("functional_capability", dim10_functional),
     "execution": ("autonomous_execution", dim3_execution),
     "crosschannel": ("cross_channel", dim4_crosschannel),
     "breadth": ("integration_breadth", dim5_breadth),

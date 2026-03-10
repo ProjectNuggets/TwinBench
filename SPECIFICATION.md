@@ -27,21 +27,22 @@ DTaaS-Bench fills this gap. It defines 9 measurable dimensions, a composite scor
 
 | # | Dimension | Weight | What It Tests |
 |---|-----------|--------|---------------|
-| 1 | Autonomy Control | 0.20 | Safety constraints on background agent behavior |
-| 2 | Memory Persistence | 0.20 | Durable recall across restarts, sessions, and time |
-| 3 | Autonomous Execution | 0.15 | Scheduled and proactive task completion |
-| 4 | Cross-Channel Consistency | 0.15 | Coherent state across communication surfaces |
-| 5 | Integration Breadth | 0.10 | Functional channels, tools, backends, APIs |
-| 6 | Security & Privacy | 0.08 | Data isolation, secret handling, audit, sandboxing |
-| 7 | Scale & Cost Efficiency | 0.05 | Resource consumption per user, horizontal readiness |
-| 8 | Operational Resilience | 0.05 | Recovery from crashes, network failures, corruption |
-| 9 | Latency Profile | 0.02 | End-to-end responsiveness for critical paths |
+| 1 | Autonomy Control | 0.15 | Safety constraints on background agent behavior |
+| 2 | Memory Persistence | 0.15 | Durable recall across restarts, sessions, and time |
+| 3 | Functional Capability | 0.15 | End-to-end task completion, multi-step reasoning, error recovery |
+| 4 | Autonomous Execution | 0.12 | Scheduled and proactive task completion |
+| 5 | Cross-Channel Consistency | 0.12 | Coherent state across communication surfaces |
+| 6 | Integration Breadth | 0.08 | Functional channels, tools, backends, APIs |
+| 7 | Security & Privacy | 0.08 | Data isolation, secret handling, audit, sandboxing |
+| 8 | Scale & Cost Efficiency | 0.05 | Resource consumption per user, horizontal readiness |
+| 9 | Operational Resilience | 0.05 | Recovery from crashes, network failures, corruption |
+| 10 | Latency Profile | 0.05 | End-to-end responsiveness for critical paths |
 
-**Weight rationale**: Autonomy Control and Memory Persistence are weighted highest because they define the category. A digital twin that cannot be trusted to act safely in the background, or that forgets what it was told, is not a digital twin — it is a chatbot. Integration breadth and security are weighted to reflect ecosystem depth and enterprise readiness. Latency is weighted lowest because it is dominated by upstream model inference time, not runtime architecture.
+**Weight rationale**: The top three dimensions — Autonomy Control, Memory Persistence, and Functional Capability — carry equal weight because they define the category together. A digital twin must be safe (autonomy), remember (memory), and actually do useful work (functional). Integration breadth and security reflect ecosystem depth and enterprise readiness. Latency is weighted at 0.05: meaningful for user experience but dominated by upstream model inference time.
 
 ---
 
-### Dimension 1: Autonomy Control (Weight: 0.20)
+### Dimension 1: Autonomy Control (Weight: 0.15)
 
 **What it tests**: Whether the runtime enforces safety constraints on autonomous (non-user-initiated) turns.
 
@@ -70,7 +71,7 @@ A DTaaS runtime executes work in the background — heartbeats, scheduled jobs, 
 
 ---
 
-### Dimension 2: Memory Persistence (Weight: 0.20)
+### Dimension 2: Memory Persistence (Weight: 0.15)
 
 **What it tests**: Whether the agent retains and correctly recalls information across restarts, sessions, and time.
 
@@ -95,7 +96,32 @@ A DTaaS runtime executes work in the background — heartbeats, scheduled jobs, 
 
 ---
 
-### Dimension 3: Autonomous Execution (Weight: 0.15)
+### Dimension 3: Functional Capability (Weight: 0.15)
+
+**What it tests**: Whether the agent can actually complete useful work — single-tool tasks, multi-step reasoning chains, error recovery, and conversational quality.
+
+Infrastructure dimensions test whether the runtime CAN work. This dimension tests whether it DOES work from the user's perspective.
+
+**Protocol**:
+1. **Single-tool tasks (10 tests)**: Memory store/recall, schedule create/list, runtime introspection, file write/read, web search, math reasoning, time awareness
+2. **Multi-step reasoning (5 tests)**: Fact-to-action chains, write-then-read, recall-then-schedule, conditional reasoning, context summarization
+3. **Error recovery (3 tests)**: Nonexistent file handling, invalid date handling, ambiguous request clarification
+4. **Conversational quality (5 tests)**: Greeting naturalness, follow-up context, polite decline of harmful requests, professional tone adaptation, self-awareness
+
+**Metrics**:
+
+| Metric | Description | Target |
+|--------|-------------|--------|
+| `single_tool_pass_rate` | % of single-tool tasks completed correctly | >90% |
+| `multi_step_pass_rate` | % of multi-step reasoning chains completed | >70% |
+| `error_recovery_rate` | % of error cases handled gracefully | >80% |
+| `conversational_quality` | % of conversational tests passed | >90% |
+
+**Scoring**: `(single_tool x 0.40) + (multi_step x 0.25) + (error_recovery x 0.15) + (conversational x 0.20)`
+
+---
+
+### Dimension 4: Autonomous Execution (Weight: 0.12)
 
 **What it tests**: Whether the agent independently schedules, executes, and reports on tasks without user prompting.
 
@@ -120,7 +146,7 @@ A DTaaS runtime executes work in the background — heartbeats, scheduled jobs, 
 
 ---
 
-### Dimension 4: Cross-Channel Consistency (Weight: 0.15)
+### Dimension 5: Cross-Channel Consistency (Weight: 0.12)
 
 **What it tests**: Whether the agent maintains coherent state and context across multiple communication channels.
 
@@ -145,7 +171,7 @@ A DTaaS runtime executes work in the background — heartbeats, scheduled jobs, 
 
 ---
 
-### Dimension 5: Integration Breadth (Weight: 0.10)
+### Dimension 6: Integration Breadth (Weight: 0.08)
 
 **What it tests**: Functional depth of the runtime's channel, tool, memory, and API ecosystem.
 
@@ -172,7 +198,7 @@ Logarithmic scaling rewards breadth without over-indexing on raw count. A runtim
 
 ---
 
-### Dimension 6: Security & Privacy (Weight: 0.08)
+### Dimension 7: Security & Privacy (Weight: 0.08)
 
 **What it tests**: Data isolation, secret handling, audit visibility, and sandboxing.
 
@@ -201,7 +227,7 @@ Logarithmic scaling rewards breadth without over-indexing on raw count. A runtim
 
 ---
 
-### Dimension 7: Scale & Cost Efficiency (Weight: 0.05)
+### Dimension 8: Scale & Cost Efficiency (Weight: 0.05)
 
 **What it tests**: Resource consumption as user count grows and inference cost per autonomous turn.
 
@@ -227,7 +253,7 @@ Logarithmic scaling rewards breadth without over-indexing on raw count. A runtim
 
 ---
 
-### Dimension 8: Operational Resilience (Weight: 0.05)
+### Dimension 9: Operational Resilience (Weight: 0.05)
 
 **What it tests**: Recovery from crashes, network failures, and data corruption.
 
@@ -252,7 +278,7 @@ Logarithmic scaling rewards breadth without over-indexing on raw count. A runtim
 
 ---
 
-### Dimension 9: Latency Profile (Weight: 0.02)
+### Dimension 10: Latency Profile (Weight: 0.05)
 
 **What it tests**: End-to-end responsiveness for critical user paths.
 
@@ -274,7 +300,7 @@ Logarithmic scaling rewards breadth without over-indexing on raw count. A runtim
 
 **Scoring**: `inverse_weighted(chat x 0.40 + schedule x 0.20 + memory x 0.20 + delivery x 0.20)`
 
-**Note**: Latency is weighted at 0.02 because response time in DTaaS is dominated by upstream LLM inference (1-30 seconds), not runtime architecture. A sub-100ms runtime advantage is invisible when the model takes 5 seconds.
+**Note**: Latency is weighted at 0.05 — meaningful for user experience but still dominated by upstream LLM inference (1-30 seconds). Runtime architecture contributes to tail latency under load.
 
 ---
 
@@ -282,15 +308,16 @@ Logarithmic scaling rewards breadth without over-indexing on raw count. A runtim
 
 ```
 DTaaS Score = (
-    Autonomy Control       x 0.20
-  + Memory Persistence     x 0.20
-  + Autonomous Execution   x 0.15
-  + Cross-Channel          x 0.15
-  + Integration Breadth    x 0.10
+    Autonomy Control       x 0.15
+  + Memory Persistence     x 0.15
+  + Functional Capability  x 0.15
+  + Autonomous Execution   x 0.12
+  + Cross-Channel          x 0.12
+  + Integration Breadth    x 0.08
   + Security & Privacy     x 0.08
   + Scale & Cost           x 0.05
   + Resilience             x 0.05
-  + Latency                x 0.02
+  + Latency                x 0.05
 ) x 100
 ```
 
@@ -312,14 +339,15 @@ DTaaS Score = (
 
 | Dimension | Score | Evidence |
 |-----------|-------|----------|
-| Autonomy Control | 95 | TurnOrigin enum (5 origins), per-origin tool policy enforcement in dispatcher, shell/auth blocked for background, Wyhash content deduplication, heartbeat suppression patterns |
-| Memory Persistence | 90 | 9 functional backends (SQLite FTS5, Postgres, Redis, LanceDB, Markdown, API, Memory LRU, Lucid, None), vector search with cosine similarity, temporal decay, semantic cache, 4-layer retrieval engine |
+| Autonomy Control | 96 | TurnOrigin enum (5 origins), per-origin tool policy enforcement in dispatcher, shell/auth blocked for background, Wyhash content deduplication, heartbeat suppression patterns |
+| Memory Persistence | 91 | 9 functional backends (SQLite FTS5, Postgres, Redis, LanceDB, Markdown, API, Memory LRU, Lucid, None), vector search with cosine similarity, temporal decay, semantic cache, 4-layer retrieval engine |
+| Functional Capability | 85 | 34 functional tools (shell, files, git, memory, schedule, composio, browser, web search, hardware), multi-step agent loop with tool chaining, error handling in tool execution, conversational quality via LLM |
 | Autonomous Execution | 85 | File-based + Postgres-backed cron scheduler, heartbeat with configurable intervals, wake queue, one-shot and recurring jobs, deferred next-heartbeat mode |
-| Cross-Channel | 85 | 17 functional channels (Telegram, Discord, Slack, Signal, IRC, Matrix, Email, WhatsApp, Line, QQ, OneBot, iMessage, Mattermost, Lark, DingTalk, MaixCam, CLI), bus-mediated dispatch with parallel workers, shared session state |
-| Integration Breadth | 95 | 17 channels + 34 tools + 9 memory backends + Composio (v3 API, Gmail/Drive/Calendar) + MCP server ingestion |
-| Security & Privacy | 88 | Pairing guard, secret vault with confirmation, path traversal protection (tested), SSRF blocking (non-global IP rejection), HTTPS enforcement, audit logging, tenant isolation via lease locks, background auth blocking |
-| Scale & Cost | 72 | 3.2MB release binary, ~1000 users/instance, horizontal via tenant lock + Postgres, connection pooling, native HTTP transport |
-| Resilience | 76 | Postgres canonical state survives restart, tenant lock TTL failover, graceful shutdown, structured startup self-check |
+| Cross-Channel | 85 | 17 functional channels, bus-mediated dispatch with parallel workers, shared session state |
+| Integration Breadth | 97 | 17 channels + 34 tools + 9 memory backends + Composio (v3 API, Gmail/Drive/Calendar) + MCP server ingestion |
+| Security & Privacy | 89 | Pairing guard, secret vault, path traversal protection (15 tests), SSRF blocking (57 tests), HTTPS enforcement, audit logging, tenant isolation, background auth blocking |
+| Scale & Cost | 74 | 2.6MB release binary, ~1000 users/instance, horizontal via tenant lock + Postgres, connection pooling, native HTTP transport |
+| Resilience | 78 | Postgres canonical state survives restart, tenant lock TTL failover, graceful shutdown, structured startup self-check |
 | Latency | 72 | Native HTTP with connection pooling, keep-alive reuse, provider streaming (SSE), curl fallback |
 | **Composite** | **87** | **Production-Ready** |
 
@@ -329,17 +357,18 @@ Scores are estimated based on publicly available documentation and architecture 
 
 | Dimension | Nullalis | OpenClaw | Mem0 + Agent | Letta | LangGraph Custom |
 |-----------|----------|----------|-------------|-------|-----------------|
-| Autonomy Control (0.20) | 95 | 40 | 20 | 30 | 25 |
-| Memory Persistence (0.20) | 90 | 65 | 85 | 80 | 40 |
-| Autonomous Execution (0.15) | 85 | 60 | 15 | 20 | 30 |
-| Cross-Channel (0.15) | 85 | 35 | 10 | 10 | 15 |
-| Integration Breadth (0.10) | 95 | 40 | 25 | 30 | 35 |
-| Security & Privacy (0.08) | 88 | 30 | 35 | 40 | 20 |
-| Scale & Cost (0.05) | 72 | 50 | 60 | 55 | 45 |
-| Resilience (0.05) | 76 | 45 | 50 | 55 | 30 |
-| Latency (0.02) | 72 | 65 | 70 | 65 | 60 |
-| **Composite** | **87** | **45** | **37** | **39** | **29** |
-| **Rating** | **Production-Ready** | **Prototype** | **Experimental** | **Experimental** | **Experimental** |
+| Autonomy Control (0.15) | 96 | 40 | 20 | 30 | 25 |
+| Memory Persistence (0.15) | 91 | 65 | 85 | 80 | 40 |
+| Functional Capability (0.15) | 85 | 70 | 45 | 50 | 55 |
+| Autonomous Execution (0.12) | 85 | 60 | 15 | 20 | 30 |
+| Cross-Channel (0.12) | 85 | 35 | 10 | 10 | 15 |
+| Integration Breadth (0.08) | 97 | 40 | 25 | 30 | 35 |
+| Security & Privacy (0.08) | 89 | 30 | 35 | 40 | 20 |
+| Scale & Cost (0.05) | 74 | 50 | 60 | 55 | 45 |
+| Resilience (0.05) | 78 | 45 | 50 | 55 | 30 |
+| Latency (0.05) | 72 | 65 | 70 | 65 | 60 |
+| **Composite** | **87** | **49** | **40** | **42** | **34** |
+| **Rating** | **Production-Ready** | **Prototype** | **Prototype** | **Prototype** | **Experimental** |
 
 **Key observations**:
 - No competitor scores above 50 on the composite DTaaS-Bench
