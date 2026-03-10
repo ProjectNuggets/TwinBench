@@ -38,12 +38,12 @@ That's what Digital Twin as a Service (DTaaS) requires. DTaaS-Bench is the first
 | Runtime | Composite | Rating | Autonomy | Memory | Functional | Execution | Channels | Breadth | Security | Scale | Resilience | Latency |
 |---------|-----------|--------|----------|--------|------------|-----------|----------|---------|----------|-------|------------|---------|
 | **[Nullalis v0.1](results/nullalis-v0.1-report.md)** | **87** | **Production-Ready** | 96 | 91 | 85 | 85 | 85 | 97 | 89 | 74 | 78 | 72 |
-| OpenClaw (est.) | 49 | Prototype | 40 | 65 | 70 | 60 | 35 | 40 | 30 | 50 | 45 | 65 |
-| Letta (est.) | 42 | Prototype | 30 | 80 | 50 | 20 | 10 | 30 | 40 | 55 | 55 | 65 |
-| Mem0 + Agent (est.) | 40 | Prototype | 20 | 85 | 45 | 15 | 10 | 25 | 35 | 60 | 50 | 70 |
-| LangGraph Custom (est.) | 34 | Experimental | 25 | 40 | 55 | 30 | 15 | 35 | 20 | 45 | 30 | 60 |
+| OpenClaw (est.) | 61 | Beta | 45 | 70 | 75 | 55 | 75 | 70 | 35 | 55 | 50 | 70 |
+| Letta (est.) | 46 | Prototype | 30 | 85 | 55 | 25 | 15 | 35 | 40 | 55 | 55 | 65 |
+| Mem0 + Agent (est.) | 41 | Prototype | 15 | 88 | 50 | 10 | 10 | 25 | 30 | 65 | 50 | 70 |
+| LangGraph Custom (est.) | 38 | Experimental | 20 | 45 | 65 | 25 | 15 | 40 | 20 | 50 | 35 | 60 |
 
-Estimated scores are based on public documentation. **We invite all runtimes to submit verified results.**
+Estimated scores are based on publicly available documentation and architecture analysis (March 2026). OpenClaw supports 20+ channels and hybrid memory search. Letta has tiered self-editing memory. Mem0 provides graph-based memory with $24M funding. LangGraph enables flexible agent orchestration. **We invite all runtimes to submit verified results.**
 
 ---
 

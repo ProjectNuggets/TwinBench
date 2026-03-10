@@ -355,27 +355,28 @@ DTaaS Score = (
 
 Scores are estimated based on publicly available documentation and architecture analysis. Competitors are invited to submit verified results using the DTaaS-Bench harness.
 
-| Dimension | Nullalis | OpenClaw | Mem0 + Agent | Letta | LangGraph Custom |
-|-----------|----------|----------|-------------|-------|-----------------|
-| Autonomy Control (0.15) | 96 | 40 | 20 | 30 | 25 |
-| Memory Persistence (0.15) | 91 | 65 | 85 | 80 | 40 |
-| Functional Capability (0.15) | 85 | 70 | 45 | 50 | 55 |
-| Autonomous Execution (0.12) | 85 | 60 | 15 | 20 | 30 |
-| Cross-Channel (0.12) | 85 | 35 | 10 | 10 | 15 |
-| Integration Breadth (0.08) | 97 | 40 | 25 | 30 | 35 |
-| Security & Privacy (0.08) | 89 | 30 | 35 | 40 | 20 |
-| Scale & Cost (0.05) | 74 | 50 | 60 | 55 | 45 |
-| Resilience (0.05) | 78 | 45 | 50 | 55 | 30 |
-| Latency (0.05) | 72 | 65 | 70 | 65 | 60 |
-| **Composite** | **87** | **49** | **40** | **42** | **34** |
-| **Rating** | **Production-Ready** | **Prototype** | **Prototype** | **Prototype** | **Experimental** |
+| Dimension | Nullalis | OpenClaw | Letta | Mem0 + Agent | LangGraph Custom |
+|-----------|----------|----------|-------|-------------|-----------------|
+| Autonomy Control (0.15) | 96 | 45 | 30 | 15 | 20 |
+| Memory Persistence (0.15) | 91 | 70 | 85 | 88 | 45 |
+| Functional Capability (0.15) | 85 | 75 | 55 | 50 | 65 |
+| Autonomous Execution (0.12) | 85 | 55 | 25 | 10 | 25 |
+| Cross-Channel (0.12) | 85 | 75 | 15 | 10 | 15 |
+| Integration Breadth (0.08) | 97 | 70 | 35 | 25 | 40 |
+| Security & Privacy (0.08) | 89 | 35 | 40 | 30 | 20 |
+| Scale & Cost (0.05) | 74 | 55 | 55 | 65 | 50 |
+| Resilience (0.05) | 78 | 50 | 55 | 50 | 35 |
+| Latency (0.05) | 72 | 70 | 65 | 70 | 60 |
+| **Composite** | **87** | **61** | **46** | **41** | **38** |
+| **Rating** | **Production-Ready** | **Beta** | **Prototype** | **Prototype** | **Experimental** |
 
 **Key observations**:
-- No competitor scores above 50 on the composite DTaaS-Bench
-- The largest gap is in **Autonomy Control** — most runtimes have no concept of background turn policy
-- **Cross-Channel** is the second-largest gap — most competitors are single-channel
-- **Memory** is the most competitive dimension — Mem0 and Letta both invest heavily here, but without autonomy or channels they cannot deliver a complete digital twin experience
-- OpenClaw is the closest overall competitor (scheduling + Telegram) but lacks security controls and multi-channel breadth
+- **OpenClaw is the closest competitor** at 61 (Beta) — strong in channels (20+) and functional capability, but lacks background autonomy control, security hardening, and multi-tenant infrastructure
+- **Letta leads on memory architecture** (85) with tiered self-editing memory, but has no multi-channel support, no scheduling, and no autonomy control
+- **Mem0 leads on raw memory recall** (88) with graph-based knowledge storage, but is a memory layer — not a runtime. No channels, no scheduling, no autonomy.
+- **The largest gap** between nullalis and all competitors is in **Autonomy Control** — no competitor has a concept of background turn origin classification, tool policy enforcement, or output deduplication
+- **Memory is the most competitive dimension** — three competitors score 70-88 here. This is the area where nullalis's lead is narrowest.
+- **Nullalis is the only runtime scoring above 80 on more than 5 dimensions simultaneously** — this breadth is the defining characteristic of a production DTaaS platform
 
 ---
 
