@@ -65,7 +65,7 @@ A Digital Twin as a Service runtime is fundamentally different:
 | Can it call a tool? | Can it schedule tools to run while you sleep? |
 | Can it handle one channel? | Can it maintain state across Telegram, Slack, and email? |
 | Can it complete a task? | Can it complete a task *without doing something dangerous*? |
-| Can it scale requests? | Can it scale to 1,000 concurrent users at 3MB binary? |
+| Can it scale requests? | Can it scale to 1,000 concurrent users? |
 
 ---
 
