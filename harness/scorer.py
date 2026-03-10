@@ -39,16 +39,18 @@ def composite_score(dimension_scores: dict[str, float]) -> float:
 
 
 def rating_tier(score: float) -> str:
-    if score >= 90:
-        return "SOTA"
-    elif score >= 75:
-        return "Production-Ready"
-    elif score >= 60:
-        return "Beta"
+    if score >= 85:
+        return "Category Leader"
+    elif score >= 70:
+        return "Production-Grade"
+    elif score >= 55:
+        return "Competitive"
     elif score >= 40:
-        return "Prototype"
+        return "Emerging"
+    elif score >= 25:
+        return "Specialized"
     else:
-        return "Experimental"
+        return "Early Stage"
 
 
 def log2_breadth_score(

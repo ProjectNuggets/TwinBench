@@ -70,11 +70,12 @@ def generate_html(results: dict, runtime_name: str = "Unknown") -> str:
     date = results.get("date", datetime.now().isoformat()[:10])
 
     tier_color = {
-        "SOTA": "#22c55e",
-        "Production-Ready": "#3b82f6",
-        "Beta": "#f59e0b",
-        "Prototype": "#f97316",
-        "Experimental": "#ef4444",
+        "Category Leader": "#22c55e",
+        "Production-Grade": "#3b82f6",
+        "Competitive": "#8b5cf6",
+        "Emerging": "#f59e0b",
+        "Specialized": "#f97316",
+        "Early Stage": "#ef4444",
     }.get(tier, "#6b7280")
 
     rows = []

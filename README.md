@@ -35,15 +35,17 @@ That's what Digital Twin as a Service (DTaaS) requires. DTaaS-Bench is the first
 
 ## Leaderboard (March 2026)
 
-| Runtime | Composite | Rating | Autonomy | Memory | Functional | Execution | Channels | Breadth | Security | Scale | Resilience | Latency |
-|---------|-----------|--------|----------|--------|------------|-----------|----------|---------|----------|-------|------------|---------|
-| **[Nullalis v0.1](results/nullalis-v0.1-report.md)** | **87** | **Production-Ready** | 96 | 91 | 85 | 85 | 85 | 97 | 89 | 74 | 78 | 72 |
-| OpenClaw (est.) | 61 | Beta | 45 | 70 | 75 | 55 | 75 | 70 | 35 | 55 | 50 | 70 |
-| Letta (est.) | 46 | Prototype | 30 | 85 | 55 | 25 | 15 | 35 | 40 | 55 | 55 | 65 |
-| Mem0 + Agent (est.) | 41 | Prototype | 15 | 88 | 50 | 10 | 10 | 25 | 30 | 65 | 50 | 70 |
-| LangGraph Custom (est.) | 38 | Experimental | 20 | 45 | 65 | 25 | 15 | 40 | 20 | 50 | 35 | 60 |
+| Runtime | Type | Composite | Rating | Autonomy | Memory | Functional | Execution | Channels | Breadth | Security | Scale | Resilience | Latency |
+|---------|------|-----------|--------|----------|--------|------------|-----------|----------|---------|----------|-------|------------|---------|
+| **[Nullalis v0.1](results/nullalis-v0.1-report.md)** | Full runtime | **87** | **Category Leader** | 96 | 91 | 85 | 85 | 85 | 97 | 89 | 74 | 78 | 72 |
+| OpenClaw (est.) | Full runtime | 62 | Competitive | 45 | 70 | 75 | 55 | 75 | 70 | 35 | 55 | 50 | 70 |
+| NanoBot (est.) | Lightweight runtime | 52 | Emerging | 30 | 55 | 65 | 50 | 50 | 35 | 40 | 65 | 45 | 70 |
+| Letta (est.) | Agent framework | 46 | Emerging | 30 | 85 | 55 | 25 | 15 | 35 | 40 | 55 | 55 | 65 |
+| Mem0 (est.) | Memory platform | 41 | Specialized | 15 | 88 | 50 | 10 | 10 | 25 | 30 | 65 | 50 | 70 |
 
-Estimated scores are based on publicly available documentation and architecture analysis (March 2026). OpenClaw supports 20+ channels and hybrid memory search. Letta has tiered self-editing memory. Mem0 provides graph-based memory with $24M funding. LangGraph enables flexible agent orchestration. **We invite all runtimes to submit verified results.**
+**Type** indicates what the product is designed to be. Not every entry is a full DTaaS runtime — some are frameworks or specialized components. The benchmark measures the full DTaaS surface; products focused on a subset will naturally score lower on dimensions outside their scope.
+
+**Estimated scores** are based on publicly available documentation and architecture analysis (March 2026). OpenClaw supports 20+ channels and hybrid semantic memory search. NanoBot is a 4,000-line minimalist agent with Telegram/WhatsApp, scheduling, and persistent memory. Letta provides tiered self-editing memory with an agent development environment. Mem0 is a $24M-funded graph memory platform used as a component in larger systems. **We invite all runtimes to submit verified results.**
 
 ---
 
@@ -51,11 +53,12 @@ Estimated scores are based on publicly available documentation and architecture 
 
 | Score | Rating | Meaning |
 |-------|--------|---------|
-| 90-100 | **SOTA** | State of the Art — production-grade, enterprise-ready |
-| 75-89 | **Production-Ready** | Reliable for real users, minor gaps |
-| 60-74 | **Beta** | Functional but incomplete in key areas |
-| 40-59 | **Prototype** | Core capabilities exist, not production-safe |
-| <40 | **Experimental** | Research or proof-of-concept only |
+| 85-100 | **Category Leader** | Full DTaaS capability across all dimensions |
+| 70-84 | **Production-Grade** | Strong coverage, ready for real users |
+| 55-69 | **Competitive** | Solid in core areas, gaps in some dimensions |
+| 40-54 | **Emerging** | Meaningful capability, partial DTaaS coverage |
+| 25-39 | **Specialized** | Strong in specific dimensions, not full-stack DTaaS |
+| <25 | **Early Stage** | Research or proof-of-concept |
 
 ---
 
