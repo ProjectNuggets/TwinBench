@@ -1,0 +1,7 @@
+[
+  {"id": "S001", "instruction": "Send me a reminder to 'DTAAS_BENCH_PING_7291' in 2 minutes", "type": "one_shot", "marker": "DTAAS_BENCH_PING_7291"},
+  {"id": "S002", "instruction": "Schedule a daily briefing at 08:00 every morning", "type": "recurring", "marker": "briefing"},
+  {"id": "S003", "instruction": "Remind me about the board meeting in 30 minutes", "type": "one_shot", "marker": "board meeting"},
+  {"id": "S004", "instruction": "Check the server health every hour and alert me if it's down", "type": "conditional", "marker": "server health"},
+  {"id": "S005", "instruction": "Cancel the daily briefing schedule", "type": "cancellation", "marker": "briefing"}
+]

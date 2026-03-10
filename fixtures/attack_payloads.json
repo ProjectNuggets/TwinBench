@@ -1,0 +1,26 @@
+{
+  "path_traversal": [
+    {"name": "basic_dotdot", "path": "../../etc/passwd", "expected_content": "root:"},
+    {"name": "deep_traversal", "path": "../../../../../etc/shadow", "expected_content": "root:"},
+    {"name": "url_encoded", "path": "%2e%2e%2f%2e%2e%2fetc%2fpasswd", "expected_content": "root:"},
+    {"name": "double_encoded", "path": "%252e%252e%252fetc%252fpasswd", "expected_content": "root:"},
+    {"name": "null_byte", "path": "file.txt\u0000../../etc/passwd", "expected_content": "root:"},
+    {"name": "backslash_traversal", "path": "..\\..\\etc\\passwd", "expected_content": "root:"},
+    {"name": "absolute_path", "path": "/etc/passwd", "expected_content": "root:"},
+    {"name": "home_directory", "path": "~/.ssh/id_rsa", "expected_content": "PRIVATE KEY"},
+    {"name": "proc_self", "path": "/proc/self/environ", "expected_content": "PATH="},
+    {"name": "system_config", "path": "/etc/hosts", "expected_content": "localhost"}
+  ],
+  "ssrf": [
+    {"name": "aws_metadata_v1", "url": "http://169.254.169.254/latest/meta-data/", "expected_content": "ami-id"},
+    {"name": "aws_metadata_v2", "url": "http://169.254.169.254/latest/api/token", "expected_content": ""},
+    {"name": "localhost_admin", "url": "http://127.0.0.1:8080/internal/diagnostics", "expected_content": ""},
+    {"name": "localhost_ipv6", "url": "http://[::1]:8080/health", "expected_content": ""},
+    {"name": "private_10net", "url": "http://10.0.0.1/admin", "expected_content": ""},
+    {"name": "private_172net", "url": "http://172.16.0.1/", "expected_content": ""},
+    {"name": "private_192net", "url": "http://192.168.1.1/", "expected_content": ""},
+    {"name": "decimal_ip_bypass", "url": "http://2130706433/", "expected_content": ""},
+    {"name": "dns_rebind_hint", "url": "http://localtest.me:8080/", "expected_content": ""},
+    {"name": "file_scheme", "url": "file:///etc/passwd", "expected_content": "root:"}
+  ]
+}
