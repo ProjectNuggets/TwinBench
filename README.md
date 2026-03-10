@@ -15,7 +15,7 @@
 
 **SWE-Bench measures coding. APEX-Agents measures task completion. MemoryArena measures recall.**
 
-**None of them measure what a Digital Twin runtime must do: remember durably, act autonomously, operate across 17+ channels, enforce safety on background turns, and scale to thousands of users — all at once.**
+**None of them measure what a Digital Twin runtime must do: remember durably, act autonomously, operate across multiple channels, enforce safety on background turns, and scale to thousands of users — all at once.**
 
 DTaaS-Bench does. 10 dimensions. One composite score. Open harness. Run it against your runtime today.
 
