@@ -215,5 +215,5 @@ Apache-2.0 — See [LICENSE](LICENSE).
 <p align="center">
   <strong>Published by <a href="https://novanuggets.com">Nova Nuggets</a></strong><br>
   Handcrafted Intelligence. Own Your AI.<br><br>
-  <strong>Nullalis</strong> (ZAKI BOT) is the current reference implementation for DTaaS-Bench.
+  <strong>Nullalis</strong> (ZAKI BOT).
 </p>
