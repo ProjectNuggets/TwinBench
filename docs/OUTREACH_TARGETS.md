@@ -1,41 +1,59 @@
 # Outreach Targets
 
-Initial outreach groups for TwinBench.
+TwinBench should start with a focused first wave, not a giant blast. This page organizes who to contact first and why.
 
-## Direct Runtime Competitors
+## Wave 1: Direct Competitors
 
 - OpenClaw
 - NanoBot
 - PicoClaw
 - Letta
 
-## Adjacent Agent Platforms
+Why this wave:
 
-- agent framework teams with persistence ambitions
-- memory infrastructure products
-- orchestration platforms adding long-lived assistant behavior
+- closest fit to the personal AI assistant runtime category
+- most likely to understand the benchmark immediately
+- highest chance of generating early public challenge and discussion
 
-## Memory and Runtime Infrastructure Companies
+## Wave 2: Adjacent Platforms
 
-- memory-layer vendors
-- agent hosting platforms
-- background job / workflow systems entering AI runtime territory
+- Mem0
+- LangGraph / LangChain runtime teams
+- agent orchestration and long-lived workflow platforms
 
-## Frontier Labs
+Why this wave:
+
+- strong overlap on memory, execution, or runtime infrastructure
+- useful critique even if full native contract support is missing
+- can expand the benchmark’s legitimacy beyond direct assistant builders
+
+## Wave 3: Frontier Labs
 
 - OpenAI
 - Anthropic
 - Google DeepMind
-- Meta AI
 - xAI
+
+Why this wave:
+
+- category-level validation matters
+- labs may not have benchmark-native runtimes yet, but they influence the ecosystem
+- even partial engagement helps TwinBench become the public benchmark to beat
 
 ## Outreach Order
 
 1. direct runtime builders
-2. adjacent platform teams
-3. memory/runtime infra companies
-4. frontier labs
+2. adjacent platforms and infrastructure companies
+3. frontier labs
 
-The ask should stay consistent:
+## Core Ask
 
-“TwinBench is an open benchmark for personal AI assistant runtimes. We invite you to run your system and publish a trusted artifact.”
+Use the same sentence everywhere:
+
+“We think a new benchmark category is needed for personal AI assistant runtimes. TwinBench is open, evidence-first, and vendor-neutral. We invite you to run your system and publish an artifact-backed result.”
+
+## Working Docs
+
+- Detailed first-batch research: [OUTREACH_RESEARCH_FIRST_BATCH.md](OUTREACH_RESEARCH_FIRST_BATCH.md)
+- Email variants: [EMAIL_CAMPAIGN.md](EMAIL_CAMPAIGN.md)
+- Messaging packet: [OUTREACH_PACKET.md](OUTREACH_PACKET.md)

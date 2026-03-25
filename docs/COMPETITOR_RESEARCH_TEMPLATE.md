@@ -39,3 +39,7 @@ Use this before sending outreach.
 - likely objection:
 - best opening angle:
 - suggested email template:
+
+## First Batch Reference
+
+For a filled example set, see [OUTREACH_RESEARCH_FIRST_BATCH.md](OUTREACH_RESEARCH_FIRST_BATCH.md).

@@ -43,6 +43,8 @@ Quick links:
 - [How to Submit Results](docs/HOW_TO_SUBMIT.md)
 - [Results Index](docs/RESULTS_INDEX.md)
 - [Trust Model](docs/TRUST_MODEL.md)
+- [Launch Packet](docs/LAUNCH_PACKET.md)
+- [Outreach Waves](docs/OUTREACH_WAVES.md)
 - [Press Kit](PRESSKIT.md)
 
 ## Category Definition
