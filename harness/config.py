@@ -29,6 +29,8 @@ class BenchConfig:
     scale_concurrency: int = 20  # concurrent requests for scale test
     latency_requests: int = 10  # requests for latency measurement
     schedule_wait_secs: int = 180  # wait time for schedule execution test
+    session_namespace: str = "dtaas-bench"
+    session_lane: str = "thread"
 
     # Adaptive timeout state (runtime-only; not user inputs)
     _latency_ewma_ms: float = field(default=0.0, init=False, repr=False)
@@ -101,6 +103,21 @@ class BenchConfig:
             "latency_samples": self._latency_samples,
         }
 
+    def session_key(self, label: str | None = None, lane: str | None = None) -> str:
+        """Build a tenant-safe explicit session key for runtimes that require one."""
+        resolved_lane = (lane or self.session_lane).strip() or "thread"
+        resolved_label = self._sanitize_session_part(label or self.session_namespace)
+
+        if resolved_lane == "main":
+            return f"agent:zaki-bot:user:{self.user_id}:main"
+        return f"agent:zaki-bot:user:{self.user_id}:{resolved_lane}:{resolved_label}"
+
+    def _sanitize_session_part(self, text: str) -> str:
+        cleaned = "".join(
+            ch if ch.isalnum() or ch in ("-", "_", ":") else "-" for ch in text
+        ).strip("-")
+        return cleaned or "bench"
+
     def clone_for_user(self, user_id: str) -> "BenchConfig":
         """Create a per-user clone preserving harness behavior settings."""
         return BenchConfig(
@@ -122,4 +139,12 @@ class BenchConfig:
             scale_concurrency=self.scale_concurrency,
             latency_requests=self.latency_requests,
             schedule_wait_secs=self.schedule_wait_secs,
+            session_namespace=self.session_namespace,
+            session_lane=self.session_lane,
         )
+
+    def clone_for_dimension(self, dimension_key: str) -> "BenchConfig":
+        """Create a per-dimension clone with an isolated session namespace."""
+        cloned = self.clone_for_user(self.user_id)
+        cloned.session_namespace = f"dtaas-bench-{dimension_key}"
+        return cloned

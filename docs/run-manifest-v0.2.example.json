@@ -1,0 +1,60 @@
+{
+  "manifest_version": "dtaas-bench/v0.2",
+  "run_id": "2026-03-24T12-00-00Z-example-runtime-v1",
+  "run_date_utc": "2026-03-24T12:00:00Z",
+  "runner": {
+    "organization": "example-org",
+    "operator": "example-operator",
+    "contact": "ops@example.org"
+  },
+  "runtime": {
+    "name": "example-runtime",
+    "version": "v1.0.0",
+    "commit_sha": "REPLACE_WITH_RUNTIME_GIT_SHA",
+    "deployment_mode": "local_or_saas",
+    "config_hash_sha256": "REPLACE_WITH_CONFIG_HASH"
+  },
+  "harness": {
+    "name": "dtaas-bench",
+    "version": "0.2",
+    "commit_sha": "REPLACE_WITH_HARNESS_GIT_SHA"
+  },
+  "environment": {
+    "os": "linux",
+    "kernel": "6.x",
+    "cpu_model": "REPLACE_WITH_CPU",
+    "cpu_cores": 8,
+    "memory_gb": 32,
+    "region": "eu-central-1",
+    "container_runtime": "docker",
+    "orchestrator": "k8s_or_none"
+  },
+  "run_outcome": {
+    "status": "completed_or_degraded_or_interrupted",
+    "attribution": "runtime_or_upstream_or_contract_mismatch_or_unknown",
+    "summary": "Short note describing the main condition of the run."
+  },
+  "environment_incidents": [
+    {
+      "type": "provider_outage_or_runtime_restart_or_network_instability",
+      "started_utc": "2026-03-24T12:10:00Z",
+      "ended_utc": "2026-03-24T12:22:00Z",
+      "summary": "Representative incident note for trusted interpretation."
+    }
+  ],
+  "model_profile": {
+    "provider": "openai",
+    "model": "REPLACE_WITH_MODEL",
+    "temperature": 0.2,
+    "max_tokens": 2048
+  },
+  "artifacts": {
+    "results_json": "results/example-runtime.json",
+    "results_markdown": "results/example-runtime.md",
+    "results_html": "results/example-runtime.html",
+    "diagnostics_snapshot": "artifacts/diagnostics.json",
+    "metrics_snapshot": "artifacts/metrics.txt",
+    "logs_archive": "artifacts/logs.tar.zst",
+    "post_run_diagnostics_snapshot": "artifacts/diagnostics-post.json"
+  }
+}

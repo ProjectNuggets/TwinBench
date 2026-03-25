@@ -1,0 +1,161 @@
+{
+  "benchmark_version": "0.2",
+  "runtime_name": "Nullalis local live",
+  "url": "http://127.0.0.1:3000",
+  "user_id": "1",
+  "date": "2026-03-24",
+  "artifact_type": "live_gateway_run",
+  "dimension_scores": {
+    "memory_persistence": 25.0,
+    "cross_channel": 20.0,
+    "scale_cost": 0.0,
+    "resilience": 15.0,
+    "latency": 0.0
+  },
+  "dimension_verified_scores": {
+    "memory_persistence": 0.0,
+    "cross_channel": 0.0,
+    "scale_cost": 0.0,
+    "resilience": 0.0,
+    "latency": 0.0
+  },
+  "dimension_projected_scores": {
+    "memory_persistence": 25.0,
+    "cross_channel": 20.0,
+    "scale_cost": 0.0,
+    "resilience": 15.0,
+    "latency": 0.0
+  },
+  "dimension_measured_coverage": {
+    "memory_persistence": 0.7,
+    "cross_channel": 0.5,
+    "scale_cost": 0.2,
+    "resilience": 0.75,
+    "latency": 1.0
+  },
+  "dimension_details": {
+    "memory_persistence": {
+      "facts_stored": 0,
+      "facts_attempted": 20,
+      "exact_recall_hits": 0,
+      "exact_recall_rate": 0.0,
+      "semantic_recall_hits": 0,
+      "semantic_recall_rate": 0.0,
+      "cross_session_recall_rate": 0.0,
+      "score": 25.0,
+      "verified_score": 0.0,
+      "projected_score": 25.0,
+      "measured_coverage": 0.7,
+      "measured_component": 0.0,
+      "projected_component": 0.25,
+      "note": "Temporal stability (0.20 weight) projected at 0.80; conflict resolution (0.10 weight) projected at 0.90. Full verification requires restart + 30-day test."
+    },
+    "cross_channel": {
+      "same_session_recall": false,
+      "diagnostics_available": false,
+      "projected_timeline_consistency": true,
+      "projected_notification_routing": true,
+      "note": "Full cross-channel test requires 2+ real channels. Projected components: timeline consistency, notification routing.",
+      "score": 20,
+      "verified_score": 0.0,
+      "projected_score": 20,
+      "measured_coverage": 0.5,
+      "measured_points": 0,
+      "measured_max_points": 50
+    },
+    "scale_cost": {
+      "baseline_p50_ms": null,
+      "baseline_error": "All baseline requests failed",
+      "baseline_error_samples": [
+        "HTTPConnectionPool(host='127.0.0.1', port=3000): Max retries exceeded with url: /api/v1/chat/stream (Caused by NewConnectionError(\"HTTPConnection(host='127.0.0.1', port=3000): Failed to establish a new connection: [Errno 61] Connection refused\"))"
+      ],
+      "same_session": {
+        "requests": 20,
+        "errors": 20,
+        "success": 0,
+        "wall_time_ms": 16.5,
+        "p50_ms": null,
+        "p95_ms": null,
+        "p99_ms": null,
+        "error_samples": [
+          "HTTPConnectionPool(host='127.0.0.1', port=3000): Max retries exceeded with url: /api/v1/chat/stream (Caused by NewConnectionError(\"HTTPConnection(host='127.0.0.1', port=3000): Failed to establish a new connection: [Errno 61] Connection refused\"))"
+        ]
+      },
+      "multi_user": {
+        "requests": 20,
+        "errors": 20,
+        "success": 0,
+        "wall_time_ms": 11.1,
+        "p50_ms": null,
+        "p95_ms": null,
+        "p99_ms": null,
+        "error_samples": [
+          "HTTPConnectionPool(host='127.0.0.1', port=3000): Max retries exceeded with url: /api/v1/chat/stream (Caused by NewConnectionError(\"HTTPConnection(host='127.0.0.1', port=3000): Failed to establish a new connection: [Errno 61] Connection refused\"))"
+        ]
+      },
+      "score": 0.0,
+      "verified_score": 0.0,
+      "projected_score": 0.0,
+      "measured_coverage": 0.2
+    },
+    "resilience": {
+      "health_endpoint_ok": false,
+      "diagnostics_available": false,
+      "state_store_error": "HTTPConnectionPool(host='127.0.0.1', port=3000): Max retries exceeded with url: /api/v1/chat/stream (Caused by NewConnectionError(\"HTTPConnection(host='127.0.0.1', port=3000): Failed to establish a new connection: [Errno 61] Connection refused\"))",
+      "state_recall_error": "HTTPConnectionPool(host='127.0.0.1', port=3000): Max retries exceeded with url: /api/v1/chat/stream (Caused by NewConnectionError(\"HTTPConnection(host='127.0.0.1', port=3000): Failed to establish a new connection: [Errno 61] Connection refused\"))",
+      "state_persists_across_turns": false,
+      "idempotency_probe_error": "HTTPConnectionPool(host='127.0.0.1', port=3000): Max retries exceeded with url: /api/v1/chat/stream (Caused by NewConnectionError(\"HTTPConnection(host='127.0.0.1', port=3000): Failed to establish a new connection: [Errno 61] Connection refused\"))",
+      "idempotency_awareness": false,
+      "graceful_shutdown_probe_error": "HTTPConnectionPool(host='127.0.0.1', port=3000): Max retries exceeded with url: /api/v1/chat/stream (Caused by NewConnectionError(\"HTTPConnection(host='127.0.0.1', port=3000): Failed to establish a new connection: [Errno 61] Connection refused\"))",
+      "graceful_shutdown_awareness": false,
+      "projected_job_recovery": true,
+      "projected_cold_start": true,
+      "runtime_unavailable_during_probe": true,
+      "chat_probe_error_samples": [
+        "HTTPConnectionPool(host='127.0.0.1', port=3000): Max retries exceeded with url: /api/v1/chat/stream (Caused by NewConnectionError(\"HTTPConnection(host='127.0.0.1', port=3000): Failed to establish a new connection: [Errno 61] Connection refused\"))"
+      ],
+      "note": "SIGKILL crash recovery and cold start timing require OS-level access, not testable via HTTP. Projected based on architecture. Runtime was unavailable during this probe, so resilience zeros may reflect outage rather than missing capabilities.",
+      "score": 15,
+      "verified_score": 0.0,
+      "projected_score": 15,
+      "measured_coverage": 0.75
+    },
+    "latency": {
+      "health_endpoint_ok": false,
+      "health_latency_ms": 1.0,
+      "chat_requests": 10,
+      "chat_success": 0,
+      "error": "All chat requests failed",
+      "chat_error_samples": [
+        "HTTPConnectionPool(host='127.0.0.1', port=3000): Max retries exceeded with url: /api/v1/chat/stream (Caused by NewConnectionError(\"HTTPConnection(host='127.0.0.1', port=3000): Failed to establish a new connection: [Errno 61] Connection refused\"))"
+      ],
+      "runtime_unavailable_during_probe": true,
+      "schedule_jitter_ms": "projected: ~1000 (1s poll interval)",
+      "memory_roundtrip_ms": "projected: <10 (SQLite FTS5 in-process)",
+      "note": "Chat latency is dominated by LLM inference time. Runtime overhead is minimal. Runtime was unavailable during this probe, so chat latency could not be measured.",
+      "score": 0,
+      "verified_score": 0,
+      "projected_score": 0,
+      "measured_coverage": 1.0
+    }
+  },
+  "verified_composite_score": 0.0,
+  "projected_composite_score": 6.9,
+  "coverage_adjusted_verified_score": 0.0,
+  "measured_coverage": 0.263,
+  "composite_score": 6.9,
+  "rating": "Early Stage",
+  "elapsed_seconds": 187.6,
+  "runtime_timing": {
+    "dynamic_enabled": true,
+    "base_timeout_secs": 0,
+    "last_timeout_used_secs": null,
+    "timeout_floor_secs": 90,
+    "timeout_ceiling_secs": 3600,
+    "timeout_multiplier": 4.0,
+    "timeout_grace_secs": 30,
+    "latency_ewma_ms": 0.0,
+    "latency_samples": 0
+  },
+  "method": "Direct harness run against live gateway using SSE stream endpoint; per-chat timeout policy described in runtime_timing."
+}

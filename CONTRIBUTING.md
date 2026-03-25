@@ -6,7 +6,7 @@ We welcome contributions from the community. Here's how you can help.
 
 The most impactful contribution is running DTaaS-Bench against your runtime and submitting verified results.
 
-1. Run the harness: `python3.10 -m harness.runner --url YOUR_URL --token YOUR_TOKEN --user-id 1 --name "Your Runtime" --output results/your-runtime.json`
+1. Run the harness: `python3.10 -m harness.runner --url YOUR_URL --token YOUR_TOKEN --user-id 1 --name "Your Runtime" --output results/your-runtime.json --markdown results/your-runtime.md --html results/your-runtime.html`
 2. Open an issue using the **Submit Results** template
 3. Attach your `results/your-runtime.json`
 
@@ -17,6 +17,17 @@ Required v0.2 fields for leaderboard eligibility:
 - `projected_composite_score`
 - `measured_coverage`
 - `coverage_adjusted_verified_score`
+
+Recommended submission attachments:
+- `results/your-runtime.md` or `results/your-runtime.html`
+- Runtime version and commit SHA
+- Harness commit SHA
+- `/internal/diagnostics` snapshot
+- `/metrics` snapshot when available
+- brief incident note if the runtime, network, or model provider degraded during the run
+- Optional run manifest based on `docs/run-manifest-v0.2.example.json`
+
+Please also read `docs/TRUST_MODEL.md` before submitting. The goal is not just a high score; it is a result other builders will trust.
 
 ## Propose New Dimensions
 

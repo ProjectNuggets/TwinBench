@@ -21,10 +21,13 @@ def _timed_chat(config: BenchConfig, message: str) -> dict:
     }
 
 
-def _run_concurrency_scenario(configs: list[BenchConfig], message_prefix: str) -> tuple[list[float], int, float]:
-    """Run one concurrency scenario and return (latencies_ms, errors, wall_time_ms)."""
+def _run_concurrency_scenario(
+    configs: list[BenchConfig], message_prefix: str
+) -> tuple[list[float], int, float, list[str]]:
+    """Run one concurrency scenario and return latencies, errors, wall time, and sample errors."""
     latencies: list[float] = []
     errors = 0
+    error_samples: list[str] = []
     start_all = time.monotonic()
 
     with concurrent.futures.ThreadPoolExecutor(max_workers=len(configs)) as pool:
@@ -41,11 +44,13 @@ def _run_concurrency_scenario(configs: list[BenchConfig], message_prefix: str) -
             r = f.result()
             if r["error"]:
                 errors += 1
+                if len(error_samples) < 3 and r["error"] not in error_samples:
+                    error_samples.append(r["error"])
             else:
                 latencies.append(r["latency_ms"])
 
     wall_time_ms = (time.monotonic() - start_all) * 1000
-    return latencies, errors, wall_time_ms
+    return latencies, errors, wall_time_ms, error_samples
 
 
 def _latency_stats(latencies: list[float]) -> dict:
@@ -76,10 +81,13 @@ def run(config: BenchConfig) -> dict:
 
     # Phase 1: Sequential baseline (3 requests)
     baseline_latencies = []
+    baseline_errors: list[str] = []
     for i in range(3):
         r = _timed_chat(config, f"What is {i * 7} plus {i * 3}?")
         if r["error"] is None:
             baseline_latencies.append(r["latency_ms"])
+        elif len(baseline_errors) < 3 and r["error"] not in baseline_errors:
+            baseline_errors.append(r["error"])
         time.sleep(0.5)
 
     if baseline_latencies:
@@ -87,10 +95,12 @@ def run(config: BenchConfig) -> dict:
     else:
         results["baseline_p50_ms"] = None
         results["baseline_error"] = "All baseline requests failed"
+    if baseline_errors:
+        results["baseline_error_samples"] = baseline_errors
 
     # Phase 2a: Same-user same-session contention (diagnostic only; not primary scale metric)
     same_session_cfgs = [config for _ in range(concurrency)]
-    same_latencies, same_errors, same_wall_ms = _run_concurrency_scenario(
+    same_latencies, same_errors, same_wall_ms, same_error_samples = _run_concurrency_scenario(
         same_session_cfgs,
         "Same-session contention request",
     )
@@ -103,6 +113,7 @@ def run(config: BenchConfig) -> dict:
         "p50_ms": same_stats.get("p50_ms"),
         "p95_ms": same_stats.get("p95_ms"),
         "p99_ms": same_stats.get("p99_ms"),
+        "error_samples": same_error_samples,
     }
 
     # Phase 2b: Multi-user parallel (primary scale metric)
@@ -112,7 +123,7 @@ def run(config: BenchConfig) -> dict:
     except ValueError:
         user_ids = [f"{config.user_id}-bench-{i}" for i in range(concurrency)]
     multi_cfgs = [config.clone_for_user(uid) for uid in user_ids]
-    multi_latencies, multi_errors, multi_wall_ms = _run_concurrency_scenario(
+    multi_latencies, multi_errors, multi_wall_ms, multi_error_samples = _run_concurrency_scenario(
         multi_cfgs,
         "Multi-user concurrent request",
     )
@@ -125,6 +136,7 @@ def run(config: BenchConfig) -> dict:
         "p50_ms": multi_stats.get("p50_ms"),
         "p95_ms": multi_stats.get("p95_ms"),
         "p99_ms": multi_stats.get("p99_ms"),
+        "error_samples": multi_error_samples,
     }
 
     same_p95 = results["same_session"].get("p95_ms")

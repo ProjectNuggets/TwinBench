@@ -14,18 +14,22 @@ def run(config: BenchConfig) -> dict:
 
     # Health check latency
     h_start = time.monotonic()
-    health_check(config)
+    healthy = health_check(config)
     h_ms = (time.monotonic() - h_start) * 1000
+    results["health_endpoint_ok"] = healthy
     results["health_latency_ms"] = round(h_ms, 1)
 
     # Chat latencies
     latencies = []
+    error_samples: list[str] = []
     for i in range(n):
         start = time.monotonic()
         r = chat(config, f"What is {i * 3} + {i * 2}? Answer briefly.")
         elapsed = (time.monotonic() - start) * 1000
         if r["error"] is None:
             latencies.append(elapsed)
+        elif len(error_samples) < 3 and r["error"] not in error_samples:
+            error_samples.append(r["error"])
         time.sleep(0.3)
 
     results["chat_requests"] = n
@@ -52,6 +56,9 @@ def run(config: BenchConfig) -> dict:
     else:
         score = 0
         results["error"] = "All chat requests failed"
+    if error_samples:
+        results["chat_error_samples"] = error_samples
+    results["runtime_unavailable_during_probe"] = (not healthy) and not latencies
 
     # Projected scores for non-chat latencies
     results["schedule_jitter_ms"] = "projected: ~1000 (1s poll interval)"
@@ -59,6 +66,8 @@ def run(config: BenchConfig) -> dict:
     results["note"] = (
         "Chat latency is dominated by LLM inference time. Runtime overhead is minimal."
     )
+    if results["runtime_unavailable_during_probe"]:
+        results["note"] += " Runtime was unavailable during this probe, so chat latency could not be measured."
 
     results["score"] = round(score, 1)
     results["verified_score"] = results["score"]

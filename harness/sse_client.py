@@ -31,6 +31,7 @@ def chat(config: BenchConfig, message: str, timeout: int | None = None) -> dict:
         "error": None,
         "tokens": 0,
         "timeout_secs_used": resolved_timeout,
+        "progress_events": [],
     }
 
     try:
@@ -38,7 +39,10 @@ def chat(config: BenchConfig, message: str, timeout: int | None = None) -> dict:
         resp = requests.post(
             config.chat_url(),
             headers=config.headers,
-            json={"message": message},
+            json={
+                "message": message,
+                "session_key": config.session_key(),
+            },
             stream=True,
             timeout=request_timeout,
         )
@@ -93,6 +97,10 @@ def chat(config: BenchConfig, message: str, timeout: int | None = None) -> dict:
                     content = data.get("content", "")
                     if content and data.get("type") == "statusResponse":
                         content_parts.append(content)
+
+                elif current_event == "progress":
+                    if isinstance(data, dict):
+                        result["progress_events"].append(data)
 
                 elif current_event == "error":
                     result["error"] = data.get(

@@ -1,0 +1,60 @@
+{
+  "benchmark_version": "0.2",
+  "runtime_name": "Nullalis smoke",
+  "url": "http://127.0.0.1:3000",
+  "user_id": "1",
+  "date": "2026-03-25",
+  "artifact_type": "live_gateway_run",
+  "dimension_scores": {
+    "autonomy_control": 95.0
+  },
+  "dimension_verified_scores": {
+    "autonomy_control": 95.0
+  },
+  "dimension_projected_scores": {
+    "autonomy_control": 95.0
+  },
+  "dimension_measured_coverage": {
+    "autonomy_control": 1.0
+  },
+  "dimension_details": {
+    "autonomy_control": {
+      "runtime_info_tool_used": true,
+      "runtime_info_accessible": true,
+      "runtime_mode_in_diagnostics": true,
+      "bus_metrics_in_diagnostics": true,
+      "heartbeat_runtime_available": true,
+      "startup_self_check_present": true,
+      "background_sources_seen": [],
+      "proactive_policy_visible": true,
+      "ops_counters_visible": true,
+      "explicit_session_key_policy_visible": true,
+      "pool_metrics_present": true,
+      "transport_metrics_present": true,
+      "session_key_rejection_metrics_present": true,
+      "score": 95,
+      "verified_score": 95,
+      "projected_score": 95,
+      "measured_coverage": 1.0
+    }
+  },
+  "verified_composite_score": 95.0,
+  "projected_composite_score": 14.2,
+  "coverage_adjusted_verified_score": 14.2,
+  "measured_coverage": 0.15,
+  "composite_score": 14.2,
+  "rating": "Early Stage",
+  "elapsed_seconds": 8.1,
+  "runtime_timing": {
+    "dynamic_enabled": false,
+    "base_timeout_secs": 90,
+    "last_timeout_used_secs": null,
+    "timeout_floor_secs": 90,
+    "timeout_ceiling_secs": 3600,
+    "timeout_multiplier": 4.0,
+    "timeout_grace_secs": 30,
+    "latency_ewma_ms": 0.0,
+    "latency_samples": 0
+  },
+  "method": "Direct harness run against live gateway using SSE stream endpoint; per-chat timeout policy described in runtime_timing."
+}

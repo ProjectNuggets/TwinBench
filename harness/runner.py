@@ -9,9 +9,11 @@ Usage:
 
 import argparse
 import json
+import os
 import sys
 import time
 from datetime import datetime
+from pathlib import Path
 
 from rich.console import Console
 from rich.table import Table
@@ -52,6 +54,38 @@ DIMENSION_MAP = {
 console = Console()
 
 
+def resolve_token(args) -> str:
+    """Resolve internal API token from CLI or local Nullalis config."""
+    if args.token:
+        return args.token
+
+    if not args.token_from_nullalis_config:
+        console.print("[red]Either --token or --token-from-nullalis-config is required.[/red]")
+        sys.exit(1)
+
+    cfg_path = Path(os.path.expanduser(args.token_from_nullalis_config))
+    try:
+        with cfg_path.open() as f:
+            payload = json.load(f)
+    except (OSError, json.JSONDecodeError) as e:
+        console.print(
+            f"[red]Failed to load Nullalis config for token discovery: {cfg_path} ({e})[/red]"
+        )
+        sys.exit(1)
+
+    token = (
+        payload.get("gateway", {}).get("internal_service_tokens", [None])[0]
+        if isinstance(payload, dict)
+        else None
+    )
+    if not token:
+        console.print(
+            f"[red]No gateway.internal_service_tokens[0] found in {cfg_path}.[/red]"
+        )
+        sys.exit(1)
+    return token
+
+
 def main():
     parser = argparse.ArgumentParser(
         description="DTaaS-Bench: benchmark a DTaaS runtime"
@@ -59,7 +93,13 @@ def main():
     parser.add_argument(
         "--url", required=True, help="Runtime base URL (e.g. http://localhost:8080)"
     )
-    parser.add_argument("--token", required=True, help="Internal API token")
+    parser.add_argument("--token", help="Internal API token")
+    parser.add_argument(
+        "--token-from-nullalis-config",
+        nargs="?",
+        const="~/.nullalis/config.json",
+        help="Load token from local Nullalis config (default: ~/.nullalis/config.json)",
+    )
     parser.add_argument(
         "--user-id", default="1", help="User ID for tenant context (default: 1)"
     )
@@ -120,11 +160,18 @@ def main():
         default=20,
         help="Concurrent requests for scale dimension (default: 20)",
     )
+    parser.add_argument(
+        "--memory-sample-size",
+        type=int,
+        default=20,
+        help="Facts to use in memory dimension (default: 20)",
+    )
     args = parser.parse_args()
+    token = resolve_token(args)
 
     config = BenchConfig(
         base_url=args.url.rstrip("/"),
-        token=args.token,
+        token=token,
         user_id=args.user_id,
         timeout=args.timeout,
         timeout_dynamic=args.timeout_dynamic or args.timeout == 0,
@@ -132,6 +179,7 @@ def main():
         timeout_ceiling_secs=args.timeout_ceiling,
         timeout_multiplier=args.timeout_multiplier,
         timeout_grace_secs=args.timeout_grace,
+        memory_sample_size=args.memory_sample_size,
         scale_concurrency=args.scale_concurrency,
         schedule_wait_secs=0 if args.skip_schedule_wait else 180,
     )
@@ -183,9 +231,10 @@ def main():
         dim_id, dim_module = DIMENSION_MAP[dim_key]
         label = DIMENSION_LABELS.get(dim_id, dim_key)
         console.print(f"  Running [bold]{label}[/bold]...", end=" ")
+        dim_config = config.clone_for_dimension(dim_key)
 
         try:
-            result = dim_module.run(config)
+            result = dim_module.run(dim_config)
             score = float(result.get("score", 0))
             verified_score = float(result.get("verified_score", score))
             projected_score = float(result.get("projected_score", score))

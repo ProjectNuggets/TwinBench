@@ -19,6 +19,7 @@ def run(config: BenchConfig) -> dict:
     facts = _load_facts()
     sample_size = min(config.memory_sample_size, len(facts))
     results = {}
+    error_samples: list[str] = []
 
     # Phase 1: Store facts
     stored = 0
@@ -26,6 +27,8 @@ def run(config: BenchConfig) -> dict:
         r = chat(config, f"Please remember this important fact: {fact['statement']}")
         if r["error"] is None:
             stored += 1
+        elif len(error_samples) < 3 and r["error"] not in error_samples:
+            error_samples.append(r["error"])
         time.sleep(0.5)  # avoid rate limiting
 
     results["facts_stored"] = stored
@@ -43,6 +46,8 @@ def run(config: BenchConfig) -> dict:
             and fact["expected_keyword"].lower() in r["content"].lower()
         ):
             exact_hits += 1
+        elif r["error"] and len(error_samples) < 3 and r["error"] not in error_samples:
+            error_samples.append(r["error"])
         time.sleep(0.5)
 
     exact_rate = exact_hits / sample_size if sample_size > 0 else 0
@@ -58,6 +63,8 @@ def run(config: BenchConfig) -> dict:
             and fact["expected_keyword"].lower() in r["content"].lower()
         ):
             semantic_hits += 1
+        elif r["error"] and len(error_samples) < 3 and r["error"] not in error_samples:
+            error_samples.append(r["error"])
         time.sleep(0.5)
 
     semantic_rate = semantic_hits / sample_size if sample_size > 0 else 0
@@ -74,6 +81,8 @@ def run(config: BenchConfig) -> dict:
             and fact["expected_keyword"].lower() in r["content"].lower()
         ):
             cross_hits += 1
+        elif r["error"] and len(error_samples) < 3 and r["error"] not in error_samples:
+            error_samples.append(r["error"])
         time.sleep(0.5)
 
     cross_rate = cross_hits / cross_sample if cross_sample > 0 else 0
@@ -84,12 +93,16 @@ def run(config: BenchConfig) -> dict:
     projected_component = measured_component + 0.80 * 0.20 + 0.90 * 0.10
 
     verified_score = (measured_component / measured_weight) * 100
-    projected_score = projected_component * 100
+    projected_score = max(verified_score, projected_component * 100)
 
     results["score"] = round(min(100, projected_score), 1)
     results["verified_score"] = round(min(100, verified_score), 1)
     results["projected_score"] = round(min(100, projected_score), 1)
     results["measured_coverage"] = round(measured_weight, 2)
+    results["measured_component"] = round(measured_component, 3)
+    results["projected_component"] = round(projected_component, 3)
+    if error_samples:
+        results["error_samples"] = error_samples
     results["note"] = (
         "Temporal stability (0.20 weight) projected at 0.80; conflict resolution (0.10 weight) projected at 0.90. Full verification requires restart + 30-day test."
     )

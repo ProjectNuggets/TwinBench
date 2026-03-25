@@ -1,0 +1,82 @@
+# HELP nullalis_gateway_requests_total Total HTTP requests handled.
+# TYPE nullalis_gateway_requests_total counter
+nullalis_gateway_requests_total 188
+# HELP nullalis_gateway_chat_stream_total Total chat stream requests.
+# TYPE nullalis_gateway_chat_stream_total counter
+nullalis_gateway_chat_stream_total 51
+# HELP nullalis_gateway_chat_stream_errors_total Total chat stream errors.
+# TYPE nullalis_gateway_chat_stream_errors_total counter
+nullalis_gateway_chat_stream_errors_total 0
+# HELP nullalis_gateway_chat_stream_lanes_total Accepted chat stream requests by lane.
+# TYPE nullalis_gateway_chat_stream_lanes_total counter
+nullalis_gateway_chat_stream_lanes_total{lane="main"} 0
+nullalis_gateway_chat_stream_lanes_total{lane="thread"} 51
+nullalis_gateway_chat_stream_lanes_total{lane="task"} 0
+nullalis_gateway_chat_stream_lanes_total{lane="cron"} 0
+# HELP nullalis_gateway_chat_stream_session_key_rejections_total Rejected chat stream requests by session_key validation reason.
+# TYPE nullalis_gateway_chat_stream_session_key_rejections_total counter
+nullalis_gateway_chat_stream_session_key_rejections_total{reason="missing"} 2
+nullalis_gateway_chat_stream_session_key_rejections_total{reason="invalid"} 0
+nullalis_gateway_chat_stream_session_key_rejections_total{reason="wrong_user"} 0
+nullalis_gateway_chat_stream_session_key_rejections_total{reason="invalid_lane"} 0
+# HELP nullalis_gateway_telegram_webhook_total Total telegram webhook requests.
+# TYPE nullalis_gateway_telegram_webhook_total counter
+nullalis_gateway_telegram_webhook_total 10
+# HELP nullalis_gateway_telegram_webhook_rejected_total Total rejected telegram webhooks.
+# TYPE nullalis_gateway_telegram_webhook_rejected_total counter
+nullalis_gateway_telegram_webhook_rejected_total 0
+# HELP nullalis_gateway_tenant_lock_conflicts_total Total tenant ownership-lock conflicts.
+# TYPE nullalis_gateway_tenant_lock_conflicts_total counter
+nullalis_gateway_tenant_lock_conflicts_total 0
+# HELP nullalis_gateway_tenant_lock_conflicts_by_route_total Tenant ownership-lock conflicts by route.
+# TYPE nullalis_gateway_tenant_lock_conflicts_by_route_total counter
+nullalis_gateway_tenant_lock_conflicts_by_route_total{route="chat_stream_sse"} 0
+nullalis_gateway_tenant_lock_conflicts_by_route_total{route="chat_stream_http"} 0
+nullalis_gateway_tenant_lock_conflicts_by_route_total{route="webhook"} 0
+nullalis_gateway_tenant_lock_conflicts_by_route_total{route="daemon"} 0
+nullalis_gateway_tenant_lock_conflicts_by_route_total{route="api"} 0
+# HELP nullalis_gateway_tenant_lock_conflict_retries_total Total lock-acquire retry attempts before conflicts/success.
+# TYPE nullalis_gateway_tenant_lock_conflict_retries_total counter
+nullalis_gateway_tenant_lock_conflict_retries_total 0
+# HELP nullalis_gateway_in_flight_requests Current in-flight requests.
+# TYPE nullalis_gateway_in_flight_requests gauge
+nullalis_gateway_in_flight_requests 1
+# HELP nullalis_gateway_drain_rejected_total Total requests rejected while draining.
+# TYPE nullalis_gateway_drain_rejected_total counter
+nullalis_gateway_drain_rejected_total 0
+# HELP nullalis_gateway_overload_rejected_total Total requests rejected due to queue overload.
+# TYPE nullalis_gateway_overload_rejected_total counter
+nullalis_gateway_overload_rejected_total 0
+# HELP nullalis_gateway_drain_mode Current drain mode status.
+# TYPE nullalis_gateway_drain_mode gauge
+nullalis_gateway_drain_mode 0
+# HELP nullalis_gateway_shutdown_requested Whether shutdown has been requested.
+# TYPE nullalis_gateway_shutdown_requested gauge
+nullalis_gateway_shutdown_requested 0
+# HELP nullalis_http_transport_native_total Native transport successes by subsystem.
+# TYPE nullalis_http_transport_native_total counter
+nullalis_http_transport_native_total{subsystem="tools"} 0
+nullalis_http_transport_native_total{subsystem="providers"} 0
+nullalis_http_transport_native_total{subsystem="channels"} 0
+nullalis_http_transport_native_total{subsystem="system"} 0
+# HELP nullalis_http_transport_curl_total Curl transport uses by subsystem.
+# TYPE nullalis_http_transport_curl_total counter
+nullalis_http_transport_curl_total{subsystem="tools"} 62
+nullalis_http_transport_curl_total{subsystem="providers"} 1837
+nullalis_http_transport_curl_total{subsystem="channels"} 10
+nullalis_http_transport_curl_total{subsystem="system"} 0
+# HELP nullalis_http_transport_fallback_total Native transport fallbacks by subsystem.
+# TYPE nullalis_http_transport_fallback_total counter
+nullalis_http_transport_fallback_total{subsystem="tools"} 0
+nullalis_http_transport_fallback_total{subsystem="providers"} 0
+nullalis_http_transport_fallback_total{subsystem="channels"} 0
+nullalis_http_transport_fallback_total{subsystem="system"} 0
+# HELP nullalis_http_pool_hits_total Connection pool hits (reused connection).
+# TYPE nullalis_http_pool_hits_total counter
+nullalis_http_pool_hits_total 0
+# HELP nullalis_http_pool_misses_total Connection pool misses (new connection opened).
+# TYPE nullalis_http_pool_misses_total counter
+nullalis_http_pool_misses_total 0
+# HELP nullalis_http_pool_idle_connections Current idle connections in pool.
+# TYPE nullalis_http_pool_idle_connections gauge
+nullalis_http_pool_idle_connections 0

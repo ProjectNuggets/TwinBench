@@ -3,7 +3,13 @@
 import time
 
 from .config import BenchConfig
-from .sse_client import chat
+from .sse_client import chat, get_diagnostics
+
+
+def _ops_snapshot(config: BenchConfig) -> dict:
+    diag = get_diagnostics(config) or {}
+    ops = diag.get("ops", {})
+    return ops if isinstance(ops, dict) else {}
 
 
 def run(config: BenchConfig) -> dict:
@@ -12,6 +18,9 @@ def run(config: BenchConfig) -> dict:
     measured_points = 0
     projected_bonus_points = 0
     measured_max_points = 65  # creation/list/cancel/conditional
+
+    before_ops = _ops_snapshot(config)
+    before_scheduler_total = before_ops.get("scheduler_executed_total")
 
     # Test 1: Task creation — ask agent to schedule something
     r1 = chat(
@@ -80,11 +89,22 @@ def run(config: BenchConfig) -> dict:
         results["waiting_for_execution_secs"] = config.schedule_wait_secs
         time.sleep(config.schedule_wait_secs)
 
+        after_ops = _ops_snapshot(config)
+        after_scheduler_total = after_ops.get("scheduler_executed_total")
+        scheduler_total_increased = (
+            isinstance(before_scheduler_total, int)
+            and isinstance(after_scheduler_total, int)
+            and after_scheduler_total > before_scheduler_total
+        )
+        results["scheduler_total_before"] = before_scheduler_total
+        results["scheduler_total_after"] = after_scheduler_total
+        results["scheduler_total_increased"] = scheduler_total_increased
+
         r6 = chat(
             config,
             "Did you send me any reminders or execute any scheduled tasks in the last 5 minutes? Look for 'DTAAS_BENCH_PING_7291'.",
         )
-        task_executed = any(
+        task_confirmed_by_chat = any(
             kw in r6["content"].lower()
             for kw in [
                 "7291",
@@ -96,12 +116,14 @@ def run(config: BenchConfig) -> dict:
                 "reminded",
             ]
         )
+        task_executed = task_confirmed_by_chat or scheduler_total_increased
+        results["task_confirmed_by_chat"] = task_confirmed_by_chat
         results["task_executed"] = task_executed
         if task_executed:
             measured_points += 35
         else:
             results["execution_note"] = (
-                "Task may have executed but agent could not confirm via conversation."
+                "Task was not confirmed by chat reply or scheduler counter delta."
             )
             measured_points += 10  # Partial credit: task was created correctly
     else:

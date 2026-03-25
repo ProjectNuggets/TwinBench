@@ -3,140 +3,66 @@
 from .config import BenchConfig
 from .sse_client import get_diagnostics, get_metrics, health_check, chat
 from .scorer import log2_breadth_score
+from .evidence import extract_json_object, live_integration_counts, used_tool
 
 
 def run(config: BenchConfig) -> dict:
-    """Count and verify functional integrations from diagnostics."""
+    """Count and verify functional integrations from diagnostics and runtime_info."""
     results = {}
 
     # Health check
     healthy = health_check(config)
     results["health_endpoint_ok"] = healthy
 
-    # Fetch diagnostics for integration counts
+    # Fetch diagnostics for live integration counts
     diag = get_diagnostics(config)
     channels = 0
     tools = 0
     backends = 0
     integrations = 0
-    tools_from_fallback = False
-    backends_from_fallback = False
-    integrations_from_fallback = False
+    component_coverage = {
+        "channels": 0.0,
+        "tools": 0.0,
+        "backends": 0.0,
+        "integrations": 0.0,
+    }
 
     if diag:
         results["diagnostics_available"] = True
-        diag_str = str(diag)
-
-        # Count channels from diagnostics (look for channel-related keys)
-        channel_names = [
-            "telegram",
-            "discord",
-            "slack",
-            "signal",
-            "irc",
-            "matrix",
-            "email",
-            "whatsapp",
-            "imessage",
-            "mattermost",
-            "lark",
-            "line",
-            "qq",
-            "onebot",
-            "dingtalk",
-            "maixcam",
-            "cli",
-        ]
-        channels = sum(1 for name in channel_names if name in diag_str.lower())
-
-        # Try to get tool count from runtime_info
-        r = chat(
-            config,
-            "Use runtime_info with section summary. How many enabled_tools do you have? Give me just the number.",
-        )
-        if r["error"] is None:
-            # Try to extract a number from the response
-            import re
-
-            numbers = re.findall(r"\b(\d{2,3})\b", r["content"])
-            if numbers:
-                tools = int(numbers[0])
-
-        if tools == 0:
-            # Fallback: count known tool names in diagnostics
-            tool_names = [
-                "shell",
-                "file_read",
-                "file_write",
-                "file_edit",
-                "file_append",
-                "git",
-                "image",
-                "memory_store",
-                "memory_recall",
-                "memory_list",
-                "memory_forget",
-                "delegate",
-                "schedule",
-                "runtime_info",
-                "spawn",
-                "message",
-                "http_request",
-                "web_fetch",
-                "web_search",
-                "browser",
-                "screenshot",
-                "composio",
-                "browser_open",
-                "hardware_info",
-                "hardware_memory",
-                "i2c",
-                "spi",
-            ]
-            tools = sum(1 for name in tool_names if name in diag_str.lower())
-            if tools == 0:
-                tools = 27  # Known from code analysis
-                tools_from_fallback = True
-
-        # Count memory backends
-        backend_names = [
-            "sqlite",
-            "postgres",
-            "redis",
-            "markdown",
-            "lancedb",
-            "api",
-            "memory",
-            "lucid",
-            "none",
-        ]
-        backends = sum(1 for name in backend_names if name in diag_str.lower())
-        if backends == 0:
-            backends = 9  # Known from code analysis
-            backends_from_fallback = True
-
-        # Count external integrations
-        if "composio" in diag_str.lower():
-            integrations += 1
-        if "mcp" in diag_str.lower():
-            integrations += 1
-        if integrations == 0:
-            integrations = 1
-            integrations_from_fallback = True
+        configured_channels, connected_channels = live_integration_counts(diag)
+        channels = max(configured_channels, connected_channels)
+        if channels > 0:
+            component_coverage["channels"] = 0.30
+        integrations = configured_channels
+        if integrations > 0:
+            component_coverage["integrations"] = 0.20
 
     else:
         results["diagnostics_available"] = False
-        # Fallback to known values from code analysis
-        channels = 17
-        tools = 34
-        backends = 9
-        integrations = 2
-        tools_from_fallback = True
-        backends_from_fallback = True
-        integrations_from_fallback = True
-        results["note"] = (
-            "Diagnostics unavailable; using code-analysis fallback values."
-        )
+
+    # Try to get structured counts from runtime_info
+    r = chat(
+        config,
+        "Use runtime_info and return concise JSON only with these keys: enabled_tools_count, channels_count, memory_backends_count, integrations_count, state_backend, provider, model.",
+    )
+    runtime_info_payload = extract_json_object(r.get("content", ""))
+    runtime_info_used = used_tool(r, "runtime_info")
+    results["runtime_info_tool_used"] = runtime_info_used
+    results["runtime_info_payload"] = runtime_info_payload
+
+    if runtime_info_used and runtime_info_payload:
+        if runtime_info_payload.get("enabled_tools_count"):
+            tools = int(runtime_info_payload["enabled_tools_count"])
+            component_coverage["tools"] = 0.30
+        if runtime_info_payload.get("channels_count"):
+            channels = max(channels, int(runtime_info_payload["channels_count"]))
+            component_coverage["channels"] = max(component_coverage["channels"], 0.30)
+        if runtime_info_payload.get("memory_backends_count"):
+            backends = int(runtime_info_payload["memory_backends_count"])
+            component_coverage["backends"] = 0.20
+        if runtime_info_payload.get("integrations_count"):
+            integrations = max(integrations, int(runtime_info_payload["integrations_count"]))
+            component_coverage["integrations"] = max(component_coverage["integrations"], 0.20)
 
     results["channels"] = channels
     results["tools"] = tools
@@ -149,27 +75,13 @@ def run(config: BenchConfig) -> dict:
 
     # Score
     projected_score = log2_breadth_score(channels, tools, backends, integrations)
-
-    measured_coverage = 1.0 if diag else 0.0
-    if diag:
-        if tools_from_fallback:
-            measured_coverage -= 0.30
-        if backends_from_fallback:
-            measured_coverage -= 0.20
-        if integrations_from_fallback:
-            measured_coverage -= 0.20
-    measured_coverage = max(0.0, min(1.0, measured_coverage))
-
-    verified_score = projected_score * measured_coverage
+    measured_coverage = round(sum(component_coverage.values()), 2)
+    verified_score = projected_score if measured_coverage > 0 else 0.0
     results["score"] = round(projected_score, 1)
     results["verified_score"] = round(verified_score, 1)
     results["projected_score"] = round(projected_score, 1)
     results["measured_coverage"] = round(measured_coverage, 2)
-    results["fallback_components"] = {
-        "tools": tools_from_fallback,
-        "backends": backends_from_fallback,
-        "integrations": integrations_from_fallback,
-    }
+    results["component_coverage"] = component_coverage
     return {
         "dimension": "integration_breadth",
         "score": results["score"],

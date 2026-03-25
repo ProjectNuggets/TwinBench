@@ -46,9 +46,13 @@ def run(config: BenchConfig) -> dict:
 
     # Test 3: State persistence — store and recall
     marker = "RESILIENCE_BENCH_5837"
-    chat(config, f"Remember this resilience marker: {marker}")
+    remember = chat(config, f"Remember this resilience marker: {marker}")
+    if remember["error"]:
+        results["state_store_error"] = remember["error"]
     time.sleep(1)
     r = chat(config, "What is the resilience marker I just told you?")
+    if r["error"]:
+        results["state_recall_error"] = r["error"]
     persists = marker.lower() in r["content"].lower() or "5837" in r["content"]
     results["state_persists_across_turns"] = persists
     if persists:
@@ -70,6 +74,8 @@ def run(config: BenchConfig) -> dict:
             "yes",
         ]
     )
+    if r2["error"]:
+        results["idempotency_probe_error"] = r2["error"]
     results["idempotency_awareness"] = has_idempotency
     if has_idempotency:
         measured_points += 10
@@ -83,6 +89,8 @@ def run(config: BenchConfig) -> dict:
         kw in r3["content"].lower()
         for kw in ["graceful", "shutdown", "sigterm", "signal", "drain", "yes"]
     )
+    if r3["error"]:
+        results["graceful_shutdown_probe_error"] = r3["error"]
     results["graceful_shutdown_awareness"] = graceful
     if graceful:
         measured_points += 10
@@ -92,9 +100,26 @@ def run(config: BenchConfig) -> dict:
     projected_bonus_points += 5  # cold_start: projected (<3s based on binary size)
     results["projected_job_recovery"] = True
     results["projected_cold_start"] = True
+    chat_probe_errors = [
+        err
+        for err in [
+            results.get("state_store_error"),
+            results.get("state_recall_error"),
+            results.get("idempotency_probe_error"),
+            results.get("graceful_shutdown_probe_error"),
+        ]
+        if err
+    ]
+    results["runtime_unavailable_during_probe"] = (
+        not healthy and not diag and len(chat_probe_errors) == 4
+    )
+    if chat_probe_errors:
+        results["chat_probe_error_samples"] = list(dict.fromkeys(chat_probe_errors))[:3]
     results["note"] = (
         "SIGKILL crash recovery and cold start timing require OS-level access, not testable via HTTP. Projected based on architecture."
     )
+    if results["runtime_unavailable_during_probe"]:
+        results["note"] += " Runtime was unavailable during this probe, so resilience zeros may reflect outage rather than missing capabilities."
 
     projected_score = min(100, measured_points + projected_bonus_points)
     verified_score = min(100, (measured_points / 75) * 100)
