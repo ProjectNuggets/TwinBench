@@ -1,5 +1,5 @@
 {
-  "manifest_version": "dtaas-bench/v0.2",
+  "manifest_version": "twinbench/v0.2",
   "run_id": "2026-03-24T12-00-00Z-example-runtime-v1",
   "run_date_utc": "2026-03-24T12:00:00Z",
   "runner": {
@@ -15,10 +15,11 @@
     "config_hash_sha256": "REPLACE_WITH_CONFIG_HASH"
   },
   "harness": {
-    "name": "dtaas-bench",
+    "name": "twinbench",
     "version": "0.2",
     "commit_sha": "REPLACE_WITH_HARNESS_GIT_SHA"
   },
+  "run_profile": "local_reference_or_saas_runtime_or_multi_tenant_ready",
   "environment": {
     "os": "linux",
     "kernel": "6.x",
@@ -56,5 +57,11 @@
     "metrics_snapshot": "artifacts/metrics.txt",
     "logs_archive": "artifacts/logs.tar.zst",
     "post_run_diagnostics_snapshot": "artifacts/diagnostics-post.json"
+  },
+  "dimension_availability": {
+    "scale_cost": {
+      "status": "measured_or_partially_measured_or_unavailable",
+      "reason_code": "multi_user_bootstrap_unavailable_or_null"
+    }
   }
 }

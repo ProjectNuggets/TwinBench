@@ -1,4 +1,4 @@
-"""DTaaS-Bench composite score calculator."""
+"""TwinBench composite score calculator."""
 
 import math
 

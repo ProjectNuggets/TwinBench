@@ -1,152 +1,73 @@
-<p align="center">
-  <h1 align="center">DTaaS-Bench</h1>
-  <p align="center">
-    <strong>Open benchmark for persistent autonomous AI agent runtimes.</strong>
-  </p>
-  <p align="center">
-    <a href="SPECIFICATION.md">Specification</a> &middot;
-    <a href="docs/TRUST_MODEL.md">Trust Model</a> &middot;
-    <a href="CHANGELOG.md">Changelog</a> &middot;
-    <a href="results/nullalis-v0.2-report.md">Results</a> &middot;
-    <a href="CONTRIBUTING.md">Contribute</a> &middot;
-    <a href="https://novanuggets.com">Nova Nuggets</a>
-  </p>
-</p>
+# TwinBench
 
----
+**Open Benchmark for Personal AI Assistant Runtimes**
 
-**SWE-Bench measures coding. APEX-Agents measures task completion. MemoryArena measures recall.**
+TwinBench measures whether an AI runtime can behave like a real personal AI assistant: **remember, act, follow up, stay safe, and operate over time**.
 
-**None of them measure what a Digital Twin runtime must do: remember durably, act autonomously, operate across multiple channels, enforce safety on background turns, and scale to thousands of users — all at once.**
+This repository exists because the current benchmark landscape still misses a category between a chatbot and a task agent. We use the technical term `DTaaS` internally for that runtime category, but the public-facing benchmark is simpler:
 
-DTaaS-Bench does. 10 dimensions. Two explicit composites (`verified` + `projected`). Open harness. Run it against your runtime today.
+**TwinBench defines the runtime category behind persistent personal AI assistants.**
 
-This repo is also an argument: there is a real category between "chatbot" and "agent framework" that deserves its own evaluation standard. We call that category `Digital Twin as a Service` (`DTaaS`).
+Quick links:
+- [Overview](docs/OVERVIEW.md)
+- [Getting Started in 10 Minutes](docs/GETTING_STARTED.md)
+- [Run Profiles](docs/RUN_PROFILES.md)
+- [Compatibility Checklist](docs/COMPATIBILITY_CHECKLIST.md)
+- [Preflight Checklist](docs/PREFLIGHT.md)
+- [How to Submit Results](docs/HOW_TO_SUBMIT.md)
+- [Results Index](docs/RESULTS_INDEX.md)
+- [Trust Model](docs/TRUST_MODEL.md)
+- [Press Kit](PRESSKIT.md)
 
----
+## What TwinBench Measures
 
-## Verified Leaderboard (March 2026)
+TwinBench is for runtimes that aim to behave like persistent personal AI assistants:
 
-Only runs produced by this harness with raw artifacts are ranked here.
+- remember across sessions and restarts
+- execute tasks autonomously
+- keep state coherent across channels and surfaces
+- protect users during background turns
+- operate as real runtime infrastructure, not just a single prompt loop
 
-| Runtime | Type | Verified (coverage-adjusted) | Coverage | Projected | Rating |
-|---------|------|------------------------------|----------|-----------|--------|
-| **[Nullalis v0.2 live artifact](results/nullalis-v0.2-report.md)** | Full runtime | **64.4** | **78.9%** | **79.8** | **Competitive** |
+The benchmark reports two composites:
 
-Nullalis is the first reference runtime in this repository because it demonstrates the full stack this benchmark is naming: persistent memory, autonomous execution, multi-channel operation, and background-turn controls. Read [why that matters](docs/NULLALIS_REFERENCE_RUNTIME.md).
+- `verified`: based only on behavior or evidence directly measured in the run
+- `projected`: includes clearly labeled assumptions for not-yet-measured parts
 
-## External Comparison (Unverified, not ranked)
+The leaderboard tiers on `coverage_adjusted_verified_score`, not on the most flattering number.
 
-External runtime rows are reference estimates from public documentation and are intentionally excluded from the verified leaderboard.
+## Who This Is For
 
-| Runtime | Type | Status |
-|---------|------|--------|
-| OpenClaw | Full runtime | Unverified external estimate |
-| NanoBot | Lightweight runtime | Unverified external estimate |
-| Letta | Agent framework | Unverified external estimate |
-| Mem0 | Memory platform | Unverified external estimate |
+- runtime builders shipping personal AI assistant products
+- agent framework teams adding persistence and autonomous execution
+- infra and platform teams building agent runtimes
+- researchers studying long-lived assistants
+- advanced indie builders who want a serious benchmark, not a demo script
 
-Submit a harness artifact to replace any estimate with a verified score.
+## What This Is Not
 
-## v0.2 Integrity Highlights
+- not a chatbot benchmark
+- not a coding benchmark
+- not a single-turn task benchmark
+- not a marketing scorecard for one vendor
 
-- Coverage-aware leaderboard scoring is now default.
-- Every run publishes both `verified` and `projected` composites.
-- External estimates are explicitly non-ranked.
-- CI now validates harness integrity and v0.2 artifact schema on every PR.
-- Latest live gateway run completed in 4392.9s (no per-chat timeout mode) and reports full measured timing metadata in the artifact.
+## Verified Results
 
-## Why This Repo Exists
+Current reference artifacts derived from checked-in runs are listed in [docs/RESULTS_INDEX.md](docs/RESULTS_INDEX.md).
 
-DTaaS-Bench is trying to do three jobs at once:
+Nullalis is the current **reference runtime**, not the benchmark owner. Its role is to prove the category is real and to provide the first evidence-rich public artifact.
 
-- define the `DTaaS` runtime category clearly enough that people can argue about it in public
-- give builders a benchmark they can actually run against local and SaaS deployments
-- create a trusted submission standard so the leaderboard is earned rather than narrated
-
-Nullalis is important here because it is a strong reference runtime, not because it gets special treatment. The benchmark should become more valuable as more runtimes submit verified artifacts and try to beat it.
-
----
-
-## Why DTaaS Needs Its Own Benchmark
-
-Existing AI agent benchmarks test **stateless task completion**. They spin up a model, run a prompt, check the output, and tear everything down.
-
-A Digital Twin as a Service runtime is fundamentally different:
-
-| What Chatbot Benchmarks Test | What DTaaS-Bench Tests |
-|------------------------------|------------------------|
-| Can it answer a question? | Can it remember the answer 30 days later? |
-| Can it call a tool? | Can it schedule tools to run while you sleep? |
-| Can it handle one channel? | Can it maintain state across Telegram, Slack, and email? |
-| Can it complete a task? | Can it complete a task *without doing something dangerous*? |
-| Can it scale requests? | Can it scale to 1,000 concurrent users? |
-
----
-
-## 10 Dimensions
-
-| # | Dimension | Weight | What It Measures |
-|---|-----------|--------|------------------|
-| 1 | **Autonomy Control** | 0.15 | Background turn safety: tool blocking, output dedup, origin labeling |
-| 2 | **Memory Persistence** | 0.15 | Recall accuracy across restarts, paraphrasing, and time decay |
-| 3 | **Functional Capability** | 0.15 | Real task completion: tools, multi-step reasoning, error recovery |
-| 4 | **Autonomous Execution** | 0.12 | Scheduled jobs: creation, on-time execution, no duplicates |
-| 5 | **Cross-Channel Consistency** | 0.12 | Shared state and context across communication channels |
-| 6 | **Integration Breadth** | 0.08 | Functional channels, tools, memory backends, API integrations |
-| 7 | **Security & Privacy** | 0.08 | Path traversal, SSRF, tenant isolation, secret handling, audit |
-| 8 | **Scale & Cost Efficiency** | 0.05 | Binary size, memory per user, horizontal scaling, inference cost |
-| 9 | **Operational Resilience** | 0.05 | Crash recovery, state persistence, graceful degradation |
-| 10 | **Latency Profile** | 0.05 | Chat p95, schedule jitter, memory roundtrip, delivery time |
-
-## Rating Tiers
-
-| Score | Rating | What It Means |
-|-------|--------|---------------|
-| 85-100 | **Category Leader** | Full DTaaS capability across all 10 dimensions |
-| 70-84 | **Production-Grade** | Strong coverage, ready for real users |
-| 55-69 | **Competitive** | Solid in core areas, gaps in some dimensions |
-| 40-54 | **Emerging** | Meaningful capability, partial DTaaS coverage |
-| 25-39 | **Specialized** | Strong in specific dimensions, not full-stack |
-| <25 | **Early Stage** | Research or proof-of-concept |
-
-## Scoring Integrity Contract
-
-Every run reports:
-- `verified_composite_score` (measured components only)
-- `projected_composite_score` (includes projection assumptions)
-- `measured_coverage` (how much of scoring weight was actually measured)
-- `coverage_adjusted_verified_score` (used for tiering in v0.2)
-
-The benchmark never promotes an unverified external estimate to leaderboard status.
-
-For the full evidence model, read [docs/TRUST_MODEL.md](docs/TRUST_MODEL.md).
-For nearby runtime compatibility status, read [docs/COMPETITOR_RUNNABILITY.md](docs/COMPETITOR_RUNNABILITY.md).
-
----
-
-## Quick Start
+## Getting Started in 10 Minutes
 
 ```bash
 git clone https://github.com/ProjectNuggets/DTaaS-benchmark.git
 cd DTaaS-benchmark
 python3.10 -m pip install -r harness/requirements.txt
+```
 
-# Run all 10 dimensions
-python3.10 -m harness.runner \
-  --url http://localhost:8080 \
-  --token YOUR_TOKEN \
-  --user-id 1 \
-  --name "My Runtime"
+Run a full benchmark:
 
-# Run specific dimensions
-python3.10 -m harness.runner \
-  --url http://localhost:8080 \
-  --token YOUR_TOKEN \
-  --user-id 1 \
-  --dimensions memory,security,functional
-
-# Full report suite (JSON + Markdown + HTML)
+```bash
 python3.10 -m harness.runner \
   --url http://localhost:8080 \
   --token YOUR_TOKEN \
@@ -155,8 +76,11 @@ python3.10 -m harness.runner \
   --output results/run.json \
   --markdown results/run.md \
   --html results/run.html
+```
 
-# Local Nullalis: discover the active token from ~/.nullalis/config.json
+Run local Nullalis with auto token discovery:
+
+```bash
 python3.10 -m harness.runner \
   --url http://127.0.0.1:3000 \
   --token-from-nullalis-config \
@@ -164,105 +88,105 @@ python3.10 -m harness.runner \
   --name "Nullalis Local"
 ```
 
-The harness produces a terminal summary table, a machine-readable JSON file, a Markdown report, and a self-contained HTML report with score bars and tier badges.
+Then:
 
-Useful local tuning:
-- `--memory-sample-size 5` for faster validation reruns
-- `--timeout 20 --timeout-dynamic --timeout-floor 20 --timeout-ceiling 120 --timeout-grace 10` for bounded local gateway runs
+1. open the generated JSON
+2. review the verified score, projected score, and measured coverage
+3. attach the artifact through [docs/HOW_TO_SUBMIT.md](docs/HOW_TO_SUBMIT.md)
 
-Runtime requirement:
-- Python 3.10+ (the harness uses modern type syntax)
+If you are new here, start with [docs/GETTING_STARTED.md](docs/GETTING_STARTED.md) instead of the full specification.
 
----
+## Official Run Profiles
 
-## How It Works
+TwinBench currently documents three first-class run shapes:
 
-The harness talks to any runtime via HTTP:
+- `local reference`: for a locally running runtime with direct access to internal auth
+- `saas runtime`: for a remotely hosted runtime that exposes the benchmark contract
+- `multi-tenant-ready`: for runtimes that support benchmark user provisioning and fair multi-user fanout
+
+Details and commands are in [docs/RUN_PROFILES.md](docs/RUN_PROFILES.md).
+
+## Benchmark Contract
+
+Required runtime surfaces:
 
 | Endpoint | Method | Purpose | Required |
 |----------|--------|---------|----------|
-| `/api/v1/chat/stream` | POST (SSE) | Send messages, receive streamed responses | Yes |
+| `/api/v1/chat/stream` | POST (SSE) | Send a message and receive streamed output | Yes |
 | `/health` | GET | Health check | Yes |
-| `/internal/diagnostics` | GET | Runtime introspection | Yes |
-| `/metrics` | GET | Prometheus metrics | Optional |
+| `/internal/diagnostics` | GET | Runtime introspection and evidence support | Yes |
+| `/metrics` | GET | Prometheus-style metrics | Optional |
 
-Each dimension script sends real requests to the runtime, parses responses, and scores based on the [SPECIFICATION](SPECIFICATION.md). Measured and projected components are surfaced separately.
+Before a full run, use the [Preflight Checklist](docs/PREFLIGHT.md) and [Compatibility Checklist](docs/COMPATIBILITY_CHECKLIST.md).
 
----
+## Benchmark Principles
 
-## Submit Your Results
+- neutral to vendor
+- evidence over claims
+- unsupported is not the same as failure
+- missing bootstrap should be reported distinctly
+- same-user contention is a diagnostic, not the primary multi-user scale claim
 
-Run the benchmark. Submit your score. Join the leaderboard.
+The full scoring and evidence rules live in [SPECIFICATION.md](SPECIFICATION.md) and [docs/TRUST_MODEL.md](docs/TRUST_MODEL.md).
 
-1. `python -m harness.runner --url YOUR_URL --token TOKEN --user-id 1 --name "Your Runtime" --output results/your-runtime.json --markdown results/your-runtime.md --html results/your-runtime.html`
-2. Open an issue using the [Submit Results template](.github/ISSUE_TEMPLATE/submit-results.md)
-3. Attach your JSON output and recommended evidence pack
+## How Results Work
 
-All submitted results are published with full transparency. No editorial gatekeeping.
+Every serious result should include:
 
-Recommended evidence pack:
-
-- result JSON
+- benchmark JSON
 - Markdown or HTML report
 - runtime version or commit SHA
 - harness commit SHA
-- diagnostics snapshot
-- metrics snapshot
-- incident notes when the runtime or upstream model path degraded during the run
-- optional run manifest using [docs/run-manifest-v0.2.example.json](docs/run-manifest-v0.2.example.json)
+- diagnostics snapshot when available
+- metrics snapshot when available
+- incident notes when the run degraded
 
----
+TwinBench also records dimension-level availability and reason codes so blocked or unsupported dimensions stay interpretable instead of silently looking like product weakness.
 
-## Repository Structure
+## New Here?
 
-```
+Recommended reading order:
+
+1. [docs/GETTING_STARTED.md](docs/GETTING_STARTED.md)
+2. [docs/RUN_PROFILES.md](docs/RUN_PROFILES.md)
+3. [docs/COMPATIBILITY_CHECKLIST.md](docs/COMPATIBILITY_CHECKLIST.md)
+4. [docs/HOW_TO_SUBMIT.md](docs/HOW_TO_SUBMIT.md)
+5. [SPECIFICATION.md](SPECIFICATION.md)
+
+If your runtime does not match the contract yet, read [docs/INTEGRATION_PATHS.md](docs/INTEGRATION_PATHS.md).
+
+## Repository Guide
+
+```text
 DTaaS-benchmark/
-├── README.md                   You are here
-├── CHANGELOG.md                Release history
-├── SPECIFICATION.md            Full benchmark spec (10 dimensions, scoring, rules)
-├── CONTRIBUTING.md             How to contribute
+├── README.md
+├── SPECIFICATION.md
+├── PRESSKIT.md
+├── CHANGELOG.md
+├── CONTRIBUTING.md
 ├── docs/
-│   ├── TRUST_MODEL.md          Verification rules and evidence tiers
-│   ├── NULLALIS_REFERENCE_RUNTIME.md
-│   ├── OPEN_SOURCE_RELEASE_CHECKLIST.md
-│   └── run-manifest-v0.2.example.json
-├── LICENSE                     Apache-2.0
+│   ├── GETTING_STARTED.md
+│   ├── RUN_PROFILES.md
+│   ├── PREFLIGHT.md
+│   ├── COMPATIBILITY_CHECKLIST.md
+│   ├── GLOSSARY.md
+│   ├── INTEGRATION_PATHS.md
+│   ├── HOW_TO_SUBMIT.md
+│   ├── RESULTS_INDEX.md
+│   ├── OUTREACH_PACKET.md
+│   ├── OUTREACH_TARGETS.md
+│   └── TRUST_MODEL.md
 ├── harness/
-│   ├── runner.py               CLI entry point
-│   ├── scorer.py               Composite score + rating tiers
-│   ├── report.py               Markdown + HTML report generator
-│   ├── sse_client.py           SSE chat client
-│   ├── config.py               Runtime connection config
-│   └── dim{1-10}_*.py          10 dimension test scripts
-├── fixtures/
-│   ├── facts_100.json          100 diverse test facts
-│   ├── attack_payloads.json    Path traversal + SSRF inputs
-│   └── schedules.json          Task scheduling definitions
 └── results/
-    ├── nullalis-v0.1.json      Legacy v0.1 reference artifact
-    ├── nullalis-v0.1-report.md Legacy v0.1 report
-    ├── nullalis-v0.2.json      v0.2 live gateway artifact
-    └── nullalis-v0.2-report.md v0.2 live gateway report
 ```
 
----
+## Contributing
 
-## Full Specification
+Contributions are welcome, especially:
 
-[SPECIFICATION.md](SPECIFICATION.md) contains everything: dimension definitions, test protocols, scoring formulas, rules for fair comparison, and the complete methodology.
+- new verified runtime artifacts
+- benchmark fairness improvements
+- docs that make the benchmark easier to adopt
+- better test coverage and report generation
 
-If you want the short version of what counts as a trustworthy result, start with [docs/TRUST_MODEL.md](docs/TRUST_MODEL.md).
-
----
-
-## License
-
-Apache-2.0 — See [LICENSE](LICENSE).
-
----
-
-<p align="center">
-  <strong>Published by <a href="https://novanuggets.com">Nova Nuggets</a></strong><br>
-  Handcrafted Intelligence. Own Your AI.<br><br>
-  <strong>Nullalis</strong> (ZAKI BOT).
-</p>
+Start with [CONTRIBUTING.md](CONTRIBUTING.md).

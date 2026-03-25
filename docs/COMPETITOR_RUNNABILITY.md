@@ -1,6 +1,8 @@
 # Competitor Runnability Notes
 
-This document tracks which nearby runtimes can be run directly against DTaaS-Bench today, and which still need an adapter or contract shim.
+TwinBench is intended to be approachable to outside runtime teams. This document exists so compatibility gaps are explained honestly rather than hidden behind optimistic wording.
+
+This document tracks which nearby runtimes can be run directly against TwinBench today, and which still need an adapter or contract shim.
 
 The point is to keep early comparison honest. A repo existing on disk is not the same as a reproducible benchmark submission.
 
@@ -8,7 +10,7 @@ The point is to keep early comparison honest. A repo existing on disk is not the
 
 ### Nullalis
 
-Status: runnable now
+Status: benchmark-ready now
 
 Why:
 
@@ -22,7 +24,7 @@ Why:
 
 Local path: `/Users/nova/Desktop/ALIS24_Final/openclaw-latest`
 
-Status: substantial candidate, not directly runnable on the DTaaS-Bench contract yet
+Status: adapter-ready candidate, not directly runnable on the TwinBench contract yet
 
 Observed shape:
 
@@ -35,22 +37,22 @@ Concrete local evidence from repo sweep:
 
 - health and readiness HTTP routes are implemented in `src/gateway/server-http.ts`
 - main gateway examples and dev tooling are centered on `ws://` or `wss://` targets
-- no local evidence of the DTaaS-Bench chat contract at `/api/v1/chat/stream`
+- no local evidence of the TwinBench chat contract at `/api/v1/chat/stream`
 - session concepts exist, but not in the same HTTP+SSE surface the harness currently expects
 
 Current benchmark gap:
 
-- DTaaS-Bench expects HTTP + SSE chat on `/api/v1/chat/stream`
+- TwinBench expects HTTP + SSE chat on `/api/v1/chat/stream`
 - local OpenClaw docs indicate the main control plane is gateway WebSocket / RPC oriented
 - this likely requires either:
-  - an adapter shim that exposes the DTaaS-Bench contract
+  - an adapter shim that exposes the TwinBench contract
   - or a benchmark transport extension for OpenClaw-style gateways
 
 ## PicoClaw
 
 Local path: `/Users/nova/Desktop/picoclaw`
 
-Status: interesting lightweight runtime, not directly runnable on the DTaaS-Bench contract yet
+Status: interesting lightweight runtime, not directly runnable on the TwinBench contract yet
 
 Observed shape:
 
@@ -76,7 +78,7 @@ Current benchmark gap:
 A runtime should only appear as a verified comparison artifact when:
 
 - the benchmark runs against a live instance
-- the runtime uses either the standard DTaaS-Bench contract or a documented adapter
+- the runtime uses either the standard TwinBench contract or a documented adapter
 - raw result artifacts are attached
 - verified/projected separation is preserved
 

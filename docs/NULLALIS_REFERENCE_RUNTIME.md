@@ -1,8 +1,8 @@
 # Nullalis as the Reference Runtime
 
-DTaaS-Bench exists to define a category that most current AI assistant benchmarks do not measure well.
+TwinBench exists to define a category that most current AI assistant benchmarks do not measure well.
 
-Nullalis is the first reference runtime in this repository because it appears to implement the full runtime shape DTaaS-Bench is trying to capture:
+Nullalis is the first reference runtime in this repository because it appears to implement the full runtime shape TwinBench is trying to capture:
 
 - durable memory and per-user state
 - autonomous scheduling and heartbeat execution
@@ -41,13 +41,13 @@ This matters because the category claim is much stronger when there is at least 
 
 Good framing:
 
-- "Nullalis is the first public reference runtime evaluated with DTaaS-Bench."
+- "Nullalis is the first public reference runtime evaluated with TwinBench."
 - "Nullalis demonstrates why this category deserves its own benchmark."
 - "The benchmark is open; any runtime can submit a stronger verified artifact."
 
 Bad framing:
 
-- "DTaaS-Bench proves Nullalis is best."
+- "TwinBench proves Nullalis is best."
 - "Nullalis defines the score."
 - "Other systems are ranked by editorial judgment."
 
@@ -64,4 +64,4 @@ Nullalis gives the benchmark four things that help the repo open-source well:
 
 Use this repo to say:
 
-"DTaaS-Bench was created because existing assistant benchmarks mostly test stateless turn completion. Nullalis is the first reference runtime that made it obvious a stronger benchmark was needed. The benchmark is now open so anyone can reproduce the result, challenge the methodology, or beat the score with a better runtime."
+"TwinBench was created because existing assistant benchmarks mostly test stateless turn completion. Nullalis is the first reference runtime that made it obvious a stronger benchmark was needed. The benchmark is now open so anyone can reproduce the result, challenge the methodology, or beat the score with a better runtime."

@@ -1,4 +1,4 @@
-"""DTaaS-Bench configuration."""
+"""TwinBench configuration."""
 
 from dataclasses import dataclass, field
 

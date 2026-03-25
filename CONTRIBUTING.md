@@ -1,10 +1,10 @@
-# Contributing to DTaaS-Bench
+# Contributing to TwinBench
 
-We welcome contributions from the community. Here's how you can help.
+We welcome contributions from the community. TwinBench is meant to be approachable to runtime builders, researchers, and advanced indie teams, not just internal operators.
 
 ## Submit Benchmark Results
 
-The most impactful contribution is running DTaaS-Bench against your runtime and submitting verified results.
+The most impactful contribution is running TwinBench against your runtime and submitting verified results.
 
 1. Run the harness: `python3.10 -m harness.runner --url YOUR_URL --token YOUR_TOKEN --user-id 1 --name "Your Runtime" --output results/your-runtime.json --markdown results/your-runtime.md --html results/your-runtime.html`
 2. Open an issue using the **Submit Results** template
@@ -29,12 +29,18 @@ Recommended submission attachments:
 
 Please also read `docs/TRUST_MODEL.md` before submitting. The goal is not just a high score; it is a result other builders will trust.
 
+If you are new to the repo, start with:
+
+- `docs/GETTING_STARTED.md`
+- `docs/PREFLIGHT.md`
+- `docs/HOW_TO_SUBMIT.md`
+
 ## Propose New Dimensions
 
-If you believe an important DTaaS capability is not covered by the current 10 dimensions, open an issue with:
+If you believe an important personal AI assistant runtime capability is not covered by the current 10 dimensions, open an issue with:
 
 - What the dimension measures
-- Why it matters for DTaaS
+- Why it matters for persistent personal AI assistant runtimes
 - A proposed test protocol
 - How it would be scored
 

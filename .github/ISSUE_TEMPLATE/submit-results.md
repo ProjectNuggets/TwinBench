@@ -1,6 +1,6 @@
 ---
 name: Submit Benchmark Results
-about: Submit DTaaS-Bench results for your runtime
+about: Submit TwinBench results for your runtime
 title: "[Results] <Runtime Name> v<Version>"
 labels: results
 ---
@@ -16,7 +16,8 @@ labels: results
 
 ## Benchmark Run
 
-- **DTaaS-Bench Version**: 0.2
+- **TwinBench Version**: 0.2
+- **Run Profile**: local reference / SaaS runtime / multi-tenant-ready
 - **Date**: 
 - **Platform**: 
 - **Harness Command Used**:
@@ -32,6 +33,12 @@ python -m harness.runner --url <URL> --token <TOKEN> --user-id <ID> --name "<Nam
 **Measured Coverage**: 
 **Coverage-Adjusted Verified Score**: /100
 **Rating**: 
+
+### Dimension Availability
+
+- **Any partially measured dimensions**:
+- **Any unavailable dimensions**:
+- **Reason codes seen in artifact**:
 
 ### Dimension Scores
 
@@ -53,6 +60,7 @@ python -m harness.runner --url <URL> --token <TOKEN> --user-id <ID> --name "<Nam
 - **Diagnostics attached**: yes/no
 - **Metrics attached**: yes/no
 - **Run manifest attached**: yes/no
+- **Preflight completed**: yes/no
 - **Any runtime/provider incident during run**:
 - **Incident attribution**: runtime / upstream dependency / network / unknown
 - **Notes on projected components**:

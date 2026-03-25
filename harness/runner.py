@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""DTaaS-Bench Runner — benchmark any persistent autonomous AI agent runtime.
+"""TwinBench runner for personal AI assistant runtimes.
 
 Usage:
     python -m harness.runner --url http://localhost:8080 --token TOKEN --user-id 1
@@ -88,7 +88,7 @@ def resolve_token(args) -> str:
 
 def main():
     parser = argparse.ArgumentParser(
-        description="DTaaS-Bench: benchmark a DTaaS runtime"
+        description="TwinBench: benchmark a personal AI assistant runtime"
     )
     parser.add_argument(
         "--url", required=True, help="Runtime base URL (e.g. http://localhost:8080)"
@@ -196,7 +196,7 @@ def main():
                 sys.exit(1)
 
     console.print()
-    console.print("[bold]DTaaS-Bench v0.2[/bold]", style="blue")
+    console.print("[bold]TwinBench v0.2[/bold]", style="blue")
     console.print(f"Runtime: {args.url}")
     console.print(f"User ID: {args.user_id}")
     console.print(f"Dimensions: {', '.join(dims_to_run)}")
@@ -213,6 +213,8 @@ def main():
     # Run dimensions
     all_results = {
         "benchmark_version": "0.2",
+        "benchmark_name": "TwinBench",
+        "benchmark_subtitle": "Open Benchmark for Personal AI Assistant Runtimes",
         "runtime_name": args.name,
         "url": args.url,
         "user_id": args.user_id,
@@ -222,6 +224,8 @@ def main():
         "dimension_verified_scores": {},
         "dimension_projected_scores": {},
         "dimension_measured_coverage": {},
+        "dimension_status": {},
+        "dimension_reason_codes": {},
         "dimension_details": {},
     }
 
@@ -247,6 +251,16 @@ def main():
             all_results["dimension_verified_scores"][dim_id] = verified_score
             all_results["dimension_projected_scores"][dim_id] = projected_score
             all_results["dimension_measured_coverage"][dim_id] = measured_coverage
+            status = result.get("status")
+            if status is None:
+                if measured_coverage >= 1.0:
+                    status = "measured"
+                elif measured_coverage > 0:
+                    status = "partially_measured"
+                else:
+                    status = "unavailable"
+            all_results["dimension_status"][dim_id] = status
+            all_results["dimension_reason_codes"][dim_id] = result.get("reason_code")
             all_results["dimension_details"][dim_id] = result.get("details", {})
             console.print(
                 f"[green]V:{verified_score:.0f}[/green] / [cyan]P:{projected_score:.0f}[/cyan] (cov {measured_coverage:.0%})"
@@ -257,6 +271,8 @@ def main():
             all_results["dimension_verified_scores"][dim_id] = 0
             all_results["dimension_projected_scores"][dim_id] = 0
             all_results["dimension_measured_coverage"][dim_id] = 0.0
+            all_results["dimension_status"][dim_id] = "error"
+            all_results["dimension_reason_codes"][dim_id] = "dimension_execution_failed"
             all_results["dimension_details"][dim_id] = {"error": str(e)}
 
     elapsed = time.monotonic() - start_total
@@ -286,7 +302,7 @@ def main():
 
     # Display results table
     console.print()
-    table = Table(title="DTaaS-Bench Results", show_lines=True)
+    table = Table(title="TwinBench Results", show_lines=True)
     table.add_column("Dimension", style="bold")
     table.add_column("Weight", justify="right")
     table.add_column("Verified", justify="right")

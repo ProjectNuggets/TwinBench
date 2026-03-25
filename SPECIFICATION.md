@@ -1,6 +1,6 @@
-# DTaaS-Bench v0.2
+# TwinBench v0.2
 
-## Open Benchmark for Persistent Autonomous AI Agent Runtimes
+## Open Benchmark for Personal AI Assistant Runtimes
 
 **Published by**: Nova Nuggets — Handcrafted Intelligence. Own Your AI.
 **Author**: Alfred Succer, Founder & CEO
@@ -11,13 +11,15 @@
 
 ## Executive Summary
 
-Digital Twin as a Service (DTaaS) represents a new category of AI infrastructure: persistent, autonomous agent runtimes that remember, plan, act, and follow up — continuously, across channels, under the user's control.
+TwinBench evaluates the runtime category behind persistent personal AI assistants: systems that remember, plan, act, and follow up continuously, across channels, under the user's control.
+
+Inside this repo we still use the technical term `DTaaS` for the underlying runtime category, but the public-facing benchmark language is intentionally broader and easier to understand.
 
 As of March 2026, no benchmark evaluates this category. Industrial digital twin benchmarks (AWS IoT TwinMaker, Azure Digital Twins, Eclipse Ditto) measure IoT simulation fidelity. AI agent benchmarks (APEX-Agents, SWE-Bench, VitaBench, TAU2-Bench, MemoryArena) measure isolated LLM task completion.
 
-Neither captures what a DTaaS runtime must do: maintain durable state, execute autonomously within safety constraints, operate across multiple communication channels, and scale to thousands of concurrent users — all while remaining under the operator's control.
+Neither captures what a personal AI assistant runtime must do: maintain durable state, execute autonomously within safety constraints, operate across multiple communication channels, and scale to real user populations while remaining under operator control.
 
-DTaaS-Bench fills this gap. It defines 10 measurable dimensions, explicit verified/projected score separation, and a reproducible test protocol that any runtime can be evaluated against.
+TwinBench fills this gap. It defines 10 measurable dimensions, explicit verified/projected score separation, and a reproducible test protocol that any serious runtime can be evaluated against.
 
 ---
 
@@ -231,9 +233,17 @@ Logarithmic scaling rewards breadth without over-indexing on raw count. A runtim
 
 **What it tests**: Resource consumption as user count grows and inference cost per autonomous turn.
 
+TwinBench interprets scale using three separate signals:
+
+- `same_session_contention`: diagnostic only; expected to serialize on some runtimes
+- `provisioned_multi_user_parallelism`: the primary measured multi-user signal
+- `bootstrap_availability`: whether tenant-aware benchmark users can be provisioned fairly before fanout
+
 **Protocol**:
 1. Measure baseline: 1 user, idle RSS, binary size
-2. Simulate 10 / 100 / 1000 concurrent users with active conversations
+2. Measure same-user contention separately as a diagnostic, not as the primary scale claim
+3. Provision benchmark users when the runtime requires tenant bootstrap
+4. Simulate 10 / 100 / 1000 concurrent provisioned users with active conversations when supported
 3. Measure: RSS per user, CPU utilization, p95 latency at each scale point
 4. Measure: inference token cost per autonomous turn (input + output)
 5. Test horizontal scaling: can the runtime run N instances with shared state?
@@ -250,6 +260,8 @@ Logarithmic scaling rewards breadth without over-indexing on raw count. A runtim
 | `cost_per_auto_turn_usd` | Average inference cost per autonomous background turn |
 
 **Scoring**: `(inverse_rss x 0.25) + (inverse_p95 x 0.20) + (max_users x 0.25) + (horizontal x 0.20) + (inverse_cost x 0.10)`
+
+If multi-user bootstrap is unavailable, the artifact should report a reason code such as `multi_user_bootstrap_unavailable` rather than silently treating the runtime as low-scale.
 
 ---
 
@@ -328,6 +340,8 @@ Required v0.2 run outputs:
 2. `projected_composite_score`
 3. `measured_coverage` (0-1)
 4. `coverage_adjusted_verified_score = verified_composite_score * measured_coverage`
+5. `dimension_status`
+6. `dimension_reason_codes`
 
 Tier classification uses `coverage_adjusted_verified_score`.
 
@@ -457,10 +471,10 @@ Nullalis (ZAKI BOT) is our autonomous agent runtime: a persistent digital twin t
 
 ## About This Benchmark
 
-DTaaS-Bench is an open specification. Any runtime can be evaluated against it. Nova Nuggets publishes this benchmark to define the category and raise the bar for what a digital twin runtime should deliver. We welcome contributions, critiques, and competing results.
+TwinBench is an open specification. Any runtime can be evaluated against it. Nova Nuggets publishes this benchmark to define the category and raise the bar for what a personal AI assistant runtime should deliver. We welcome contributions, critiques, and competing results.
 
 To submit results or propose changes: contact the Nova Nuggets engineering team or open an issue on the benchmark repository.
 
 ---
 
-*DTaaS-Bench v0.2 — March 2026 — Nova Nuggets*
+*TwinBench v0.2 — March 2026 — Nova Nuggets*

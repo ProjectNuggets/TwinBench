@@ -220,6 +220,8 @@ def run(config: BenchConfig) -> dict:
             "verified_score": results["verified_score"],
             "projected_score": results["projected_score"],
             "measured_coverage": results["measured_coverage"],
+            "status": "unavailable",
+            "reason_code": "multi_user_bootstrap_unavailable",
             "details": results,
         }
 
@@ -251,5 +253,7 @@ def run(config: BenchConfig) -> dict:
         "verified_score": results["verified_score"],
         "projected_score": results["projected_score"],
         "measured_coverage": results["measured_coverage"],
+        "status": "partially_measured",
+        "reason_code": "multi_user_scale_measured_with_provisioned_subset",
         "details": results,
     }

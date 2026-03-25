@@ -1,6 +1,6 @@
 # Changelog
 
-All notable changes to DTaaS-Bench should be documented in this file.
+All notable changes to TwinBench should be documented in this file.
 
 The format is intentionally simple and release-oriented.
 
@@ -28,3 +28,20 @@ The format is intentionally simple and release-oriented.
 ### Notes
 
 - This release is focused on benchmark trust, open-source readiness, and compatibility with the current Nullalis gateway contract.
+
+## [0.3.0] - 2026-03-25
+
+### Added
+
+- Public-facing TwinBench branding for personal AI assistant runtimes
+- New newcomer docs: getting started, run profiles, preflight, compatibility checklist, glossary, integration paths, and lightweight submission flow
+- Public results index and press kit
+- Outreach packet and outreach target list for competitor and lab wave
+- Dimension-level artifact status and reason code fields
+
+### Changed
+
+- Reframed README and specification around personal AI assistant runtime language
+- Clarified scale fairness: same-session contention is diagnostic, multi-user fanout should provision users first
+- Updated trust model and issue template to distinguish unavailable dimensions from product failure
+- Added provisioning-aware scale benchmark behavior and Nullalis local token discovery flow

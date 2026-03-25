@@ -1,15 +1,15 @@
-# DTaaS-Bench Trust Model
+# TwinBench Trust Model
 
-DTaaS-Bench is designed to do two things at the same time:
+TwinBench is designed to do two things at the same time:
 
 1. define a real category in the AI assistant market, and
 2. remain trustworthy enough that the category is taken seriously.
 
 That means the benchmark cannot just be a marketing scorecard. It needs clear evidence rules, explicit limits, and reproducible artifacts.
 
-## What DTaaS-Bench Measures
+## What TwinBench Measures
 
-DTaaS-Bench measures persistent autonomous AI agent runtimes:
+TwinBench measures persistent personal AI assistant runtimes:
 
 - systems that remember across sessions and restarts
 - systems that act without a user actively typing
@@ -17,7 +17,7 @@ DTaaS-Bench measures persistent autonomous AI agent runtimes:
 - systems that enforce safety and operator control during background turns
 - systems that can be deployed as real runtime infrastructure, not just prompt wrappers
 
-This is the category we call `Digital Twin as a Service` (`DTaaS`).
+Inside this repo, this is the category we still call `Digital Twin as a Service` (`DTaaS`).
 
 ## The Benchmark Integrity Rule
 
@@ -32,7 +32,7 @@ The benchmark never treats an estimate as a verified leaderboard result.
 
 ## Evidence Tiers
 
-DTaaS-Bench uses three evidence tiers.
+TwinBench uses three evidence tiers.
 
 ### Tier 1: Live Behavioral Evidence
 
@@ -73,7 +73,7 @@ This evidence is useful for explaining why a runtime should perform well, but th
 
 ## Result Classes
 
-DTaaS-Bench uses three result classes.
+TwinBench uses three result classes.
 
 ### Verified Leaderboard Result
 
@@ -105,7 +105,7 @@ External estimates are non-ranked comparison rows derived from public materials.
 
 The benchmark should reward real runtime behavior, not polished answers.
 
-DTaaS-Bench therefore prefers:
+TwinBench therefore prefers:
 
 - observed behavior over claims
 - endpoint evidence over natural-language self-report
@@ -117,7 +117,7 @@ Known weak spots should be documented openly. If a dimension currently depends o
 
 ## Incident Attribution
 
-Trusted benchmarking also means being clear about where a failure happened.
+Trusted benchmarking also means being clear about where a failure happened and why a dimension may be unavailable.
 
 When a run degrades, submissions should distinguish between:
 
@@ -127,6 +127,20 @@ When a run degrades, submissions should distinguish between:
 - contract mismatch: the runtime could not be exercised fairly because it needs an adapter or does not implement the benchmark transport
 
 If a run encounters an outage or degraded upstream dependency, that does not invalidate the artifact. It does mean the artifact should say so explicitly.
+
+Public artifacts should also separate:
+
+- measured dimension
+- partially measured dimension
+- unavailable dimension
+- error during dimension execution
+
+Whenever possible, a dimension that is unavailable should include a reason code. Examples:
+
+- `multi_user_bootstrap_unavailable`
+- `contract_mismatch`
+- `missing_diagnostics_surface`
+- `runtime_unavailable_during_probe`
 
 Strong submissions should attach:
 
@@ -177,7 +191,7 @@ Recommended additions:
 
 ## Open Benchmark Position
 
-DTaaS-Bench is opinionated about the category, but it should be neutral about who wins.
+TwinBench is opinionated about the category, but it should be neutral about who wins.
 
 The benchmark is strongest when:
 
