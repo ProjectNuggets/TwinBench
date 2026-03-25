@@ -2,6 +2,8 @@
 
 This page is the public landing page for checked-in TwinBench artifacts. It highlights one canonical current result, shows benchmark progression without clutter, and keeps supporting artifacts available for audit.
 
+If you are new to TwinBench, read [WHY_TWINBENCH.md](WHY_TWINBENCH.md) first, then come back here for the current public result.
+
 ## Current Reference Result
 
 ### Nullalis Local Open-Ended Race

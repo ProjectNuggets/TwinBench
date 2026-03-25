@@ -41,6 +41,7 @@ Use a benchmark card that includes:
 Suggested asset source:
 
 - `assets/benchmark-score-card.svg`
+- `assets/benchmark-score-card.png`
 
 If GitHub requires raster for the social preview, export a PNG from that asset and keep the wording identical.
 

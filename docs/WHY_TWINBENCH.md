@@ -2,6 +2,14 @@
 
 TwinBench exists because current AI benchmarks still leave a major category under-measured.
 
+That missing category is the **personal AI assistant runtime**:
+
+- not just a chatbot
+- not just a coding agent
+- not just a workflow step
+
+It is the runtime behind a long-lived assistant that can remember, act, follow up, stay safe, and operate over time for one user.
+
 ## What Existing Benchmarks Usually Measure
 
 - coding ability
@@ -24,9 +32,18 @@ TwinBench focuses on the runtime behavior behind persistent personal AI assistan
 - scale and resilience
 - real artifact-backed evidence
 
+## Who This Is For
+
+- runtime builders shipping personal AI assistant products
+- agent framework teams moving toward persistent assistants
+- infra teams building long-lived agent runtimes
+- researchers who want a benchmark category closer to real assistant behavior
+
 ## Why This Matters Now
 
 The market is moving from “chat” toward long-lived assistants. That shift needs a benchmark that treats the assistant as infrastructure, not only as a model call.
+
+If the industry is going to talk seriously about personal AI assistants, it needs a benchmark that measures runtime behavior rather than only prompt quality.
 
 ## The Standard TwinBench Is Trying to Set
 
@@ -37,3 +54,9 @@ The market is moving from “chat” toward long-lived assistants. That shift ne
 - strict about evidence
 
 TwinBench should become the place where serious runtime builders prove what their systems can actually do.
+
+## Start Here
+
+- Want the benchmark in 10 minutes: [GETTING_STARTED.md](GETTING_STARTED.md)
+- Want the current public reference artifact: [RESULTS_INDEX.md](RESULTS_INDEX.md)
+- Want the detailed rules: [SPECIFICATION.md](../SPECIFICATION.md)
