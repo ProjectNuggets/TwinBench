@@ -2,7 +2,8 @@
   "results": [
     {
       "slug": "nullalis-live-2026-03-25-openended",
-      "runtime_name": "Nullalis local openended race",
+      "runtime_name": "Nullalis Reference Runtime",
+      "raw_runtime_name": "Nullalis local openended race",
       "date": "2026-03-25",
       "coverage_adjusted_verified_score": 75.9,
       "verified_composite_score": 90.9,
@@ -290,7 +291,8 @@
     },
     {
       "slug": "nullalis-local-2026-03-24",
-      "runtime_name": "Nullalis local live",
+      "runtime_name": "Nullalis Baseline",
+      "raw_runtime_name": "Nullalis local live",
       "date": "2026-03-24",
       "coverage_adjusted_verified_score": 68.1,
       "verified_composite_score": 81.6,
@@ -545,6 +547,7 @@
     {
       "slug": "twinbench-demo-runtime",
       "runtime_name": "TwinBench Demo Runtime",
+      "raw_runtime_name": "TwinBench Demo Runtime",
       "date": "2026-03-25",
       "coverage_adjusted_verified_score": 54.4,
       "verified_composite_score": 79.0,
@@ -851,7 +854,8 @@
     },
     {
       "slug": "nullalis-live-2026-03-25",
-      "runtime_name": "Nullalis local live",
+      "runtime_name": "Nullalis Auth-Failed Run",
+      "raw_runtime_name": "Nullalis local live",
       "date": "2026-03-25",
       "coverage_adjusted_verified_score": 5.8,
       "verified_composite_score": 8.4,
@@ -1126,7 +1130,8 @@
     },
     {
       "slug": "nullalis-scale-probe",
-      "runtime_name": "Nullalis scale probe",
+      "runtime_name": "Nullalis Scale Fairness Probe",
+      "raw_runtime_name": "Nullalis scale probe",
       "date": "2026-03-25",
       "coverage_adjusted_verified_score": 1.0,
       "verified_composite_score": 96.0,
@@ -1208,7 +1213,8 @@
     },
     {
       "slug": "nullalis-targeted-2026-03-24",
-      "runtime_name": "Nullalis local live",
+      "runtime_name": "Nullalis Degraded Recovery Run",
+      "raw_runtime_name": "Nullalis local live",
       "date": "2026-03-24",
       "coverage_adjusted_verified_score": 0.0,
       "verified_composite_score": 0.0,

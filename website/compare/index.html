@@ -4,30 +4,30 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Compare TwinBench results</title>
-  <link rel="stylesheet" href="site.css">
+  <link rel="stylesheet" href="../site.css">
 </head>
 <body>
   <div class="shell">
     <div class="nav">
-      <a href="index.html">Home</a>
-      <a href="methodology/index.html">Methodology</a>
-      <a href="faq/index.html">FAQ</a>
-      <a href="submit/index.html">Submit</a>
-      <a href="compare/index.html">Compare</a>
+      <a href="../index.html">Home</a>
+      <a href="../methodology/index.html">Methodology</a>
+      <a href="../faq/index.html">FAQ</a>
+      <a href="../submit/index.html">Submit</a>
+      <a href="../compare/index.html">Compare</a>
       <a href="https://github.com/ProjectNuggets/DTaaS-benchmark">GitHub</a>
     </div>
     
 <section class="hero">
   <div class="eyebrow">Compare</div>
   <h1>Compare two results</h1>
-  <p class="lede">Use this page when you want a clean side-by-side view instead of two tabs and a screenshot.</p>
+  <p class="lede">Use this page when you want a clean side-by-side view instead of two tabs and a screenshot. The reference runtime is preselected to make comparison fast.</p>
 </section>
 
 <section class="panel prose">
   <label for="left">Left</label>
-  <select id="left"><option value='nullalis-live-2026-03-25-openended'>Nullalis local openended race (nullalis-live-2026-03-25-openended)</option><option value='nullalis-local-2026-03-24'>Nullalis local live (nullalis-local-2026-03-24)</option><option value='twinbench-demo-runtime'>TwinBench Demo Runtime (twinbench-demo-runtime)</option><option value='nullalis-live-2026-03-25'>Nullalis local live (nullalis-live-2026-03-25)</option><option value='nullalis-scale-probe'>Nullalis scale probe (nullalis-scale-probe)</option><option value='nullalis-targeted-2026-03-24'>Nullalis local live (nullalis-targeted-2026-03-24)</option></select>
+  <select id="left"><option value='nullalis-live-2026-03-25-openended'>Nullalis Reference Runtime (nullalis-live-2026-03-25-openended)</option><option value='nullalis-local-2026-03-24'>Nullalis Baseline (nullalis-local-2026-03-24)</option><option value='twinbench-demo-runtime'>TwinBench Demo Runtime (twinbench-demo-runtime)</option><option value='nullalis-live-2026-03-25'>Nullalis Auth-Failed Run (nullalis-live-2026-03-25)</option><option value='nullalis-scale-probe'>Nullalis Scale Fairness Probe (nullalis-scale-probe)</option><option value='nullalis-targeted-2026-03-24'>Nullalis Degraded Recovery Run (nullalis-targeted-2026-03-24)</option></select>
   <label for="right">Right</label>
-  <select id="right"><option value='nullalis-live-2026-03-25-openended'>Nullalis local openended race (nullalis-live-2026-03-25-openended)</option><option value='nullalis-local-2026-03-24'>Nullalis local live (nullalis-local-2026-03-24)</option><option value='twinbench-demo-runtime'>TwinBench Demo Runtime (twinbench-demo-runtime)</option><option value='nullalis-live-2026-03-25'>Nullalis local live (nullalis-live-2026-03-25)</option><option value='nullalis-scale-probe'>Nullalis scale probe (nullalis-scale-probe)</option><option value='nullalis-targeted-2026-03-24'>Nullalis local live (nullalis-targeted-2026-03-24)</option></select>
+  <select id="right"><option value='nullalis-live-2026-03-25-openended'>Nullalis Reference Runtime (nullalis-live-2026-03-25-openended)</option><option value='nullalis-local-2026-03-24'>Nullalis Baseline (nullalis-local-2026-03-24)</option><option value='twinbench-demo-runtime'>TwinBench Demo Runtime (twinbench-demo-runtime)</option><option value='nullalis-live-2026-03-25'>Nullalis Auth-Failed Run (nullalis-live-2026-03-25)</option><option value='nullalis-scale-probe'>Nullalis Scale Fairness Probe (nullalis-scale-probe)</option><option value='nullalis-targeted-2026-03-24'>Nullalis Degraded Recovery Run (nullalis-targeted-2026-03-24)</option></select>
   <p><button class="button" id="run-compare" type="button">Compare</button></p>
   <div id="compare-out"></div>
 </section>
@@ -49,6 +49,8 @@ document.getElementById('run-compare').addEventListener('click', async () => {
   const right = bySlug(data.results, document.getElementById('right').value);
   document.getElementById('compare-out').innerHTML = `<div class="grid">${render(left)}${render(right)}</div>`;
 });
+document.getElementById('left').value = 'nullalis-live-2026-03-25-openended';
+document.getElementById('right').value = 'twinbench-demo-runtime';
 </script>
 
     <div class="footer">

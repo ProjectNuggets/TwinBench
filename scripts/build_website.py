@@ -22,6 +22,18 @@ ARTIFACTS_DIR = WEBSITE_DIR / "artifacts"
 
 CANONICAL_SLUG = "nullalis-live-2026-03-25-openended"
 EXCLUDE_SLUGS = {"nullalis-smoke-autonomy", "nullalis-v0.1", "nullalis-v0.2"}
+HOMEPAGE_SLUGS = {
+    "nullalis-live-2026-03-25-openended",
+    "twinbench-demo-runtime",
+}
+DISPLAY_NAME_OVERRIDES = {
+    "nullalis-live-2026-03-25-openended": "Nullalis Reference Runtime",
+    "nullalis-local-2026-03-24": "Nullalis Baseline",
+    "nullalis-live-2026-03-25": "Nullalis Auth-Failed Run",
+    "nullalis-scale-probe": "Nullalis Scale Fairness Probe",
+    "nullalis-targeted-2026-03-24": "Nullalis Degraded Recovery Run",
+    "twinbench-demo-runtime": "TwinBench Demo Runtime",
+}
 
 
 def _load_results() -> list[dict]:
@@ -35,7 +47,8 @@ def _load_results() -> list[dict]:
             continue
         item = {
             "slug": slug,
-            "runtime_name": data.get("runtime_name", slug),
+            "runtime_name": DISPLAY_NAME_OVERRIDES.get(slug, data.get("runtime_name", slug)),
+            "raw_runtime_name": data.get("runtime_name", slug),
             "date": data.get("date", ""),
             "coverage_adjusted_verified_score": data.get("coverage_adjusted_verified_score", 0),
             "verified_composite_score": data.get("verified_composite_score", 0),
@@ -57,7 +70,7 @@ def _load_results() -> list[dict]:
             item["headline_note"] = (
                 "Current public reference result. Scale interpretation is conservative relative to the later provisioning-aware scale fix."
             )
-        elif "auth-poisoned" in slug or slug.endswith("2026-03-25"):
+        elif slug == "nullalis-live-2026-03-25":
             item["headline_note"] = "Supporting degraded artifact preserved for audit."
         elif "scale-probe" in slug:
             item["headline_note"] = "Supporting fairness probe, not a replacement full-run score."
@@ -276,8 +289,9 @@ def _page(title: str, body: str, depth: int = 0) -> str:
 
 def _render_home(results: list[dict]) -> str:
     top = results[0]
+    homepage_items = [item for item in results if item["slug"] in HOMEPAGE_SLUGS]
     rows = []
-    for item in results[:8]:
+    for item in homepage_items:
         score = item["coverage_adjusted_verified_score"]
         coverage = round(item["measured_coverage"] * 100)
         rows.append(
@@ -295,9 +309,11 @@ def _render_home(results: list[dict]) -> str:
   <div class="eyebrow">The open benchmark for personal AI assistants</div>
   <h1>TwinBench</h1>
   <p class="lede">TwinBench measures whether an AI system can behave like a real personal AI assistant: remember, act, follow up, stay safe, and operate over time.</p>
+  <p class="lede" style="max-width:42ch"><strong>Can your personal AI assistant beat TwinBench?</strong> Start with the reference result, then run the demo or benchmark your own system.</p>
   <div class="actions">
     <a class="button" href="results/{top['slug']}/index.html">See the Reference Result</a>
-    <a class="button secondary" href="submit/index.html">Submit Your Assistant</a>
+    <a class="button secondary" href="submit/index.html">Benchmark Your Assistant</a>
+    <a class="button secondary" href="compare/index.html">Compare Results</a>
   </div>
   <div class="stats">
     <div class="stat"><strong>{len(results)}</strong> Checked-in artifacts</div>
@@ -310,13 +326,14 @@ def _render_home(results: list[dict]) -> str:
   <div class="panel">
     <div class="eyebrow">Leaderboard</div>
     <h2>Current public board</h2>
-    <p>The board is one place, but every result keeps its class, coverage, and evidence story. Trust comes from artifacts, not claims.</p>
+    <p>The public board shows the current reference result and challenge-worthy artifacts. Historical and degraded runs stay available, but they do not dominate first impression.</p>
     <div class="leaderboard">
       <table>
         <thead><tr><th>Assistant</th><th>Class</th><th>Tier</th><th>Score</th><th>Coverage</th><th>Date</th></tr></thead>
         <tbody>{''.join(rows)}</tbody>
       </table>
     </div>
+    <p style="margin-top:12px"><a href="https://github.com/ProjectNuggets/DTaaS-benchmark/blob/main/docs/RESULTS_INDEX.md">See full artifact history</a></p>
   </div>
   <div class="panel">
     <div class="eyebrow">Why it matters</div>
@@ -374,14 +391,25 @@ def _render_result(item: dict) -> str:
     details = item["details"]
     artifact_links = item["artifact_links"]
     detail_items = []
+    sorted_dims = []
     for dim, info in details.items():
         verified = info.get("verified_score", info.get("score", 0)) if isinstance(info, dict) else 0
         reason = item["dimension_reason_codes"].get(dim) or ""
         status = item["dimension_status"].get(dim, "measured")
         label = DIMENSION_LABELS.get(dim, dim)
+        sorted_dims.append((label, verified))
         detail_items.append(
             f"<div class='tile'><strong>{label}</strong><div class='score'>{verified:.1f}</div><div><span class='pill'>{status}</span> {reason}</div></div>"
         )
+    sorted_dims.sort(key=lambda x: x[1], reverse=True)
+    strongest = ", ".join(label for label, _ in sorted_dims[:3]) if sorted_dims else "N/A"
+    weakest = sorted_dims[-1][0] if sorted_dims else "N/A"
+    if item["slug"] == CANONICAL_SLUG:
+        why_matters = "This is the strongest public proof in the repo that the personal AI assistant category is real and measurable."
+    elif item["slug"] == "twinbench-demo-runtime":
+        why_matters = "This result proves a new user can run TwinBench end to end before pointing it at a real assistant."
+    else:
+        why_matters = "This artifact helps explain benchmark progression, fairness, and failure handling."
     links = []
     if "json" in artifact_links:
         links.append(f"<a href='{artifact_links['json']}'>JSON artifact</a>")
@@ -418,6 +446,21 @@ def _render_result(item: dict) -> str:
   </div>
 </section>
 
+<section class="two-col section">
+  <div class="panel">
+    <div class="eyebrow">What stands out</div>
+    <h2>Result interpretation</h2>
+    <p><strong>Strongest dimensions:</strong> {strongest}</p>
+    <p><strong>Main limitation:</strong> {weakest}</p>
+    <p><strong>Why it matters:</strong> {why_matters}</p>
+  </div>
+  <div class="panel">
+    <div class="eyebrow">Evidence</div>
+    <h2>How to read it</h2>
+    <p>Use coverage-adjusted verified score for public comparison, verified raw for direct measurement strength, and measured coverage to understand how much of the benchmark was truly exercised.</p>
+  </div>
+</section>
+
 <section class="section">
   <div class="eyebrow">Dimension tiles</div>
   <div class="grid">{''.join(detail_items)}</div>
@@ -442,7 +485,16 @@ def _render_methodology() -> str:
   <div class="card"><h3>Coverage matters</h3><p>The headline ranking number is coverage-adjusted verified score, not the most flattering number in the artifact.</p></div>
   <div class="card"><h3>Trust over hype</h3><p>Unsupported surfaces, missing bootstrap, and partial measurement are reported explicitly instead of flattened into a false failure.</p></div>
 </section>
+
+<section class="panel prose section">
+  <h2>What the headline numbers mean</h2>
+  <p><strong>Verified</strong> is what the run directly proved. <strong>Projected</strong> is the broader estimate with explicit assumptions. <strong>Measured coverage</strong> tells you how much of the benchmark was directly exercised.</p>
+  <p>TwinBench uses <strong>coverage-adjusted verified score</strong> for public ranking because it rewards both strength and honest measurement.</p>
+  <h2>Why unavailable is not failure</h2>
+  <p>Some systems do not expose the runtime surfaces needed for a fair direct measurement. TwinBench records that explicitly instead of pretending they cleanly failed a dimension.</p>
+</section>
 """,
+        depth=1,
     )
 
 
@@ -463,10 +515,15 @@ def _render_faq() -> str:
   <p>No. Nullalis is the current reference runtime because it produced the first strong public artifact.</p>
   <h2>Can I run TwinBench quickly?</h2>
   <p>Yes. Use the demo path from the repo or run against a native runtime with one command.</p>
+  <h2>Why can some dimensions be unavailable?</h2>
+  <p>Because some systems do not expose the runtime surfaces required for a fair direct measurement. TwinBench shows that honestly rather than hiding it.</p>
+  <h2>Why does coverage matter?</h2>
+  <p>Coverage shows how much of the benchmark was truly exercised. A flattering score with weak coverage should not outrank a strong, deeply measured artifact.</p>
   <h2>What if my assistant only supports part of the benchmark?</h2>
   <p>That is still useful. TwinBench prefers honest partial artifacts over fake comparability.</p>
 </section>
 """,
+        depth=1,
     )
 
 
@@ -494,6 +551,7 @@ def _render_submit() -> str:
   <p><a href="https://github.com/ProjectNuggets/DTaaS-benchmark/issues/new?template=submit-results.md">Open a results submission</a></p>
 </section>
 """,
+        depth=1,
     )
 
 
@@ -508,7 +566,7 @@ def _render_compare(results: list[dict]) -> str:
 <section class="hero">
   <div class="eyebrow">Compare</div>
   <h1>Compare two results</h1>
-  <p class="lede">Use this page when you want a clean side-by-side view instead of two tabs and a screenshot.</p>
+  <p class="lede">Use this page when you want a clean side-by-side view instead of two tabs and a screenshot. The reference runtime is preselected to make comparison fast.</p>
 </section>
 
 <section class="panel prose">
@@ -537,8 +595,11 @@ document.getElementById('run-compare').addEventListener('click', async () => {{
   const right = bySlug(data.results, document.getElementById('right').value);
   document.getElementById('compare-out').innerHTML = `<div class="grid">${{render(left)}}${{render(right)}}</div>`;
 }});
+document.getElementById('left').value = '{CANONICAL_SLUG}';
+document.getElementById('right').value = 'twinbench-demo-runtime';
 </script>
 """,
+        depth=1,
     )
 
 

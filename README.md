@@ -12,6 +12,11 @@ This repository exists because the current benchmark landscape still misses a ca
 
 TwinBench now ships with a lightweight public site and leaderboard surface in [`website/`](website/).
 
+Live site:
+
+- [Live Leaderboard](https://projectnuggets.github.io/DTaaS-benchmark/index.html)
+- [Reference Result](https://projectnuggets.github.io/DTaaS-benchmark/results/nullalis-live-2026-03-25-openended/index.html)
+
 Build it locally:
 
 ```bash
@@ -22,6 +27,8 @@ Then open:
 
 - `website/index.html`
 - `website/results/nullalis-live-2026-03-25-openended/index.html`
+
+The website is the public leaderboard and share surface. The repo is the benchmark source, run path, and submission workflow.
 
 ## Quick Run
 
