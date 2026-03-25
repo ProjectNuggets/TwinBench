@@ -30,3 +30,9 @@ Nullalis is the current reference runtime because it demonstrates the full-stack
 - [docs/GETTING_STARTED.md](docs/GETTING_STARTED.md)
 - [docs/RESULTS_INDEX.md](docs/RESULTS_INDEX.md)
 - [docs/OUTREACH_PACKET.md](docs/OUTREACH_PACKET.md)
+
+## Nova Nuggets
+
+TwinBench is published by [Nova Nuggets](https://novanuggets.com), an AI innovation company building toward **personal, secure, sovereign AI for everyone**.
+
+Nova Nuggets focuses on practical infrastructure and products for long-lived assistants. The benchmark should stay neutral and open, while making that mission visible to the people who discover it.

@@ -14,6 +14,10 @@ That means more than answering one prompt. A serious runtime should be able to:
 - stay safe during background turns
 - operate as real runtime infrastructure
 
+## Category Definition
+
+A personal AI assistant runtime is not just a chatbot. It is a long-lived system that remembers, acts, and stays aligned with one user over time.
+
 ## Why TwinBench Exists
 
 Current benchmarks tend to measure:
@@ -25,6 +29,8 @@ Current benchmarks tend to measure:
 Those are useful, but they do not capture the full runtime behavior expected from persistent personal AI assistants.
 
 TwinBench exists to define and measure that missing category publicly.
+
+For the stronger launch rationale, read [WHY_TWINBENCH.md](WHY_TWINBENCH.md).
 
 ## What Makes TwinBench Different
 
@@ -49,3 +55,4 @@ Each run produces:
 - compatibility: [COMPATIBILITY_CHECKLIST.md](COMPATIBILITY_CHECKLIST.md)
 - preflight: [PREFLIGHT.md](PREFLIGHT.md)
 - public results: [RESULTS_INDEX.md](RESULTS_INDEX.md)
+- agent operators: [AGENT_RUN_GUIDE.md](AGENT_RUN_GUIDE.md)

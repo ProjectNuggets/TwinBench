@@ -8,16 +8,37 @@ This repository exists because the current benchmark landscape still misses a ca
 
 **TwinBench defines the runtime category behind persistent personal AI assistants.**
 
+## Quick Run
+
+Generic runtime:
+
+```bash
+python3.10 -m harness.runner --url YOUR_URL --token YOUR_TOKEN --user-id 1 --name "Your Runtime" --output results/your-runtime.json --markdown results/your-runtime.md --html results/your-runtime.html
+```
+
+Local Nullalis:
+
+```bash
+python3.10 -m harness.runner --url http://127.0.0.1:3000 --token-from-nullalis-config --user-id 1 --name "Nullalis Local" --output results/nullalis-local.json --markdown results/nullalis-local.md --html results/nullalis-local.html
+```
+
 Quick links:
 - [Overview](docs/OVERVIEW.md)
+- [Why TwinBench](docs/WHY_TWINBENCH.md)
 - [Getting Started in 10 Minutes](docs/GETTING_STARTED.md)
+- [Run with Agents](docs/AGENT_RUN_GUIDE.md)
 - [Run Profiles](docs/RUN_PROFILES.md)
 - [Compatibility Checklist](docs/COMPATIBILITY_CHECKLIST.md)
 - [Preflight Checklist](docs/PREFLIGHT.md)
+- [Artifact Schema Explainer](docs/ARTIFACT_SCHEMA.md)
 - [How to Submit Results](docs/HOW_TO_SUBMIT.md)
 - [Results Index](docs/RESULTS_INDEX.md)
 - [Trust Model](docs/TRUST_MODEL.md)
 - [Press Kit](PRESSKIT.md)
+
+## Category Definition
+
+A personal AI assistant runtime is not just a chatbot. It is a long-lived system that remembers, acts, and stays aligned with one user over time.
 
 ## What TwinBench Measures
 
@@ -35,6 +56,14 @@ The benchmark reports two composites:
 - `projected`: includes clearly labeled assumptions for not-yet-measured parts
 
 The leaderboard tiers on `coverage_adjusted_verified_score`, not on the most flattering number.
+
+## Run with Agents
+
+If you want Codex, Claude Code, Cursor, or another coding agent to run TwinBench for you, use the exact command above or hand it this prompt:
+
+> Run TwinBench against this runtime at URL X using token Y. First perform the preflight checks, then run the harness, save JSON, Markdown, and HTML artifacts, and summarize the verified score, projected score, measured coverage, dimension statuses, and any unavailable dimensions with reason codes.
+
+For a machine-operator-ready guide, use [docs/AGENT_RUN_GUIDE.md](docs/AGENT_RUN_GUIDE.md).
 
 ## Who This Is For
 
@@ -56,6 +85,11 @@ The leaderboard tiers on `coverage_adjusted_verified_score`, not on the most fla
 Current reference artifacts derived from checked-in runs are listed in [docs/RESULTS_INDEX.md](docs/RESULTS_INDEX.md).
 
 Nullalis is the current **reference runtime**, not the benchmark owner. Its role is to prove the category is real and to provide the first evidence-rich public artifact.
+
+Canonical public reference artifact:
+
+- [Nullalis TwinBench HTML report](results/nullalis-live-2026-03-25-openended.html)
+- [Nullalis TwinBench JSON artifact](results/nullalis-live-2026-03-25-openended.json)
 
 ## Getting Started in 10 Minutes
 
@@ -131,6 +165,17 @@ The full scoring and evidence rules live in [SPECIFICATION.md](SPECIFICATION.md)
 
 ## How Results Work
 
+When you read a TwinBench artifact, start with:
+
+- `verified_composite_score`: what the run directly proved
+- `projected_composite_score`: what the runtime may support beyond direct measurement
+- `measured_coverage`: how much of the benchmark was directly exercised
+- `coverage_adjusted_verified_score`: the number used for tiering
+- `dimension_status`: whether each dimension was measured, partially measured, unavailable, or errored
+- `dimension_reason_codes`: why a dimension was unavailable or only partially measurable
+
+Use [docs/ARTIFACT_SCHEMA.md](docs/ARTIFACT_SCHEMA.md) for a plain-English field guide.
+
 Every serious result should include:
 
 - benchmark JSON
@@ -143,17 +188,55 @@ Every serious result should include:
 
 TwinBench also records dimension-level availability and reason codes so blocked or unsupported dimensions stay interpretable instead of silently looking like product weakness.
 
+Scale fairness matters especially here:
+
+- same-user serialization is normal for many personal AI assistant runtimes
+- multi-user scale claims require provisioned users
+- bootstrap-unavailable should not be misread as poor throughput
+
 ## New Here?
 
 Recommended reading order:
 
+Builders:
 1. [docs/GETTING_STARTED.md](docs/GETTING_STARTED.md)
-2. [docs/RUN_PROFILES.md](docs/RUN_PROFILES.md)
-3. [docs/COMPATIBILITY_CHECKLIST.md](docs/COMPATIBILITY_CHECKLIST.md)
-4. [docs/HOW_TO_SUBMIT.md](docs/HOW_TO_SUBMIT.md)
-5. [SPECIFICATION.md](SPECIFICATION.md)
+2. [docs/PREFLIGHT.md](docs/PREFLIGHT.md)
+3. [docs/RUN_PROFILES.md](docs/RUN_PROFILES.md)
+
+Researchers:
+1. [docs/WHY_TWINBENCH.md](docs/WHY_TWINBENCH.md)
+2. [SPECIFICATION.md](SPECIFICATION.md)
+3. [docs/TRUST_MODEL.md](docs/TRUST_MODEL.md)
+
+Competitors:
+1. [docs/COMPATIBILITY_CHECKLIST.md](docs/COMPATIBILITY_CHECKLIST.md)
+2. [docs/INTEGRATION_PATHS.md](docs/INTEGRATION_PATHS.md)
+3. [docs/HOW_TO_SUBMIT.md](docs/HOW_TO_SUBMIT.md)
+
+Agent operators:
+1. [docs/AGENT_RUN_GUIDE.md](docs/AGENT_RUN_GUIDE.md)
+2. [docs/PREFLIGHT.md](docs/PREFLIGHT.md)
+3. [docs/HOW_TO_SUBMIT.md](docs/HOW_TO_SUBMIT.md)
 
 If your runtime does not match the contract yet, read [docs/INTEGRATION_PATHS.md](docs/INTEGRATION_PATHS.md).
+
+## FAQ
+
+### Is this a chatbot benchmark?
+
+No. TwinBench is about long-lived assistant runtime behavior, not only single-turn response quality.
+
+### Is this only for Nullalis?
+
+No. Nullalis is the reference runtime because it provides the first strong artifact. The benchmark is intended to be challenged publicly by other runtimes.
+
+### Can I run this on a hosted product?
+
+Yes, if the product exposes the benchmark contract or a documented compatibility path.
+
+### What if my runtime only supports part of the category?
+
+Run TwinBench anyway. A partial but honest artifact is more useful than a narrated claim.
 
 ## Repository Guide
 
@@ -190,3 +273,9 @@ Contributions are welcome, especially:
 - better test coverage and report generation
 
 Start with [CONTRIBUTING.md](CONTRIBUTING.md).
+
+## Nova Nuggets
+
+TwinBench is published by [Nova Nuggets](https://novanuggets.com), an AI innovation company building toward **personal, secure, sovereign AI for everyone**.
+
+Our focus is practical infrastructure and products for long-lived assistants. The benchmark should stay neutral and open, while making that mission visible to people who discover the repo.
