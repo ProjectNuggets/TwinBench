@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630">
+  <rect width="1200" height="630" fill="#f8fafc"/>
+  <text x="60" y="90" fill="#0f172a" font-family="Arial, sans-serif" font-size="46" font-weight="700">TwinBench: 10 Dimensions</text>
+  <text x="60" y="130" fill="#475569" font-family="Arial, sans-serif" font-size="24">Personal AI assistant runtimes are more than one-shot prompts.</text>
+  <g fill="#0f172a" font-family="Arial, sans-serif" font-size="26">
+    <text x="80" y="200">1. Autonomy Control</text>
+    <text x="80" y="245">2. Memory Persistence</text>
+    <text x="80" y="290">3. Functional Capability</text>
+    <text x="80" y="335">4. Autonomous Execution</text>
+    <text x="80" y="380">5. Cross-Channel Consistency</text>
+    <text x="640" y="200">6. Integration Breadth</text>
+    <text x="640" y="245">7. Security &amp; Privacy</text>
+    <text x="640" y="290">8. Scale &amp; Cost Efficiency</text>
+    <text x="640" y="335">9. Operational Resilience</text>
+    <text x="640" y="380">10. Latency Profile</text>
+  </g>
+</svg>

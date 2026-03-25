@@ -39,6 +39,7 @@ For the stronger launch rationale, read [WHY_TWINBENCH.md](WHY_TWINBENCH.md).
 - it publishes raw artifacts
 - it treats unsupported dimensions honestly
 - it is designed to be vendor-neutral and beatable in public
+- it is runnable by both human operators and coding agents
 
 ## What the Benchmark Produces
 
@@ -56,3 +57,4 @@ Each run produces:
 - preflight: [PREFLIGHT.md](PREFLIGHT.md)
 - public results: [RESULTS_INDEX.md](RESULTS_INDEX.md)
 - agent operators: [AGENT_RUN_GUIDE.md](AGENT_RUN_GUIDE.md)
+- launch rationale: [WHY_TWINBENCH.md](WHY_TWINBENCH.md)

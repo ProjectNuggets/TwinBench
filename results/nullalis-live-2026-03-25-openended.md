@@ -3,6 +3,7 @@
 **Date**: 2026-03-25
 **Benchmark Version**: TwinBench v0.2
 **Runtime URL**: http://127.0.0.1:3000
+**Result Class**: Verified Reference Artifact
 
 ---
 
@@ -11,21 +12,29 @@
 - Verified raw: **90.9/100**
 - Measured coverage: **84%**
 - Projected composite: **87.6/100**
+- Interpretation: **This artifact is strong enough to compare publicly. Use the verified score for evidence-backed comparison and the projected score only as a clearly labeled estimate.**
+
+## Benchmark Principles
+
+- unsupported is not failure
+- missing bootstrap is not poor scale
+- same-user contention is diagnostic
+- evidence beats claims
 
 ### Dimension Breakdown
 
-| Dimension | Weight | Verified | Projected | Coverage | V Weighted | P Weighted |
-|-----------|--------|----------|-----------|----------|------------|------------|
-| Autonomy Control | 0.15 | 95 | 95 | 100% | 14.25 | 14.25 |
-| Memory Persistence | 0.15 | 100 | 100 | 70% | 10.50 | 15.00 |
-| Functional Capability | 0.15 | 100 | 100 | 100% | 15.00 | 15.00 |
-| Autonomous Execution | 0.12 | 100 | 100 | 100% | 12.00 | 12.00 |
-| Cross-Channel Consistency | 0.12 | 93 | 93 | 70% | 7.80 | 11.15 |
-| Integration Breadth | 0.08 | 54 | 54 | 100% | 4.32 | 4.32 |
-| Security & Privacy | 0.08 | 75 | 81 | 60% | 3.60 | 6.48 |
-| Scale & Cost Efficiency | 0.05 | 10 | 8 | 20% | 0.10 | 0.38 |
-| Operational Resilience | 0.05 | 100 | 90 | 75% | 3.75 | 4.50 |
-| Latency Profile | 0.05 | 91 | 91 | 100% | 4.56 | 4.56 |
+| Dimension | Status | Reason Code | Weight | Verified | Projected | Coverage | V Weighted | P Weighted |
+|-----------|--------|-------------|--------|----------|-----------|----------|------------|------------|
+| Autonomy Control | measured |  | 0.15 | 95 | 95 | 100% | 14.25 | 14.25 |
+| Memory Persistence | partially_measured |  | 0.15 | 100 | 100 | 70% | 10.50 | 15.00 |
+| Functional Capability | measured |  | 0.15 | 100 | 100 | 100% | 15.00 | 15.00 |
+| Autonomous Execution | measured |  | 0.12 | 100 | 100 | 100% | 12.00 | 12.00 |
+| Cross-Channel Consistency | partially_measured |  | 0.12 | 93 | 93 | 70% | 7.80 | 11.15 |
+| Integration Breadth | measured |  | 0.08 | 54 | 54 | 100% | 4.32 | 4.32 |
+| Security & Privacy | partially_measured |  | 0.08 | 75 | 81 | 60% | 3.60 | 6.48 |
+| Scale & Cost Efficiency | partially_measured |  | 0.05 | 10 | 8 | 20% | 0.10 | 0.38 |
+| Operational Resilience | partially_measured |  | 0.05 | 100 | 90 | 75% | 3.75 | 4.50 |
+| Latency Profile | measured |  | 0.05 | 91 | 91 | 100% | 4.56 | 4.56 |
 | **Verified Composite** | **1.00** | **90.9** |  | **84%** | **75.9** |  |
 | **Projected Composite** | **1.00** |  | **87.6** |  |  | **87.6** |
 

@@ -24,6 +24,22 @@ python3.10 -m harness.runner --url http://127.0.0.1:3000 --token-from-nullalis-c
 Run TwinBench against this runtime at URL X using token Y. First perform the preflight checks, then run the harness, save JSON, Markdown, and HTML artifacts, and summarize the verified score, projected score, measured coverage, dimension statuses, and any unavailable dimensions with reason codes.
 ```
 
+## Scripted Shortcuts
+
+```bash
+bash scripts/preflight.sh YOUR_URL YOUR_TOKEN 1
+bash scripts/run_twinbench.sh YOUR_URL YOUR_TOKEN "Your Runtime" 1
+bash scripts/run_twinbench_nullalis_local.sh
+```
+
+Or with `make`:
+
+```bash
+make preflight URL=YOUR_URL TOKEN=YOUR_TOKEN
+make run URL=YOUR_URL TOKEN=YOUR_TOKEN NAME="Your Runtime"
+make run-nullalis
+```
+
 ## Required Preflight Sequence
 
 1. Check `/health`

@@ -19,12 +19,14 @@ Headline:
 - Projected: `87.6`
 - Rating: `Production-Grade`
 - Result class: `reference runtime artifact`
+- Submit your runtime: [HOW_TO_SUBMIT.md](HOW_TO_SUBMIT.md)
 
 Notes:
 
 - strong core runtime behavior
 - earlier scale interpretation was conservative before provisioning-aware fixes
 - Nullalis is treated as the reference runtime, not the benchmark owner
+- scale interpretation is conservative relative to later provisioning-aware fixes
 
 ## How to Read a Result
 
@@ -43,6 +45,7 @@ Then check:
 These fields tell you whether a weak dimension was truly measured, only partially measured, unavailable, or blocked by environment or contract limitations.
 
 Use [ARTIFACT_SCHEMA.md](ARTIFACT_SCHEMA.md) for the field guide.
+See [REFERENCE_RESULT_POLICY.md](REFERENCE_RESULT_POLICY.md) for how TwinBench treats canonical, supporting, degraded, and external artifacts.
 
 ## Supporting Artifacts
 

@@ -25,6 +25,8 @@ Use [docs/PREFLIGHT.md](PREFLIGHT.md) if you want a structured check.
 
 ## Step 3: Run the benchmark
 
+If you want an agent to do this for you, use [AGENT_RUN_GUIDE.md](AGENT_RUN_GUIDE.md).
+
 Generic runtime:
 
 ```bash
@@ -80,3 +82,5 @@ Do not force it. Start with:
 - [docs/INTEGRATION_PATHS.md](INTEGRATION_PATHS.md)
 
 TwinBench is strongest when unsupported behavior is reported honestly rather than hidden.
+
+If something goes wrong, start with [TROUBLESHOOTING.md](TROUBLESHOOTING.md).

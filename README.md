@@ -22,11 +22,20 @@ Local Nullalis:
 python3.10 -m harness.runner --url http://127.0.0.1:3000 --token-from-nullalis-config --user-id 1 --name "Nullalis Local" --output results/nullalis-local.json --markdown results/nullalis-local.md --html results/nullalis-local.html
 ```
 
+Scripted shortcuts:
+
+```bash
+make preflight URL=http://localhost:8080 TOKEN=YOUR_TOKEN
+make run URL=http://localhost:8080 TOKEN=YOUR_TOKEN NAME="My Runtime"
+make run-nullalis
+```
+
 Quick links:
 - [Overview](docs/OVERVIEW.md)
 - [Why TwinBench](docs/WHY_TWINBENCH.md)
 - [Getting Started in 10 Minutes](docs/GETTING_STARTED.md)
 - [Run with Agents](docs/AGENT_RUN_GUIDE.md)
+- [Troubleshooting](docs/TROUBLESHOOTING.md)
 - [Run Profiles](docs/RUN_PROFILES.md)
 - [Compatibility Checklist](docs/COMPATIBILITY_CHECKLIST.md)
 - [Preflight Checklist](docs/PREFLIGHT.md)
