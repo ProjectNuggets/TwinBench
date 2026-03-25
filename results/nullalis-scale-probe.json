@@ -1,0 +1,103 @@
+{
+  "benchmark_version": "0.2",
+  "runtime_name": "Nullalis scale probe",
+  "url": "http://127.0.0.1:3000",
+  "user_id": "1",
+  "date": "2026-03-25",
+  "artifact_type": "live_gateway_run",
+  "dimension_scores": {
+    "scale_cost": 76.2
+  },
+  "dimension_verified_scores": {
+    "scale_cost": 96.0
+  },
+  "dimension_projected_scores": {
+    "scale_cost": 76.2
+  },
+  "dimension_measured_coverage": {
+    "scale_cost": 0.2
+  },
+  "dimension_details": {
+    "scale_cost": {
+      "baseline_p50_ms": 3797.0,
+      "same_session": {
+        "requests": 20,
+        "errors": 0,
+        "success": 20,
+        "wall_time_ms": 40565.0,
+        "p50_ms": 11195.5,
+        "p95_ms": 40559.9,
+        "p99_ms": 40559.9,
+        "error_samples": []
+      },
+      "multi_user_provisioning": {
+        "requested_users": 20,
+        "provisioned_users": 2,
+        "provisioned_user_ids": [
+          "1",
+          "2"
+        ],
+        "unavailable_users": 18,
+        "unavailable_user_ids": [
+          "3",
+          "4",
+          "5",
+          "6",
+          "7"
+        ],
+        "error_samples": []
+      },
+      "multi_user": {
+        "requests": 2,
+        "errors": 0,
+        "success": 2,
+        "wall_time_ms": 3988.4,
+        "p50_ms": 3005.9,
+        "p95_ms": 3988.2,
+        "p99_ms": 3988.2,
+        "error_samples": []
+      },
+      "contention_ratio_same_session_over_multi_user": 10.17,
+      "metrics_snapshot": {
+        "nullalis_http_transport_native_total{subsystem=\"tools\"}": "0",
+        "nullalis_http_transport_native_total{subsystem=\"providers\"}": "0",
+        "nullalis_http_transport_native_total{subsystem=\"channels\"}": "0",
+        "nullalis_http_transport_native_total{subsystem=\"system\"}": "0",
+        "nullalis_http_transport_curl_total{subsystem=\"tools\"}": "0",
+        "nullalis_http_transport_curl_total{subsystem=\"providers\"}": "1688",
+        "nullalis_http_transport_curl_total{subsystem=\"channels\"}": "0",
+        "nullalis_http_transport_curl_total{subsystem=\"system\"}": "0",
+        "nullalis_http_transport_fallback_total{subsystem=\"tools\"}": "0",
+        "nullalis_http_transport_fallback_total{subsystem=\"providers\"}": "0",
+        "nullalis_http_transport_fallback_total{subsystem=\"channels\"}": "0",
+        "nullalis_http_transport_fallback_total{subsystem=\"system\"}": "0",
+        "nullalis_http_pool_hits_total": "0",
+        "nullalis_http_pool_misses_total": "0",
+        "nullalis_http_pool_idle_connections": "0"
+      },
+      "score": 76.2,
+      "verified_score": 96.0,
+      "projected_score": 76.2,
+      "measured_coverage": 0.2
+    }
+  },
+  "verified_composite_score": 96.0,
+  "projected_composite_score": 3.8,
+  "coverage_adjusted_verified_score": 1.0,
+  "measured_coverage": 0.01,
+  "composite_score": 3.8,
+  "rating": "Early Stage",
+  "elapsed_seconds": 59.0,
+  "runtime_timing": {
+    "dynamic_enabled": false,
+    "base_timeout_secs": 90,
+    "last_timeout_used_secs": null,
+    "timeout_floor_secs": 90,
+    "timeout_ceiling_secs": 3600,
+    "timeout_multiplier": 4.0,
+    "timeout_grace_secs": 30,
+    "latency_ewma_ms": 0.0,
+    "latency_samples": 0
+  },
+  "method": "Direct harness run against live gateway using SSE stream endpoint; per-chat timeout policy described in runtime_timing."
+}

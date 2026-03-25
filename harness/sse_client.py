@@ -168,3 +168,43 @@ def get_metrics(config: BenchConfig) -> str | None:
     except requests.RequestException:
         pass
     return None
+
+
+def provision_user(config: BenchConfig) -> dict:
+    """Attempt to provision the current benchmark user for tenant-aware runtimes."""
+    url = f"{config.base_url}/api/v1/users/provision"
+    try:
+        r = requests.post(
+            url,
+            headers=config.headers,
+            json={"user_id": config.user_id},
+            timeout=15,
+        )
+    except requests.RequestException as e:
+        return {
+            "ok": False,
+            "status_code": None,
+            "error": str(e),
+            "reason": "request_failed",
+        }
+
+    try:
+        payload = r.json()
+    except json.JSONDecodeError:
+        payload = {}
+
+    if r.status_code == 200:
+        return {
+            "ok": True,
+            "status_code": r.status_code,
+            "payload": payload,
+            "reason": "provisioned",
+        }
+
+    reason = payload.get("error") if isinstance(payload, dict) else None
+    return {
+        "ok": False,
+        "status_code": r.status_code,
+        "payload": payload,
+        "reason": reason or "http_error",
+    }

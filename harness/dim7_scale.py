@@ -5,7 +5,7 @@ import statistics
 import concurrent.futures
 
 from .config import BenchConfig
-from .sse_client import chat, get_metrics
+from .sse_client import chat, get_metrics, provision_user
 
 
 def _timed_chat(config: BenchConfig, message: str) -> dict:
@@ -122,22 +122,72 @@ def run(config: BenchConfig) -> dict:
         user_ids = [str(base_user_num + i) for i in range(concurrency)]
     except ValueError:
         user_ids = [f"{config.user_id}-bench-{i}" for i in range(concurrency)]
-    multi_cfgs = [config.clone_for_user(uid) for uid in user_ids]
-    multi_latencies, multi_errors, multi_wall_ms, multi_error_samples = _run_concurrency_scenario(
-        multi_cfgs,
-        "Multi-user concurrent request",
-    )
-    multi_stats = _latency_stats(multi_latencies)
-    results["multi_user"] = {
-        "requests": concurrency,
-        "errors": multi_errors,
-        "success": len(multi_latencies),
-        "wall_time_ms": round(multi_wall_ms, 1),
-        "p50_ms": multi_stats.get("p50_ms"),
-        "p95_ms": multi_stats.get("p95_ms"),
-        "p99_ms": multi_stats.get("p99_ms"),
-        "error_samples": multi_error_samples,
+    candidate_cfgs = [config.clone_for_user(uid) for uid in user_ids]
+
+    provisioned_cfgs: list[BenchConfig] = []
+    provisioned_users: list[str] = []
+    unavailable_users: list[str] = []
+    provisioning_error_samples: list[str] = []
+    for cfg in candidate_cfgs:
+        provision_result = provision_user(cfg)
+        if provision_result["ok"]:
+            provisioned_cfgs.append(cfg)
+            provisioned_users.append(cfg.user_id)
+            continue
+
+        reason = provision_result.get("reason") or "unknown"
+        if reason == "unknown_user_id":
+            unavailable_users.append(cfg.user_id)
+        elif len(provisioning_error_samples) < 3:
+            sample = (
+                f"user={cfg.user_id} status={provision_result.get('status_code')} "
+                f"reason={reason}"
+            )
+            if sample not in provisioning_error_samples:
+                provisioning_error_samples.append(sample)
+
+    results["multi_user_provisioning"] = {
+        "requested_users": concurrency,
+        "provisioned_users": len(provisioned_cfgs),
+        "provisioned_user_ids": provisioned_users[:5],
+        "unavailable_users": len(unavailable_users),
+        "unavailable_user_ids": unavailable_users[:5],
+        "error_samples": provisioning_error_samples,
     }
+
+    if len(provisioned_cfgs) >= 2:
+        multi_latencies, multi_errors, multi_wall_ms, multi_error_samples = _run_concurrency_scenario(
+            provisioned_cfgs,
+            "Multi-user concurrent request",
+        )
+        multi_stats = _latency_stats(multi_latencies)
+        results["multi_user"] = {
+            "requests": len(provisioned_cfgs),
+            "errors": multi_errors,
+            "success": len(multi_latencies),
+            "wall_time_ms": round(multi_wall_ms, 1),
+            "p50_ms": multi_stats.get("p50_ms"),
+            "p95_ms": multi_stats.get("p95_ms"),
+            "p99_ms": multi_stats.get("p99_ms"),
+            "error_samples": multi_error_samples,
+        }
+        identity_bootstrap_available = True
+    else:
+        results["multi_user"] = {
+            "requests": len(provisioned_cfgs),
+            "errors": 0,
+            "success": 0,
+            "wall_time_ms": 0.0,
+            "p50_ms": None,
+            "p95_ms": None,
+            "p99_ms": None,
+            "error_samples": [],
+        }
+        identity_bootstrap_available = False
+        results["note"] = (
+            "Multi-user scale measurement unavailable: benchmark users could not be "
+            "provisioned through /api/v1/users/provision on this runtime."
+        )
 
     same_p95 = results["same_session"].get("p95_ms")
     multi_p95 = results["multi_user"].get("p95_ms")
@@ -159,7 +209,22 @@ def run(config: BenchConfig) -> dict:
                     results["metrics_snapshot"][parts[0]] = parts[1]
 
     # Score calculation
-    multi_success_rate = len(multi_latencies) / concurrency if concurrency > 0 else 0
+    if not identity_bootstrap_available:
+        results["score"] = 0.0
+        results["verified_score"] = 0.0
+        results["projected_score"] = 0.0
+        results["measured_coverage"] = 0.0
+        return {
+            "dimension": "scale_cost",
+            "score": results["score"],
+            "verified_score": results["verified_score"],
+            "projected_score": results["projected_score"],
+            "measured_coverage": results["measured_coverage"],
+            "details": results,
+        }
+
+    multi_requests = results["multi_user"]["requests"]
+    multi_success_rate = len(multi_latencies) / multi_requests if multi_requests > 0 else 0
     multi_p95 = results["multi_user"].get("p95_ms") or 60000
 
     # Primary measured scale signal should use multi-user throughput, not same-session contention.
