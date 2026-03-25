@@ -53,6 +53,7 @@ The canonical full Nullalis result remains the public reference artifact. Scale 
 
 These artifacts matter for trust, but they are not visually elevated to equal status with the canonical reference result.
 
+- [TwinBench demo fixture run](../results/twinbench-demo-runtime.json)
 - [Nullalis scale probe](../results/nullalis-scale-probe.json)
 - [Nullalis local baseline Markdown](../results/nullalis-local-2026-03-24.md)
 - [Nullalis targeted degraded Markdown](../results/nullalis-targeted-2026-03-24.md)

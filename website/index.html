@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>TwinBench — The benchmark for personal AI assistants</title>
+  <link rel="stylesheet" href="site.css">
+</head>
+<body>
+  <div class="shell">
+    <div class="nav">
+      <a href="index.html">Home</a>
+      <a href="methodology/index.html">Methodology</a>
+      <a href="faq/index.html">FAQ</a>
+      <a href="submit/index.html">Submit</a>
+      <a href="compare/index.html">Compare</a>
+      <a href="https://github.com/ProjectNuggets/DTaaS-benchmark">GitHub</a>
+    </div>
+    
+<section class="hero">
+  <div class="eyebrow">The open benchmark for personal AI assistants</div>
+  <h1>TwinBench</h1>
+  <p class="lede">TwinBench measures whether an AI system can behave like a real personal AI assistant: remember, act, follow up, stay safe, and operate over time.</p>
+  <div class="actions">
+    <a class="button" href="results/nullalis-live-2026-03-25-openended/index.html">See the Reference Result</a>
+    <a class="button secondary" href="submit/index.html">Submit Your Assistant</a>
+  </div>
+  <div class="stats">
+    <div class="stat"><strong>6</strong> Checked-in artifacts</div>
+    <div class="stat"><strong>75.9</strong> Current top score</div>
+    <div class="stat"><strong>84%</strong> Reference coverage</div>
+  </div>
+</section>
+
+<section class="two-col section">
+  <div class="panel">
+    <div class="eyebrow">Leaderboard</div>
+    <h2>Current public board</h2>
+    <p>The board is one place, but every result keeps its class, coverage, and evidence story. Trust comes from artifacts, not claims.</p>
+    <div class="leaderboard">
+      <table>
+        <thead><tr><th>Assistant</th><th>Class</th><th>Tier</th><th>Score</th><th>Coverage</th><th>Date</th></tr></thead>
+        <tbody><tr><td><a href='results/nullalis-live-2026-03-25-openended/index.html'>Nullalis local openended race</a></td><td><span class='pill'>Reference Runtime</span></td><td>Production-Grade</td><td class='score'>75.9</td><td>84%</td><td>2026-03-25</td></tr><tr><td><a href='results/nullalis-local-2026-03-24/index.html'>Nullalis local live</a></td><td><span class='pill'>Supporting Artifact</span></td><td>Competitive</td><td class='score'>68.1</td><td>84%</td><td>2026-03-24</td></tr><tr><td><a href='results/twinbench-demo-runtime/index.html'>TwinBench Demo Runtime</a></td><td><span class='pill'>Demo Fixture</span></td><td>Emerging</td><td class='score'>54.4</td><td>69%</td><td>2026-03-25</td></tr><tr><td><a href='results/nullalis-live-2026-03-25/index.html'>Nullalis local live</a></td><td><span class='pill'>Supporting Artifact</span></td><td>Early Stage</td><td class='score'>5.8</td><td>69%</td><td>2026-03-25</td></tr><tr><td><a href='results/nullalis-scale-probe/index.html'>Nullalis scale probe</a></td><td><span class='pill'>Supporting Artifact</span></td><td>Early Stage</td><td class='score'>1.0</td><td>1%</td><td>2026-03-25</td></tr><tr><td><a href='results/nullalis-targeted-2026-03-24/index.html'>Nullalis local live</a></td><td><span class='pill'>Supporting Artifact</span></td><td>Early Stage</td><td class='score'>0.0</td><td>26%</td><td>2026-03-24</td></tr></tbody>
+      </table>
+    </div>
+  </div>
+  <div class="panel">
+    <div class="eyebrow">Why it matters</div>
+    <h2>What current benchmarks miss</h2>
+    <p>Most AI benchmarks still measure chat quality, coding skill, or one-shot tasks. TwinBench focuses on the missing category: personal AI assistants that persist and operate over time.</p>
+    <img src="assets/what-current-benchmarks-miss.svg" alt="What current benchmarks miss" style="width:100%;border-radius:16px;border:1px solid var(--line)">
+  </div>
+</section>
+
+<section class="grid section">
+  <div class="card">
+    <div class="eyebrow">Run it</div>
+    <h3>10-minute path</h3>
+    <p>Use the repo, the demo runtime, or hand TwinBench to Codex, Claude Code, or Cursor with one prompt.</p>
+    <pre>make demo
+make site</pre>
+  </div>
+  <div class="card">
+    <div class="eyebrow">Trust</div>
+    <h3>Evidence-first by design</h3>
+    <ul>
+      <li>unsupported is not failure</li>
+      <li>missing bootstrap is not poor scale</li>
+      <li>same-user contention is diagnostic</li>
+      <li>measured coverage matters</li>
+    </ul>
+  </div>
+  <div class="card">
+    <div class="eyebrow">Challenge</div>
+    <h3>Can your assistant beat this?</h3>
+    <p>Every serious result should be artifact-backed, shareable, and easy to challenge in public.</p>
+    <img src="assets/benchmark-score-card.png" alt="TwinBench score card" style="width:100%;border-radius:16px;border:1px solid var(--line)">
+  </div>
+</section>
+
+<section class="grid section">
+  <div class="card">
+    <div class="eyebrow">Community</div>
+    <h3>GitHub first</h3>
+    <p>TwinBench starts with Discussions, issues, and submissions on GitHub. That keeps the benchmark legible and searchable while the ecosystem is still forming.</p>
+    <p><a class="button secondary" href="https://github.com/ProjectNuggets/DTaaS-benchmark/discussions">Open Discussions</a></p>
+  </div>
+  <div class="card">
+    <div class="eyebrow">Challenge loop</div>
+    <h3>Monthly challenge shape</h3>
+    <p>Reference Runtime, Top Score This Month, Most Improved, and Verified Artifact are the first public loops. The goal is recognition without hype.</p>
+    <p><a href="https://github.com/ProjectNuggets/DTaaS-benchmark/blob/main/docs/MONTHLY_CHALLENGE.md">Read the challenge shape</a></p>
+  </div>
+</section>
+
+    <div class="footer">
+      TwinBench is published by Nova Nuggets, an AI innovation company building toward personal, secure, sovereign AI for everyone.
+    </div>
+  </div>
+</body>
+</html>

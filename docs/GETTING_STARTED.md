@@ -4,6 +4,18 @@ TwinBench is the open benchmark for **personal AI assistant runtimes**.
 
 If your runtime can remember, act, follow up, and stay safe over time, this guide gets you to a first artifact quickly.
 
+If you want to see a successful TwinBench run before using a real runtime, start with the fixture demo path:
+
+```bash
+make demo
+```
+
+That generates:
+
+- `results/twinbench-demo-runtime.json`
+- `results/twinbench-demo-runtime.md`
+- `results/twinbench-demo-runtime.html`
+
 ## Step 1: Install
 
 ```bash

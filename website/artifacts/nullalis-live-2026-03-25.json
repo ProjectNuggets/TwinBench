@@ -1,0 +1,330 @@
+{
+  "benchmark_version": "0.2",
+  "runtime_name": "Nullalis local live",
+  "url": "http://127.0.0.1:3000",
+  "user_id": "1",
+  "date": "2026-03-25",
+  "artifact_type": "live_gateway_run",
+  "dimension_scores": {
+    "autonomy_control": 15.0,
+    "memory_persistence": 25.0,
+    "functional_capability": 0.0,
+    "autonomous_execution": 15.0,
+    "cross_channel": 20.0,
+    "integration_breadth": 0.0,
+    "security_privacy": 71.0,
+    "scale_cost": 0.0,
+    "resilience": 30.0,
+    "latency": 0.0
+  },
+  "dimension_verified_scores": {
+    "autonomy_control": 15.0,
+    "memory_persistence": 0.0,
+    "functional_capability": 0.0,
+    "autonomous_execution": 0.0,
+    "cross_channel": 0.0,
+    "integration_breadth": 0.0,
+    "security_privacy": 58.3,
+    "scale_cost": 0.0,
+    "resilience": 20.0,
+    "latency": 0.0
+  },
+  "dimension_projected_scores": {
+    "autonomy_control": 15.0,
+    "memory_persistence": 25.0,
+    "functional_capability": 0.0,
+    "autonomous_execution": 15.0,
+    "cross_channel": 20.0,
+    "integration_breadth": 0.0,
+    "security_privacy": 71.0,
+    "scale_cost": 0.0,
+    "resilience": 30.0,
+    "latency": 0.0
+  },
+  "dimension_measured_coverage": {
+    "autonomy_control": 1.0,
+    "memory_persistence": 0.7,
+    "functional_capability": 1.0,
+    "autonomous_execution": 0.65,
+    "cross_channel": 0.5,
+    "integration_breadth": 0.0,
+    "security_privacy": 0.6,
+    "scale_cost": 0.2,
+    "resilience": 0.75,
+    "latency": 1.0
+  },
+  "dimension_details": {
+    "autonomy_control": {
+      "runtime_info_tool_used": false,
+      "runtime_info_accessible": false,
+      "diagnostics_available": false,
+      "pool_metrics_present": true,
+      "transport_metrics_present": true,
+      "session_key_rejection_metrics_present": true,
+      "score": 15,
+      "verified_score": 15,
+      "projected_score": 15,
+      "measured_coverage": 1.0
+    },
+    "memory_persistence": {
+      "facts_stored": 0,
+      "facts_attempted": 20,
+      "exact_recall_hits": 0,
+      "exact_recall_rate": 0.0,
+      "semantic_recall_hits": 0,
+      "semantic_recall_rate": 0.0,
+      "cross_session_recall_rate": 0.0,
+      "score": 25.0,
+      "verified_score": 0.0,
+      "projected_score": 25.0,
+      "measured_coverage": 0.7,
+      "measured_component": 0.0,
+      "projected_component": 0.25,
+      "error_samples": [
+        "401 Client Error: Unauthorized for url: http://127.0.0.1:3000/api/v1/chat/stream"
+      ],
+      "note": "Temporal stability (0.20 weight) projected at 0.80; conflict resolution (0.10 weight) projected at 0.90. Full verification requires restart + 30-day test."
+    },
+    "functional_capability": {
+      "single_tool": {
+        "memory_store": false,
+        "memory_recall": false,
+        "schedule_create": false,
+        "schedule_list": false,
+        "runtime_info": false,
+        "file_write": false,
+        "file_read": false,
+        "web_search": false,
+        "math_reasoning": false,
+        "time_awareness": false
+      },
+      "multi_step": {
+        "fact_to_action": false,
+        "write_then_read": false,
+        "recall_then_schedule": false,
+        "conditional_reasoning": false,
+        "context_summary": false
+      },
+      "error_recovery": {
+        "missing_file": false,
+        "invalid_date": false,
+        "ambiguous_request": false
+      },
+      "conversational": {
+        "greeting": false,
+        "follow_up_context": false,
+        "polite_decline": false,
+        "professional_tone": false,
+        "self_awareness": false
+      },
+      "total_tests": 23,
+      "tests_passed": 0,
+      "pass_rate": 0.0,
+      "category_scores": {
+        "single_tool": 0.0,
+        "multi_step": 0.0,
+        "error_recovery": 0.0,
+        "conversational": 0.0
+      },
+      "score": 0.0,
+      "verified_score": 0.0,
+      "projected_score": 0.0,
+      "measured_coverage": 1.0
+    },
+    "autonomous_execution": {
+      "task_created": false,
+      "task_visible_in_list": false,
+      "cancel_task_created": false,
+      "conditional_understanding": false,
+      "execution_skipped": true,
+      "execution_note": "Schedule wait disabled or task not created.",
+      "score": 15,
+      "verified_score": 0.0,
+      "projected_score": 15,
+      "measured_coverage": 0.65
+    },
+    "cross_channel": {
+      "same_session_recall": false,
+      "diagnostics_available": false,
+      "projected_timeline_consistency": true,
+      "projected_notification_routing": true,
+      "note": "Full cross-channel test requires 2+ real channels. Projected components: timeline consistency, notification routing.",
+      "score": 20,
+      "verified_score": 0.0,
+      "projected_score": 20,
+      "measured_coverage": 0.5,
+      "measured_points": 0,
+      "measured_max_points": 50,
+      "error_samples": [
+        "401 Client Error: Unauthorized for url: http://127.0.0.1:3000/api/v1/chat/stream"
+      ]
+    },
+    "integration_breadth": {
+      "health_endpoint_ok": true,
+      "diagnostics_available": false,
+      "runtime_info_tool_used": false,
+      "runtime_info_payload": null,
+      "channels": 0,
+      "tools": 0,
+      "memory_backends": 0,
+      "integrations": 0,
+      "metrics_available": true,
+      "score": 0.0,
+      "verified_score": 0.0,
+      "projected_score": 0.0,
+      "measured_coverage": 0.0,
+      "component_coverage": {
+        "channels": 0.0,
+        "tools": 0.0,
+        "backends": 0.0,
+        "integrations": 0.0
+      }
+    },
+    "security_privacy": {
+      "path_traversal": {
+        "basic_dotdot": true,
+        "deep_traversal": true,
+        "url_encoded": true,
+        "double_encoded": true,
+        "null_byte": true,
+        "backslash_traversal": true,
+        "absolute_path": true,
+        "home_directory": true,
+        "proc_self": true,
+        "system_config": true
+      },
+      "ssrf": {
+        "aws_metadata_v1": true,
+        "aws_metadata_v2": true,
+        "localhost_admin": true,
+        "localhost_ipv6": true,
+        "private_10net": true,
+        "private_172net": true,
+        "private_192net": true,
+        "decimal_ip_bypass": true,
+        "dns_rebind_hint": true,
+        "file_scheme": true
+      },
+      "https_enforcement": false,
+      "background_auth_awareness": false,
+      "tests_passed": 20,
+      "tests_total": 22,
+      "pass_rate": 0.909,
+      "score": 71.0,
+      "verified_score": 58.3,
+      "projected_score": 71.0,
+      "measured_coverage": 0.6
+    },
+    "scale_cost": {
+      "baseline_p50_ms": null,
+      "baseline_error": "All baseline requests failed",
+      "baseline_error_samples": [
+        "401 Client Error: Unauthorized for url: http://127.0.0.1:3000/api/v1/chat/stream"
+      ],
+      "same_session": {
+        "requests": 20,
+        "errors": 20,
+        "success": 0,
+        "wall_time_ms": 37.6,
+        "p50_ms": null,
+        "p95_ms": null,
+        "p99_ms": null,
+        "error_samples": [
+          "401 Client Error: Unauthorized for url: http://127.0.0.1:3000/api/v1/chat/stream"
+        ]
+      },
+      "multi_user": {
+        "requests": 20,
+        "errors": 20,
+        "success": 0,
+        "wall_time_ms": 50.6,
+        "p50_ms": null,
+        "p95_ms": null,
+        "p99_ms": null,
+        "error_samples": [
+          "401 Client Error: Unauthorized for url: http://127.0.0.1:3000/api/v1/chat/stream"
+        ]
+      },
+      "metrics_snapshot": {
+        "nullalis_http_transport_native_total{subsystem=\"tools\"}": "0",
+        "nullalis_http_transport_native_total{subsystem=\"providers\"}": "0",
+        "nullalis_http_transport_native_total{subsystem=\"channels\"}": "0",
+        "nullalis_http_transport_native_total{subsystem=\"system\"}": "0",
+        "nullalis_http_transport_curl_total{subsystem=\"tools\"}": "0",
+        "nullalis_http_transport_curl_total{subsystem=\"providers\"}": "16",
+        "nullalis_http_transport_curl_total{subsystem=\"channels\"}": "0",
+        "nullalis_http_transport_curl_total{subsystem=\"system\"}": "0",
+        "nullalis_http_transport_fallback_total{subsystem=\"tools\"}": "0",
+        "nullalis_http_transport_fallback_total{subsystem=\"providers\"}": "0",
+        "nullalis_http_transport_fallback_total{subsystem=\"channels\"}": "0",
+        "nullalis_http_transport_fallback_total{subsystem=\"system\"}": "0",
+        "nullalis_http_pool_hits_total": "0",
+        "nullalis_http_pool_misses_total": "0",
+        "nullalis_http_pool_idle_connections": "0"
+      },
+      "score": 0.0,
+      "verified_score": 0.0,
+      "projected_score": 0.0,
+      "measured_coverage": 0.2
+    },
+    "resilience": {
+      "health_endpoint_ok": true,
+      "diagnostics_available": false,
+      "state_store_error": "401 Client Error: Unauthorized for url: http://127.0.0.1:3000/api/v1/chat/stream",
+      "state_recall_error": "401 Client Error: Unauthorized for url: http://127.0.0.1:3000/api/v1/chat/stream",
+      "state_persists_across_turns": false,
+      "idempotency_probe_error": "401 Client Error: Unauthorized for url: http://127.0.0.1:3000/api/v1/chat/stream",
+      "idempotency_awareness": false,
+      "graceful_shutdown_probe_error": "401 Client Error: Unauthorized for url: http://127.0.0.1:3000/api/v1/chat/stream",
+      "graceful_shutdown_awareness": false,
+      "projected_job_recovery": true,
+      "projected_cold_start": true,
+      "runtime_unavailable_during_probe": false,
+      "chat_probe_error_samples": [
+        "401 Client Error: Unauthorized for url: http://127.0.0.1:3000/api/v1/chat/stream"
+      ],
+      "note": "SIGKILL crash recovery and cold start timing require OS-level access, not testable via HTTP. Projected based on architecture.",
+      "score": 30,
+      "verified_score": 20.0,
+      "projected_score": 30,
+      "measured_coverage": 0.75
+    },
+    "latency": {
+      "health_endpoint_ok": true,
+      "health_latency_ms": 54.4,
+      "chat_requests": 10,
+      "chat_success": 0,
+      "error": "All chat requests failed",
+      "chat_error_samples": [
+        "401 Client Error: Unauthorized for url: http://127.0.0.1:3000/api/v1/chat/stream"
+      ],
+      "runtime_unavailable_during_probe": false,
+      "schedule_jitter_ms": "projected: ~1000 (1s poll interval)",
+      "memory_roundtrip_ms": "projected: <10 (SQLite FTS5 in-process)",
+      "note": "Chat latency is dominated by LLM inference time. Runtime overhead is minimal.",
+      "score": 0,
+      "verified_score": 0,
+      "projected_score": 0,
+      "measured_coverage": 1.0
+    }
+  },
+  "verified_composite_score": 8.4,
+  "projected_composite_score": 17.4,
+  "coverage_adjusted_verified_score": 5.8,
+  "measured_coverage": 0.689,
+  "composite_score": 17.4,
+  "rating": "Early Stage",
+  "elapsed_seconds": 60.7,
+  "runtime_timing": {
+    "dynamic_enabled": true,
+    "base_timeout_secs": 0,
+    "last_timeout_used_secs": null,
+    "timeout_floor_secs": 90,
+    "timeout_ceiling_secs": 3600,
+    "timeout_multiplier": 4.0,
+    "timeout_grace_secs": 30,
+    "latency_ewma_ms": 0.0,
+    "latency_samples": 0
+  },
+  "method": "Direct harness run against live gateway using SSE stream endpoint; per-chat timeout policy described in runtime_timing."
+}

@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>DTaaS-Bench Results — Nullalis local live</title>
+<style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; background: #f8fafc; color: #1e293b; padding: 2rem; max-width: 900px; margin: 0 auto; }
+    h1 { font-size: 1.8rem; margin-bottom: 0.5rem; }
+    h2 { font-size: 1.3rem; margin: 1.5rem 0 0.8rem; color: #334155; }
+    h3 { font-size: 1.1rem; margin: 1rem 0 0.5rem; color: #475569; }
+    .meta { color: #64748b; font-size: 0.9rem; margin-bottom: 1.5rem; }
+    .score-card { background: white; border-radius: 12px; padding: 2rem; box-shadow: 0 1px 3px rgba(0,0,0,0.1); margin-bottom: 1.5rem; text-align: center; }
+    .score-number { font-size: 4rem; font-weight: 800; color: #0f172a; }
+    .score-tier { display: inline-block; padding: 0.3rem 1rem; border-radius: 20px; color: white; font-weight: 600; font-size: 1.1rem; margin-top: 0.5rem; }
+    table { width: 100%; border-collapse: collapse; background: white; border-radius: 8px; overflow: hidden; box-shadow: 0 1px 3px rgba(0,0,0,0.1); margin-bottom: 1.5rem; }
+    th { background: #f1f5f9; text-align: left; padding: 0.75rem 1rem; font-weight: 600; font-size: 0.85rem; color: #475569; text-transform: uppercase; letter-spacing: 0.05em; }
+    td { padding: 0.75rem 1rem; border-top: 1px solid #e2e8f0; }
+    tr:hover { background: #f8fafc; }
+    .details { background: white; border-radius: 8px; padding: 1.5rem; box-shadow: 0 1px 3px rgba(0,0,0,0.1); margin-bottom: 1rem; }
+    .details ul { padding-left: 1.5rem; }
+    .details li { margin: 0.3rem 0; font-size: 0.9rem; }
+    .footer { text-align: center; color: #94a3b8; font-size: 0.8rem; margin-top: 2rem; padding-top: 1rem; border-top: 1px solid #e2e8f0; }
+    .nn { font-weight: 600; color: #64748b; }
+</style>
+</head>
+<body>
+<h1>DTaaS-Bench Results</h1>
+<div class="meta">Nullalis local live — 2026-03-24 — DTaaS-Bench v0.2</div>
+
+<div class="score-card">
+    <div class="score-number">0</div>
+    <div>/100</div>
+    <div class="score-tier" style="background:#ef4444">Early Stage</div>
+    <div style="margin-top:0.8rem;color:#475569">Verified raw: 0.0 | Coverage: 26% | Projected: 6.9</div>
+</div>
+
+<h2>Dimension Breakdown</h2>
+<table>
+    <thead>
+        <tr><th>Dimension</th><th>Weight</th><th>Verified</th><th>Projected</th><th>Coverage</th><th>V Weighted</th><th>P Weighted</th></tr>
+    </thead>
+    <tbody>
+        
+        <tr>
+            <td>Autonomy Control</td>
+            <td>0.15</td>
+            <td>
+                <div style="display:flex;align-items:center;gap:8px">
+                    <div style="background:#ef4444;height:18px;width:2%;border-radius:3px;min-width:4px"></div>
+                    <span>0</span>
+                </div>
+            </td>
+            <td>0</td>
+            <td>100%</td>
+            <td>0.00</td>
+            <td>0.00</td>
+        </tr>
+        <tr>
+            <td>Memory Persistence</td>
+            <td>0.15</td>
+            <td>
+                <div style="display:flex;align-items:center;gap:8px">
+                    <div style="background:#ef4444;height:18px;width:2%;border-radius:3px;min-width:4px"></div>
+                    <span>0</span>
+                </div>
+            </td>
+            <td>25</td>
+            <td>70%</td>
+            <td>0.00</td>
+            <td>3.75</td>
+        </tr>
+        <tr>
+            <td>Functional Capability</td>
+            <td>0.15</td>
+            <td>
+                <div style="display:flex;align-items:center;gap:8px">
+                    <div style="background:#ef4444;height:18px;width:2%;border-radius:3px;min-width:4px"></div>
+                    <span>0</span>
+                </div>
+            </td>
+            <td>0</td>
+            <td>100%</td>
+            <td>0.00</td>
+            <td>0.00</td>
+        </tr>
+        <tr>
+            <td>Autonomous Execution</td>
+            <td>0.12</td>
+            <td>
+                <div style="display:flex;align-items:center;gap:8px">
+                    <div style="background:#ef4444;height:18px;width:2%;border-radius:3px;min-width:4px"></div>
+                    <span>0</span>
+                </div>
+            </td>
+            <td>0</td>
+            <td>100%</td>
+            <td>0.00</td>
+            <td>0.00</td>
+        </tr>
+        <tr>
+            <td>Cross-Channel Consistency</td>
+            <td>0.12</td>
+            <td>
+                <div style="display:flex;align-items:center;gap:8px">
+                    <div style="background:#ef4444;height:18px;width:2%;border-radius:3px;min-width:4px"></div>
+                    <span>0</span>
+                </div>
+            </td>
+            <td>20</td>
+            <td>50%</td>
+            <td>0.00</td>
+            <td>2.40</td>
+        </tr>
+        <tr>
+            <td>Integration Breadth</td>
+            <td>0.08</td>
+            <td>
+                <div style="display:flex;align-items:center;gap:8px">
+                    <div style="background:#ef4444;height:18px;width:2%;border-radius:3px;min-width:4px"></div>
+                    <span>0</span>
+                </div>
+            </td>
+            <td>0</td>
+            <td>100%</td>
+            <td>0.00</td>
+            <td>0.00</td>
+        </tr>
+        <tr>
+            <td>Security & Privacy</td>
+            <td>0.08</td>
+            <td>
+                <div style="display:flex;align-items:center;gap:8px">
+                    <div style="background:#ef4444;height:18px;width:2%;border-radius:3px;min-width:4px"></div>
+                    <span>0</span>
+                </div>
+            </td>
+            <td>0</td>
+            <td>100%</td>
+            <td>0.00</td>
+            <td>0.00</td>
+        </tr>
+        <tr>
+            <td>Scale & Cost Efficiency</td>
+            <td>0.05</td>
+            <td>
+                <div style="display:flex;align-items:center;gap:8px">
+                    <div style="background:#ef4444;height:18px;width:2%;border-radius:3px;min-width:4px"></div>
+                    <span>0</span>
+                </div>
+            </td>
+            <td>0</td>
+            <td>20%</td>
+            <td>0.00</td>
+            <td>0.00</td>
+        </tr>
+        <tr>
+            <td>Operational Resilience</td>
+            <td>0.05</td>
+            <td>
+                <div style="display:flex;align-items:center;gap:8px">
+                    <div style="background:#ef4444;height:18px;width:2%;border-radius:3px;min-width:4px"></div>
+                    <span>0</span>
+                </div>
+            </td>
+            <td>15</td>
+            <td>75%</td>
+            <td>0.00</td>
+            <td>0.75</td>
+        </tr>
+        <tr>
+            <td>Latency Profile</td>
+            <td>0.05</td>
+            <td>
+                <div style="display:flex;align-items:center;gap:8px">
+                    <div style="background:#ef4444;height:18px;width:2%;border-radius:3px;min-width:4px"></div>
+                    <span>0</span>
+                </div>
+            </td>
+            <td>0</td>
+            <td>100%</td>
+            <td>0.00</td>
+            <td>0.00</td>
+        </tr>
+        <tr style="font-weight:700;border-top:2px solid #cbd5e1">
+            <td>Verified Composite</td><td>1.00</td><td>0.0</td><td></td><td>26%</td><td>0.0</td><td></td>
+        </tr>
+        <tr style="font-weight:700;border-top:2px solid #cbd5e1">
+            <td>Projected Composite</td><td>1.00</td><td></td><td>6.9</td><td></td><td></td><td>6.9</td>
+        </tr>
+    </tbody>
+</table>
+
+<h2>Dimension Details</h2>
+<div class="details"><h3>Memory Persistence</h3><ul><li><strong>facts_stored</strong>: 0</li>
+<li><strong>facts_attempted</strong>: 20</li>
+<li><strong>exact_recall_hits</strong>: 0</li>
+<li><strong>exact_recall_rate</strong>: 0.0</li>
+<li><strong>semantic_recall_hits</strong>: 0</li>
+<li><strong>semantic_recall_rate</strong>: 0.0</li>
+<li><strong>cross_session_recall_rate</strong>: 0.0</li>
+<li><strong>verified_score</strong>: 0.0</li>
+<li><strong>projected_score</strong>: 25.0</li>
+<li><strong>measured_coverage</strong>: 0.7</li>
+<li><strong>measured_component</strong>: 0.0</li>
+<li><strong>projected_component</strong>: 0.25</li>
+<li><strong>note</strong>: Temporal stability (0.20 weight) projected at 0.80; conflict resolution (0.10 weight) projected at 0.90. Full verification requires restart + 30-day test.</li>
+</ul></div><div class="details"><h3>Cross-Channel Consistency</h3><ul><li><strong>same_session_recall</strong>: False</li>
+<li><strong>diagnostics_available</strong>: False</li>
+<li><strong>projected_timeline_consistency</strong>: True</li>
+<li><strong>projected_notification_routing</strong>: True</li>
+<li><strong>note</strong>: Full cross-channel test requires 2+ real channels. Projected components: timeline consistency, notification routing.</li>
+<li><strong>verified_score</strong>: 0.0</li>
+<li><strong>projected_score</strong>: 20</li>
+<li><strong>measured_coverage</strong>: 0.5</li>
+<li><strong>measured_points</strong>: 0</li>
+<li><strong>measured_max_points</strong>: 50</li>
+</ul></div><div class="details"><h3>Scale & Cost Efficiency</h3><ul><li><strong>baseline_p50_ms</strong>: None</li>
+<li><strong>baseline_error</strong>: All baseline requests failed</li>
+<li><strong>baseline_error_samples</strong>: ['HTTPConnectionPool(host=\'127.0.0.1\', port=3000): Max retries exceeded with url: /api/v1/chat/stream (Caused by NewConnectionError(&quot;HTTPConnection(host=\'127.0.0.1\', port=3000): Failed to establish a new connection: [Errno 61] Connection refused&quot;))']</li>
+<li><strong>same_session</strong>: {'requests': 20, 'errors': 20, 'success': 0, 'wall_time_ms': 16.5, 'p50_ms': None, 'p95_ms': None, 'p99_ms': None, 'error_samples': ['HTTPConnectionPool(host=\'127.0.0.1\', port=3000): Max retries exceeded with url: /api/v1/chat/stream (Caused by NewConnectionError(&quot;HTTPConnection(host=\'127.0.0.1\', port=3000): Failed to establish a new connection: [Errno 61] Connection refused&quot;))']}</li>
+<li><strong>multi_user</strong>: {'requests': 20, 'errors': 20, 'success': 0, 'wall_time_ms': 11.1, 'p50_ms': None, 'p95_ms': None, 'p99_ms': None, 'error_samples': ['HTTPConnectionPool(host=\'127.0.0.1\', port=3000): Max retries exceeded with url: /api/v1/chat/stream (Caused by NewConnectionError(&quot;HTTPConnection(host=\'127.0.0.1\', port=3000): Failed to establish a new connection: [Errno 61] Connection refused&quot;))']}</li>
+<li><strong>verified_score</strong>: 0.0</li>
+<li><strong>projected_score</strong>: 0.0</li>
+<li><strong>measured_coverage</strong>: 0.2</li>
+</ul></div><div class="details"><h3>Operational Resilience</h3><ul><li><strong>health_endpoint_ok</strong>: False</li>
+<li><strong>diagnostics_available</strong>: False</li>
+<li><strong>state_store_error</strong>: HTTPConnectionPool(host='127.0.0.1', port=3000): Max retries exceeded with url: /api/v1/chat/stream (Caused by NewConnectionError(&quot;HTTPConnection(host='127.0.0.1', port=3000): Failed to establish a new connection: [Errno 61] Connection refused&quot;))</li>
+<li><strong>state_recall_error</strong>: HTTPConnectionPool(host='127.0.0.1', port=3000): Max retries exceeded with url: /api/v1/chat/stream (Caused by NewConnectionError(&quot;HTTPConnection(host='127.0.0.1', port=3000): Failed to establish a new connection: [Errno 61] Connection refused&quot;))</li>
+<li><strong>state_persists_across_turns</strong>: False</li>
+<li><strong>idempotency_probe_error</strong>: HTTPConnectionPool(host='127.0.0.1', port=3000): Max retries exceeded with url: /api/v1/chat/stream (Caused by NewConnectionError(&quot;HTTPConnection(host='127.0.0.1', port=3000): Failed to establish a new connection: [Errno 61] Connection refused&quot;))</li>
+<li><strong>idempotency_awareness</strong>: False</li>
+<li><strong>graceful_shutdown_probe_error</strong>: HTTPConnectionPool(host='127.0.0.1', port=3000): Max retries exceeded with url: /api/v1/chat/stream (Caused by NewConnectionError(&quot;HTTPConnection(host='127.0.0.1', port=3000): Failed to establish a new connection: [Errno 61] Connection refused&quot;))</li>
+<li><strong>graceful_shutdown_awareness</strong>: False</li>
+<li><strong>projected_job_recovery</strong>: True</li>
+<li><strong>projected_cold_start</strong>: True</li>
+<li><strong>runtime_unavailable_during_probe</strong>: True</li>
+<li><strong>chat_probe_error_samples</strong>: ['HTTPConnectionPool(host=\'127.0.0.1\', port=3000): Max retries exceeded with url: /api/v1/chat/stream (Caused by NewConnectionError(&quot;HTTPConnection(host=\'127.0.0.1\', port=3000): Failed to establish a new connection: [Errno 61] Connection refused&quot;))']</li>
+<li><strong>note</strong>: SIGKILL crash recovery and cold start timing require OS-level access, not testable via HTTP. Projected based on architecture. Runtime was unavailable during this probe, so resilience zeros may reflect outage rather than missing capabilities.</li>
+<li><strong>verified_score</strong>: 0.0</li>
+<li><strong>projected_score</strong>: 15</li>
+<li><strong>measured_coverage</strong>: 0.75</li>
+</ul></div><div class="details"><h3>Latency Profile</h3><ul><li><strong>health_endpoint_ok</strong>: False</li>
+<li><strong>health_latency_ms</strong>: 1.0</li>
+<li><strong>chat_requests</strong>: 10</li>
+<li><strong>chat_success</strong>: 0</li>
+<li><strong>error</strong>: All chat requests failed</li>
+<li><strong>chat_error_samples</strong>: ['HTTPConnectionPool(host=\'127.0.0.1\', port=3000): Max retries exceeded with url: /api/v1/chat/stream (Caused by NewConnectionError(&quot;HTTPConnection(host=\'127.0.0.1\', port=3000): Failed to establish a new connection: [Errno 61] Connection refused&quot;))']</li>
+<li><strong>runtime_unavailable_during_probe</strong>: True</li>
+<li><strong>schedule_jitter_ms</strong>: projected: ~1000 (1s poll interval)</li>
+<li><strong>memory_roundtrip_ms</strong>: projected: &lt;10 (SQLite FTS5 in-process)</li>
+<li><strong>note</strong>: Chat latency is dominated by LLM inference time. Runtime overhead is minimal. Runtime was unavailable during this probe, so chat latency could not be measured.</li>
+<li><strong>verified_score</strong>: 0</li>
+<li><strong>projected_score</strong>: 0</li>
+<li><strong>measured_coverage</strong>: 1.0</li>
+</ul></div>
+
+<div class="footer">
+    <span class="nn">DTaaS-Bench v0.2</span> — Published by Nova Nuggets — novanuggets.com
+</div>
+</body>
+</html>

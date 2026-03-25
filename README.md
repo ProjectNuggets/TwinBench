@@ -1,12 +1,27 @@
 # TwinBench
 
-**Open Benchmark for Personal AI Assistant Runtimes**
+**Open Benchmark for Personal AI Assistants**
 
-TwinBench measures whether an AI runtime can behave like a real personal AI assistant: **remember, act, follow up, stay safe, and operate over time**.
+TwinBench is the open benchmark for personal AI assistants. It measures whether an AI system can **remember, act, follow up, stay safe, and operate over time**.
 
 This repository exists because the current benchmark landscape still misses a category between a chatbot and a task agent. We use the technical term `DTaaS` internally for that runtime category, but the public-facing benchmark is simpler:
 
 **TwinBench defines the runtime category behind persistent personal AI assistants.**
+
+## Website
+
+TwinBench now ships with a lightweight public site and leaderboard surface in [`website/`](website/).
+
+Build it locally:
+
+```bash
+make site
+```
+
+Then open:
+
+- `website/index.html`
+- `website/results/nullalis-live-2026-03-25-openended/index.html`
 
 ## Quick Run
 
@@ -28,11 +43,16 @@ Scripted shortcuts:
 make preflight URL=http://localhost:8080 TOKEN=YOUR_TOKEN
 make run URL=http://localhost:8080 TOKEN=YOUR_TOKEN NAME="My Runtime"
 make run-nullalis
+make demo
+make site
 ```
 
 Quick links:
 - [Overview](docs/OVERVIEW.md)
+- [Introducing TwinBench](docs/INTRODUCING_TWINBENCH.md)
 - [Why TwinBench](docs/WHY_TWINBENCH.md)
+- [Why Current AI Benchmarks Miss Personal AI Assistants](docs/WHY_CURRENT_AI_BENCHMARKS_MISS_PERSONAL_AI_ASSISTANTS.md)
+- [What Is a Personal AI Assistant?](docs/WHAT_IS_A_PERSONAL_AI_ASSISTANT.md)
 - [Getting Started in 10 Minutes](docs/GETTING_STARTED.md)
 - [Run with Agents](docs/AGENT_RUN_GUIDE.md)
 - [Troubleshooting](docs/TROUBLESHOOTING.md)
@@ -42,6 +62,10 @@ Quick links:
 - [Artifact Schema Explainer](docs/ARTIFACT_SCHEMA.md)
 - [How to Submit Results](docs/HOW_TO_SUBMIT.md)
 - [Results Index](docs/RESULTS_INDEX.md)
+- [Roadmap](docs/ROADMAP.md)
+- [Monthly Challenge](docs/MONTHLY_CHALLENGE.md)
+- [Notable Submissions](docs/NOTABLE_SUBMISSIONS.md)
+- [Case Study Template](docs/CASE_STUDY_TEMPLATE.md)
 - [Trust Model](docs/TRUST_MODEL.md)
 - [Launch Packet](docs/LAUNCH_PACKET.md)
 - [Outreach Waves](docs/OUTREACH_WAVES.md)
@@ -67,6 +91,24 @@ The benchmark reports two composites:
 - `projected`: includes clearly labeled assumptions for not-yet-measured parts
 
 The leaderboard tiers on `coverage_adjusted_verified_score`, not on the most flattering number.
+
+## One-Click Demo
+
+If you want to see TwinBench run successfully before pointing it at a real runtime, use the fixture demo runtime.
+
+Local demo:
+
+```bash
+make demo
+```
+
+Docker demo:
+
+```bash
+docker compose up --build benchmark
+```
+
+This path spins up a small fixture assistant runtime, runs a short TwinBench pass, and writes artifacts to `results/twinbench-demo-runtime.*`.
 
 ## Run with Agents
 
@@ -94,6 +136,20 @@ For a machine-operator-ready guide, use [docs/AGENT_RUN_GUIDE.md](docs/AGENT_RUN
 ## Verified Results
 
 Current reference artifacts derived from checked-in runs are listed in [docs/RESULTS_INDEX.md](docs/RESULTS_INDEX.md).
+
+The public website/leaderboard surface is generated from checked-in artifacts in [`website/`](website/).
+
+## Community
+
+TwinBench is GitHub-first for now:
+
+- GitHub Discussions for benchmark questions and feedback
+- issues for compatibility requests
+- submissions for new public artifacts
+
+Community hub:
+
+- https://github.com/ProjectNuggets/DTaaS-benchmark/discussions
 
 Nullalis is the current **reference runtime**, not the benchmark owner. Its role is to prove the category is real and to provide the first evidence-rich public artifact.
 

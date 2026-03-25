@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Compare TwinBench results</title>
+  <link rel="stylesheet" href="site.css">
+</head>
+<body>
+  <div class="shell">
+    <div class="nav">
+      <a href="index.html">Home</a>
+      <a href="methodology/index.html">Methodology</a>
+      <a href="faq/index.html">FAQ</a>
+      <a href="submit/index.html">Submit</a>
+      <a href="compare/index.html">Compare</a>
+      <a href="https://github.com/ProjectNuggets/DTaaS-benchmark">GitHub</a>
+    </div>
+    
+<section class="hero">
+  <div class="eyebrow">Compare</div>
+  <h1>Compare two results</h1>
+  <p class="lede">Use this page when you want a clean side-by-side view instead of two tabs and a screenshot.</p>
+</section>
+
+<section class="panel prose">
+  <label for="left">Left</label>
+  <select id="left"><option value='nullalis-live-2026-03-25-openended'>Nullalis local openended race (nullalis-live-2026-03-25-openended)</option><option value='nullalis-local-2026-03-24'>Nullalis local live (nullalis-local-2026-03-24)</option><option value='twinbench-demo-runtime'>TwinBench Demo Runtime (twinbench-demo-runtime)</option><option value='nullalis-live-2026-03-25'>Nullalis local live (nullalis-live-2026-03-25)</option><option value='nullalis-scale-probe'>Nullalis scale probe (nullalis-scale-probe)</option><option value='nullalis-targeted-2026-03-24'>Nullalis local live (nullalis-targeted-2026-03-24)</option></select>
+  <label for="right">Right</label>
+  <select id="right"><option value='nullalis-live-2026-03-25-openended'>Nullalis local openended race (nullalis-live-2026-03-25-openended)</option><option value='nullalis-local-2026-03-24'>Nullalis local live (nullalis-local-2026-03-24)</option><option value='twinbench-demo-runtime'>TwinBench Demo Runtime (twinbench-demo-runtime)</option><option value='nullalis-live-2026-03-25'>Nullalis local live (nullalis-live-2026-03-25)</option><option value='nullalis-scale-probe'>Nullalis scale probe (nullalis-scale-probe)</option><option value='nullalis-targeted-2026-03-24'>Nullalis local live (nullalis-targeted-2026-03-24)</option></select>
+  <p><button class="button" id="run-compare" type="button">Compare</button></p>
+  <div id="compare-out"></div>
+</section>
+<script>
+async function loadData() {
+  const response = await fetch('../data/results.json');
+  return await response.json();
+}
+function bySlug(items, slug) {
+  return items.find((item) => item.slug === slug);
+}
+function render(item) {
+  if (!item) return '<p>Missing item.</p>';
+  return `<div class="tile"><h3>${item.runtime_name}</h3><p class="score">${item.coverage_adjusted_verified_score.toFixed(1)}</p><p>${item.result_class} · coverage ${Math.round(item.measured_coverage * 100)}%</p></div>`;
+}
+document.getElementById('run-compare').addEventListener('click', async () => {
+  const data = await loadData();
+  const left = bySlug(data.results, document.getElementById('left').value);
+  const right = bySlug(data.results, document.getElementById('right').value);
+  document.getElementById('compare-out').innerHTML = `<div class="grid">${render(left)}${render(right)}</div>`;
+});
+</script>
+
+    <div class="footer">
+      TwinBench is published by Nova Nuggets, an AI innovation company building toward personal, secure, sovereign AI for everyone.
+    </div>
+  </div>
+</body>
+</html>

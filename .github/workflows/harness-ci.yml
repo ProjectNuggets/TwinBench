@@ -29,6 +29,12 @@ jobs:
       - name: Runner CLI smoke
         run: python -m harness.runner --help
 
+      - name: Demo runtime CLI smoke
+        run: python -m harness.demo_runtime_fixture --help
+
+      - name: Build website
+        run: python scripts/build_website.py
+
       - name: Validate v0.2 result artifact schema
         run: |
           python - <<'PY'

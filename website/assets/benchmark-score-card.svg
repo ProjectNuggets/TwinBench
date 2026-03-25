@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630">
+  <rect width="1200" height="630" fill="#0f172a"/>
+  <rect x="48" y="48" width="1104" height="534" rx="28" fill="#111827" stroke="#334155"/>
+  <text x="80" y="132" fill="#e2e8f0" font-family="Arial, sans-serif" font-size="54" font-weight="700">TwinBench</text>
+  <text x="80" y="180" fill="#93c5fd" font-family="Arial, sans-serif" font-size="26">Open Benchmark for Personal AI Assistant Runtimes</text>
+  <text x="80" y="280" fill="#f8fafc" font-family="Arial, sans-serif" font-size="132" font-weight="700">75.9</text>
+  <text x="80" y="328" fill="#cbd5e1" font-family="Arial, sans-serif" font-size="28">Coverage-adjusted verified score</text>
+  <text x="80" y="405" fill="#22c55e" font-family="Arial, sans-serif" font-size="34" font-weight="700">Production-Grade</text>
+  <text x="80" y="490" fill="#cbd5e1" font-family="Arial, sans-serif" font-size="28">Remember. Act. Follow up. Stay safe. Operate over time.</text>
+  <text x="80" y="550" fill="#94a3b8" font-family="Arial, sans-serif" font-size="22">Published by Nova Nuggets</text>
+</svg>

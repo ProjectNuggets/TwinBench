@@ -1,0 +1,19 @@
+services:
+  demo-runtime:
+    build: .
+    command: ["python", "-m", "harness.demo_runtime_fixture", "--host", "0.0.0.0", "--port", "8090"]
+    ports:
+      - "8090:8090"
+
+  benchmark:
+    build: .
+    depends_on:
+      - demo-runtime
+    command:
+      [
+        "bash",
+        "-lc",
+        "sleep 2 && python -m harness.runner --url http://demo-runtime:8090 --token demo-internal-token --user-id demo-user --name 'TwinBench Demo Runtime' --skip-schedule-wait --memory-sample-size 5 --scale-concurrency 3 --output results/twinbench-demo-runtime.json --markdown results/twinbench-demo-runtime.md --html results/twinbench-demo-runtime.html"
+      ]
+    volumes:
+      - .:/app

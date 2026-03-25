@@ -297,7 +297,10 @@ def generate_html(results: dict, runtime_name: str = "Unknown") -> str:
 </html>"""
 
 
-def _escape(s: str) -> str:
+def _escape(s: str | None) -> str:
+    if s is None:
+        return ""
+    s = str(s)
     return (
         s.replace("&", "&amp;")
         .replace("<", "&lt;")

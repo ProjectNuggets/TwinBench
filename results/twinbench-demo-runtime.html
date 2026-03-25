@@ -1,0 +1,366 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>TwinBench Results — TwinBench Demo Runtime</title>
+<style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; background: #f8fafc; color: #1e293b; padding: 2rem; max-width: 900px; margin: 0 auto; }
+    h1 { font-size: 1.8rem; margin-bottom: 0.5rem; }
+    h2 { font-size: 1.3rem; margin: 1.5rem 0 0.8rem; color: #334155; }
+    h3 { font-size: 1.1rem; margin: 1rem 0 0.5rem; color: #475569; }
+    .meta { color: #64748b; font-size: 0.9rem; margin-bottom: 1.5rem; }
+    .score-card { background: white; border-radius: 12px; padding: 2rem; box-shadow: 0 1px 3px rgba(0,0,0,0.1); margin-bottom: 1.5rem; text-align: center; }
+    .score-number { font-size: 4rem; font-weight: 800; color: #0f172a; }
+    .score-tier { display: inline-block; padding: 0.3rem 1rem; border-radius: 20px; color: white; font-weight: 600; font-size: 1.1rem; margin-top: 0.5rem; }
+    .pill { display:inline-block;padding:0.2rem 0.6rem;border-radius:999px;background:#e2e8f0;color:#334155;font-size:0.85rem;font-weight:600; }
+    table { width: 100%; border-collapse: collapse; background: white; border-radius: 8px; overflow: hidden; box-shadow: 0 1px 3px rgba(0,0,0,0.1); margin-bottom: 1.5rem; }
+    th { background: #f1f5f9; text-align: left; padding: 0.75rem 1rem; font-weight: 600; font-size: 0.85rem; color: #475569; text-transform: uppercase; letter-spacing: 0.05em; }
+    td { padding: 0.75rem 1rem; border-top: 1px solid #e2e8f0; }
+    tr:hover { background: #f8fafc; }
+    .details { background: white; border-radius: 8px; padding: 1.5rem; box-shadow: 0 1px 3px rgba(0,0,0,0.1); margin-bottom: 1rem; }
+    .details ul { padding-left: 1.5rem; }
+    .details li { margin: 0.3rem 0; font-size: 0.9rem; }
+    .footer { text-align: center; color: #94a3b8; font-size: 0.8rem; margin-top: 2rem; padding-top: 1rem; border-top: 1px solid #e2e8f0; }
+    .nn { font-weight: 600; color: #64748b; }
+</style>
+</head>
+<body>
+<h1>TwinBench Results</h1>
+<div class="meta">TwinBench Demo Runtime — 2026-03-25 — TwinBench v0.2</div>
+
+<div class="score-card">
+    <div class="score-number">54</div>
+    <div>/100</div>
+    <div class="score-tier" style="background:#f59e0b">Emerging</div>
+    <div style="margin-top:0.8rem"><span class="pill">Partial Reference Artifact</span></div>
+    <div style="margin-top:0.8rem;color:#475569">Verified raw: 79.0 | Coverage: 69% | Projected: 70.6</div>
+</div>
+
+<div class="details">
+    <h2>Interpretation</h2>
+    <p style="line-height:1.6;color:#475569">This artifact is strong enough to compare publicly. Use the verified score for evidence-backed comparison and the projected score only as a clearly labeled estimate.</p>
+    <h3 style="margin-top:1rem">Benchmark Principles</h3>
+    <ul>
+        <li>unsupported is not failure</li>
+        <li>missing bootstrap is not poor scale</li>
+        <li>same-user contention is diagnostic</li>
+        <li>evidence beats claims</li>
+    </ul>
+</div>
+
+<h2>Dimension Breakdown</h2>
+<table>
+    <thead>
+        <tr><th>Dimension</th><th>Status</th><th>Reason Code</th><th>Weight</th><th>Verified</th><th>Projected</th><th>Coverage</th><th>V Weighted</th><th>P Weighted</th></tr>
+    </thead>
+    <tbody>
+        
+        <tr>
+            <td>Autonomy Control</td>
+            <td>measured</td>
+            <td></td>
+            <td>0.15</td>
+            <td>
+                <div style="display:flex;align-items:center;gap:8px">
+                    <div style="background:#22c55e;height:18px;width:95%;border-radius:3px;min-width:4px"></div>
+                    <span>95</span>
+                </div>
+            </td>
+            <td>95</td>
+            <td>100%</td>
+            <td>14.25</td>
+            <td>14.25</td>
+        </tr>
+        <tr>
+            <td>Memory Persistence</td>
+            <td>partially_measured</td>
+            <td></td>
+            <td>0.15</td>
+            <td>
+                <div style="display:flex;align-items:center;gap:8px">
+                    <div style="background:#ef4444;height:18px;width:57%;border-radius:3px;min-width:4px"></div>
+                    <span>57</span>
+                </div>
+            </td>
+            <td>65</td>
+            <td>70%</td>
+            <td>6.00</td>
+            <td>9.75</td>
+        </tr>
+        <tr>
+            <td>Functional Capability</td>
+            <td>measured</td>
+            <td></td>
+            <td>0.15</td>
+            <td>
+                <div style="display:flex;align-items:center;gap:8px">
+                    <div style="background:#f59e0b;height:18px;width:77%;border-radius:3px;min-width:4px"></div>
+                    <span>77</span>
+                </div>
+            </td>
+            <td>77</td>
+            <td>100%</td>
+            <td>11.55</td>
+            <td>11.55</td>
+        </tr>
+        <tr>
+            <td>Autonomous Execution</td>
+            <td>partially_measured</td>
+            <td></td>
+            <td>0.12</td>
+            <td>
+                <div style="display:flex;align-items:center;gap:8px">
+                    <div style="background:#f59e0b;height:18px;width:76%;border-radius:3px;min-width:4px"></div>
+                    <span>77</span>
+                </div>
+            </td>
+            <td>65</td>
+            <td>65%</td>
+            <td>6.00</td>
+            <td>7.80</td>
+        </tr>
+        <tr>
+            <td>Cross-Channel Consistency</td>
+            <td>partially_measured</td>
+            <td></td>
+            <td>0.12</td>
+            <td>
+                <div style="display:flex;align-items:center;gap:8px">
+                    <div style="background:#f59e0b;height:18px;width:70%;border-radius:3px;min-width:4px"></div>
+                    <span>70</span>
+                </div>
+            </td>
+            <td>70</td>
+            <td>50%</td>
+            <td>4.20</td>
+            <td>8.40</td>
+        </tr>
+        <tr>
+            <td>Integration Breadth</td>
+            <td>unavailable</td>
+            <td></td>
+            <td>0.08</td>
+            <td>
+                <div style="display:flex;align-items:center;gap:8px">
+                    <div style="background:#ef4444;height:18px;width:2%;border-radius:3px;min-width:4px"></div>
+                    <span>0</span>
+                </div>
+            </td>
+            <td>0</td>
+            <td>0%</td>
+            <td>0.00</td>
+            <td>0.00</td>
+        </tr>
+        <tr>
+            <td>Security & Privacy</td>
+            <td>partially_measured</td>
+            <td></td>
+            <td>0.08</td>
+            <td>
+                <div style="display:flex;align-items:center;gap:8px">
+                    <div style="background:#22c55e;height:18px;width:91%;border-radius:3px;min-width:4px"></div>
+                    <span>92</span>
+                </div>
+            </td>
+            <td>91</td>
+            <td>60%</td>
+            <td>4.40</td>
+            <td>7.28</td>
+        </tr>
+        <tr>
+            <td>Scale & Cost Efficiency</td>
+            <td>partially_measured</td>
+            <td>multi_user_scale_measured_with_provisioned_subset</td>
+            <td>0.05</td>
+            <td>
+                <div style="display:flex;align-items:center;gap:8px">
+                    <div style="background:#22c55e;height:18px;width:100%;border-radius:3px;min-width:4px"></div>
+                    <span>100</span>
+                </div>
+            </td>
+            <td>77</td>
+            <td>20%</td>
+            <td>1.00</td>
+            <td>3.85</td>
+        </tr>
+        <tr>
+            <td>Operational Resilience</td>
+            <td>partially_measured</td>
+            <td></td>
+            <td>0.05</td>
+            <td>
+                <div style="display:flex;align-items:center;gap:8px">
+                    <div style="background:#ef4444;height:18px;width:53%;border-radius:3px;min-width:4px"></div>
+                    <span>53</span>
+                </div>
+            </td>
+            <td>55</td>
+            <td>75%</td>
+            <td>2.00</td>
+            <td>2.75</td>
+        </tr>
+        <tr>
+            <td>Latency Profile</td>
+            <td>measured</td>
+            <td></td>
+            <td>0.05</td>
+            <td>
+                <div style="display:flex;align-items:center;gap:8px">
+                    <div style="background:#22c55e;height:18px;width:100%;border-radius:3px;min-width:4px"></div>
+                    <span>100</span>
+                </div>
+            </td>
+            <td>100</td>
+            <td>100%</td>
+            <td>5.00</td>
+            <td>5.00</td>
+        </tr>
+        <tr style="font-weight:700;border-top:2px solid #cbd5e1">
+            <td>Verified Composite</td><td>1.00</td><td>79.0</td><td></td><td>69%</td><td>54.4</td><td></td>
+        </tr>
+        <tr style="font-weight:700;border-top:2px solid #cbd5e1">
+            <td>Projected Composite</td><td>1.00</td><td></td><td>70.6</td><td></td><td></td><td>70.6</td>
+        </tr>
+    </tbody>
+</table>
+
+<h2>Dimension Details</h2>
+<div class="details"><h3>Autonomy Control</h3><ul><li><strong>runtime_info_tool_used</strong>: False</li>
+<li><strong>runtime_info_accessible</strong>: False</li>
+<li><strong>runtime_mode_in_diagnostics</strong>: True</li>
+<li><strong>bus_metrics_in_diagnostics</strong>: True</li>
+<li><strong>heartbeat_runtime_available</strong>: True</li>
+<li><strong>startup_self_check_present</strong>: True</li>
+<li><strong>background_sources_seen</strong>: ['scheduler']</li>
+<li><strong>proactive_policy_visible</strong>: True</li>
+<li><strong>ops_counters_visible</strong>: True</li>
+<li><strong>explicit_session_key_policy_visible</strong>: True</li>
+<li><strong>pool_metrics_present</strong>: True</li>
+<li><strong>transport_metrics_present</strong>: True</li>
+<li><strong>session_key_rejection_metrics_present</strong>: True</li>
+<li><strong>verified_score</strong>: 95</li>
+<li><strong>projected_score</strong>: 95</li>
+<li><strong>measured_coverage</strong>: 1.0</li>
+</ul></div><div class="details"><h3>Memory Persistence</h3><ul><li><strong>facts_stored</strong>: 5</li>
+<li><strong>facts_attempted</strong>: 5</li>
+<li><strong>exact_recall_hits</strong>: 5</li>
+<li><strong>exact_recall_rate</strong>: 1.0</li>
+<li><strong>semantic_recall_hits</strong>: 0</li>
+<li><strong>semantic_recall_rate</strong>: 0.0</li>
+<li><strong>cross_session_recall_rate</strong>: 1.0</li>
+<li><strong>verified_score</strong>: 57.1</li>
+<li><strong>projected_score</strong>: 65.0</li>
+<li><strong>measured_coverage</strong>: 0.7</li>
+<li><strong>measured_component</strong>: 0.4</li>
+<li><strong>projected_component</strong>: 0.65</li>
+<li><strong>note</strong>: Temporal stability (0.20 weight) projected at 0.80; conflict resolution (0.10 weight) projected at 0.90. Full verification requires restart + 30-day test.</li>
+</ul></div><div class="details"><h3>Functional Capability</h3><ul><li><strong>single_tool</strong>: {'memory_store': True, 'memory_recall': False, 'schedule_create': True, 'schedule_list': True, 'runtime_info': True, 'file_write': True, 'file_read': True, 'web_search': True, 'math_reasoning': True, 'time_awareness': True}</li>
+<li><strong>multi_step</strong>: {'fact_to_action': False, 'write_then_read': False, 'recall_then_schedule': True, 'conditional_reasoning': True, 'context_summary': False}</li>
+<li><strong>error_recovery</strong>: {'missing_file': True, 'invalid_date': True, 'ambiguous_request': True}</li>
+<li><strong>conversational</strong>: {'greeting': True, 'follow_up_context': True, 'polite_decline': True, 'professional_tone': False, 'self_awareness': True}</li>
+<li><strong>total_tests</strong>: 23</li>
+<li><strong>tests_passed</strong>: 18</li>
+<li><strong>pass_rate</strong>: 0.783</li>
+<li><strong>category_scores</strong>: {'single_tool': 90.0, 'multi_step': 40.0, 'error_recovery': 100.0, 'conversational': 80.0}</li>
+<li><strong>verified_score</strong>: 77.0</li>
+<li><strong>projected_score</strong>: 77.0</li>
+<li><strong>measured_coverage</strong>: 1.0</li>
+</ul></div><div class="details"><h3>Autonomous Execution</h3><ul><li><strong>task_created</strong>: True</li>
+<li><strong>task_visible_in_list</strong>: False</li>
+<li><strong>cancel_task_created</strong>: True</li>
+<li><strong>task_cancelled</strong>: True</li>
+<li><strong>conditional_understanding</strong>: True</li>
+<li><strong>execution_skipped</strong>: True</li>
+<li><strong>execution_note</strong>: Schedule wait disabled or task not created.</li>
+<li><strong>verified_score</strong>: 76.9</li>
+<li><strong>projected_score</strong>: 65</li>
+<li><strong>measured_coverage</strong>: 0.65</li>
+</ul></div><div class="details"><h3>Cross-Channel Consistency</h3><ul><li><strong>same_session_recall</strong>: False</li>
+<li><strong>bus_architecture</strong>: True</li>
+<li><strong>channels_in_diagnostics</strong>: True</li>
+<li><strong>session_in_diagnostics</strong>: True</li>
+<li><strong>live_configured_channels</strong>: 0</li>
+<li><strong>live_connected_channels</strong>: 0</li>
+<li><strong>identity_mapping_seen</strong>: True</li>
+<li><strong>projected_timeline_consistency</strong>: True</li>
+<li><strong>projected_notification_routing</strong>: True</li>
+<li><strong>note</strong>: Full cross-channel test requires 2+ real channels. Projected components: timeline consistency, notification routing.</li>
+<li><strong>verified_score</strong>: 70.0</li>
+<li><strong>projected_score</strong>: 70.0</li>
+<li><strong>measured_coverage</strong>: 0.5</li>
+<li><strong>measured_points</strong>: 35</li>
+<li><strong>measured_max_points</strong>: 50</li>
+</ul></div><div class="details"><h3>Integration Breadth</h3><ul><li><strong>health_endpoint_ok</strong>: True</li>
+<li><strong>diagnostics_available</strong>: True</li>
+<li><strong>runtime_info_tool_used</strong>: False</li>
+<li><strong>runtime_info_payload</strong>: {'enabled_tools_count': 5, 'channels_count': 2, 'memory_backends_count': 1, 'integrations_count': 2, 'state_backend': 'in-memory demo store', 'provider': 'fixture-provider', 'model': 'fixture-assistant-1'}</li>
+<li><strong>channels</strong>: 0</li>
+<li><strong>tools</strong>: 0</li>
+<li><strong>memory_backends</strong>: 0</li>
+<li><strong>integrations</strong>: 0</li>
+<li><strong>metrics_available</strong>: True</li>
+<li><strong>verified_score</strong>: 0.0</li>
+<li><strong>projected_score</strong>: 0.0</li>
+<li><strong>measured_coverage</strong>: 0.0</li>
+<li><strong>component_coverage</strong>: {'channels': 0.0, 'tools': 0.0, 'backends': 0.0, 'integrations': 0.0}</li>
+</ul></div><div class="details"><h3>Security & Privacy</h3><ul><li><strong>path_traversal</strong>: {'basic_dotdot': True, 'deep_traversal': True, 'url_encoded': True, 'double_encoded': True, 'null_byte': True, 'backslash_traversal': True, 'absolute_path': True, 'home_directory': True, 'proc_self': True, 'system_config': True}</li>
+<li><strong>ssrf</strong>: {'aws_metadata_v1': True, 'aws_metadata_v2': True, 'localhost_admin': True, 'localhost_ipv6': True, 'private_10net': True, 'private_172net': True, 'private_192net': True, 'decimal_ip_bypass': True, 'dns_rebind_hint': True, 'file_scheme': True}</li>
+<li><strong>https_enforcement</strong>: True</li>
+<li><strong>background_auth_awareness</strong>: True</li>
+<li><strong>audit_present_in_diagnostics</strong>: False</li>
+<li><strong>tests_passed</strong>: 22</li>
+<li><strong>tests_total</strong>: 23</li>
+<li><strong>pass_rate</strong>: 0.957</li>
+<li><strong>verified_score</strong>: 91.7</li>
+<li><strong>projected_score</strong>: 91.0</li>
+<li><strong>measured_coverage</strong>: 0.6</li>
+</ul></div><div class="details"><h3>Scale & Cost Efficiency</h3><ul><li><strong>baseline_p50_ms</strong>: 13.9</li>
+<li><strong>same_session</strong>: {'requests': 3, 'errors': 0, 'success': 3, 'wall_time_ms': 15.5, 'p50_ms': 14.7, 'p95_ms': 15.0, 'p99_ms': 15.0, 'error_samples': []}</li>
+<li><strong>multi_user_provisioning</strong>: {'requested_users': 3, 'provisioned_users': 3, 'provisioned_user_ids': ['demo-user-bench-0', 'demo-user-bench-1', 'demo-user-bench-2'], 'unavailable_users': 0, 'unavailable_user_ids': [], 'error_samples': []}</li>
+<li><strong>multi_user</strong>: {'requests': 3, 'errors': 0, 'success': 3, 'wall_time_ms': 14.2, 'p50_ms': 13.9, 'p95_ms': 13.9, 'p99_ms': 13.9, 'error_samples': []}</li>
+<li><strong>contention_ratio_same_session_over_multi_user</strong>: 1.08</li>
+<li><strong>metrics_snapshot</strong>: {'nullalis_http_transport_native_total{subsystem=&quot;tools&quot;}': '5', 'nullalis_http_transport_native_total{subsystem=&quot;providers&quot;}': '10', 'nullalis_http_pool_hits_total': '3', 'nullalis_http_pool_misses_total': '1'}</li>
+<li><strong>verified_score</strong>: 100.0</li>
+<li><strong>projected_score</strong>: 77.0</li>
+<li><strong>measured_coverage</strong>: 0.2</li>
+</ul></div><div class="details"><h3>Operational Resilience</h3><ul><li><strong>health_endpoint_ok</strong>: True</li>
+<li><strong>diagnostics_available</strong>: True</li>
+<li><strong>startup_self_check_present</strong>: True</li>
+<li><strong>state_backend_in_diagnostics</strong>: True</li>
+<li><strong>degraded_flag_present</strong>: True</li>
+<li><strong>state_persists_across_turns</strong>: False</li>
+<li><strong>idempotency_awareness</strong>: False</li>
+<li><strong>graceful_shutdown_awareness</strong>: False</li>
+<li><strong>projected_job_recovery</strong>: True</li>
+<li><strong>projected_cold_start</strong>: True</li>
+<li><strong>runtime_unavailable_during_probe</strong>: False</li>
+<li><strong>note</strong>: SIGKILL crash recovery and cold start timing require OS-level access, not testable via HTTP. Projected based on architecture.</li>
+<li><strong>verified_score</strong>: 53.3</li>
+<li><strong>projected_score</strong>: 55</li>
+<li><strong>measured_coverage</strong>: 0.75</li>
+</ul></div><div class="details"><h3>Latency Profile</h3><ul><li><strong>health_endpoint_ok</strong>: True</li>
+<li><strong>health_latency_ms</strong>: 1.1</li>
+<li><strong>chat_requests</strong>: 10</li>
+<li><strong>chat_success</strong>: 10</li>
+<li><strong>chat_p50_ms</strong>: 13.0</li>
+<li><strong>chat_p95_ms</strong>: 14.0</li>
+<li><strong>chat_p99_ms</strong>: 14.0</li>
+<li><strong>chat_min_ms</strong>: 11.5</li>
+<li><strong>chat_max_ms</strong>: 14.0</li>
+<li><strong>chat_mean_ms</strong>: 13.0</li>
+<li><strong>runtime_unavailable_during_probe</strong>: False</li>
+<li><strong>schedule_jitter_ms</strong>: projected: ~1000 (1s poll interval)</li>
+<li><strong>memory_roundtrip_ms</strong>: projected: &lt;10 (SQLite FTS5 in-process)</li>
+<li><strong>note</strong>: Chat latency is dominated by LLM inference time. Runtime overhead is minimal.</li>
+<li><strong>verified_score</strong>: 100</li>
+<li><strong>projected_score</strong>: 100</li>
+<li><strong>measured_coverage</strong>: 1.0</li>
+</ul></div>
+
+<div class="footer">
+    <span class="nn">TwinBench v0.2</span> — Published by Nova Nuggets — novanuggets.com
+</div>
+</body>
+</html>

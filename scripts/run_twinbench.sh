@@ -5,6 +5,13 @@ URL="${1:-}"
 TOKEN="${2:-}"
 NAME="${3:-External Runtime}"
 USER_ID="${4:-1}"
+PYTHON_BIN="${PYTHON:-$(command -v python3.10 2>/dev/null || command -v python3)}"
+
+if command -v uv >/dev/null 2>&1 && command -v /opt/homebrew/bin/python3 >/dev/null 2>&1; then
+  RUNNER=(uv run --python /opt/homebrew/bin/python3 --with-requirements harness/requirements.txt python)
+else
+  RUNNER=("${PYTHON_BIN}")
+fi
 
 if [[ -z "${URL}" || -z "${TOKEN}" ]]; then
   echo "usage: scripts/run_twinbench.sh <url> <token> [name] [user_id]"
@@ -16,7 +23,7 @@ OUT_JSON="results/${SLUG}.json"
 OUT_MD="results/${SLUG}.md"
 OUT_HTML="results/${SLUG}.html"
 
-python3.10 -m harness.runner \
+"${RUNNER[@]}" -m harness.runner \
   --url "${URL}" \
   --token "${TOKEN}" \
   --user-id "${USER_ID}" \
@@ -31,7 +38,7 @@ echo "  ${OUT_JSON}"
 echo "  ${OUT_MD}"
 echo "  ${OUT_HTML}"
 
-python3.10 - <<PY
+"${RUNNER[@]}" - <<PY
 import json
 from pathlib import Path
 p = Path("${OUT_JSON}")
