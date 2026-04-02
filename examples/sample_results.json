@@ -1,0 +1,79 @@
+{
+  "benchmark_name": "TwinBench",
+  "benchmark_version": "1.0",
+  "benchmark_subtitle": "Benchmark for Persistent AI Systems",
+  "system_name": "Example System",
+  "system_version": "0.1.0",
+  "date_evaluated": "2026-04-03",
+  "scenarios": [
+    {
+      "id": "return_after_delay",
+      "title": "Return After Delay",
+      "primary_metrics": ["MR", "TC"],
+      "observed_score": 82.0
+    },
+    {
+      "id": "longitudinal_task_progression",
+      "title": "Longitudinal Task Progression",
+      "primary_metrics": ["TC", "CCC"],
+      "observed_score": 78.0
+    },
+    {
+      "id": "multi_context_transfer",
+      "title": "Multi-Context Transfer",
+      "primary_metrics": ["CCC", "IC"],
+      "observed_score": 74.0
+    },
+    {
+      "id": "preference_learning",
+      "title": "Preference Learning",
+      "primary_metrics": ["PG", "MR"],
+      "observed_score": 85.0
+    },
+    {
+      "id": "identity_stability_over_time",
+      "title": "Identity Stability Over Time",
+      "primary_metrics": ["IC", "MR"],
+      "observed_score": 80.0
+    }
+  ],
+  "metrics": {
+    "MR": {
+      "score": 81.0,
+      "weight": 0.2,
+      "source": "override",
+      "note": "Strong delayed recall with one outdated preference recall."
+    },
+    "IC": {
+      "score": 79.0,
+      "weight": 0.2,
+      "source": "override",
+      "note": "Stable user framing with minor assistant role drift."
+    },
+    "CCC": {
+      "score": 75.0,
+      "weight": 0.2,
+      "source": "override",
+      "note": "Transfer generally coherent across tested contexts."
+    },
+    "TC": {
+      "score": 78.0,
+      "weight": 0.2,
+      "source": "override",
+      "note": "Task state survived interruptions with one duplicated substep."
+    },
+    "PG": {
+      "score": 86.0,
+      "weight": 0.2,
+      "source": "override",
+      "note": "Preference application improved later outputs noticeably."
+    }
+  },
+  "total_score": 79.8,
+  "scenario_coverage": 1.0,
+  "metric_coverage": 1.0,
+  "notes": [
+    "Synthetic fixture for scaffold demonstration.",
+    "Not a public benchmark submission."
+  ]
+}

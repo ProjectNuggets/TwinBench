@@ -1,0 +1,18 @@
+{
+  "id": "multi_context_transfer",
+  "title": "Multi-Context Transfer",
+  "objective": "Evaluate whether state and plans transfer coherently across contexts.",
+  "primary_metrics": ["CCC", "IC"],
+  "contexts": ["chat", "email", "workspace"],
+  "inputs": [
+    "Start work in context A.",
+    "Introduce a status update.",
+    "Resume in context B and request continuation.",
+    "Verify alignment in context C."
+  ],
+  "expected_behavior": [
+    "Maintains consistent task framing.",
+    "Carries the latest status across contexts.",
+    "Produces aligned summaries and next steps."
+  ]
+}

@@ -1,0 +1,18 @@
+{
+  "id": "longitudinal_task_progression",
+  "title": "Longitudinal Task Progression",
+  "objective": "Evaluate whether the system preserves and advances multi-step work over multiple checkpoints.",
+  "primary_metrics": ["TC", "CCC"],
+  "milestones": 3,
+  "inputs": [
+    "Initiate a multi-step task.",
+    "Interrupt the task with unrelated work.",
+    "Resume later and request the next milestone.",
+    "Finalize the task in a later session."
+  ],
+  "expected_behavior": [
+    "Preserves milestone history.",
+    "Avoids repeating already completed work.",
+    "Selects the correct next action."
+  ]
+}

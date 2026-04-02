@@ -1,0 +1,17 @@
+{
+  "id": "return_after_delay",
+  "title": "Return After Delay",
+  "objective": "Evaluate whether the system retains key facts and active task state after a defined delay.",
+  "primary_metrics": ["MR", "TC"],
+  "delay_days": 3,
+  "inputs": [
+    "Store a user preference and a dated factual detail.",
+    "Create one active task with an explicit next step.",
+    "Resume after delay and ask for both recall and continuation."
+  ],
+  "expected_behavior": [
+    "Recalls the stored fact correctly.",
+    "Applies the stored preference without being reminded.",
+    "Continues the active task from the previous state."
+  ]
+}

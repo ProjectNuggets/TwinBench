@@ -1,0 +1,18 @@
+{
+  "id": "preference_learning",
+  "title": "Preference Learning",
+  "objective": "Evaluate whether the system improves after learning durable user preferences.",
+  "primary_metrics": ["PG", "MR"],
+  "preference_types": ["formatting", "tone", "scheduling"],
+  "inputs": [
+    "Run a baseline task.",
+    "Provide explicit preferences and corrections.",
+    "Resume with a similar task later.",
+    "Check whether preferences are applied without restatement."
+  ],
+  "expected_behavior": [
+    "Applies learned preferences in later tasks.",
+    "Requires fewer repeated corrections.",
+    "Improves user-specific usefulness."
+  ]
+}

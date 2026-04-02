@@ -1,0 +1,19 @@
+{
+  "benchmark_name": "TwinBench",
+  "benchmark_version": "1.0",
+  "subtitle": "Benchmark for Persistent AI Systems",
+  "metric_weights": {
+    "MR": 0.2,
+    "IC": 0.2,
+    "CCC": 0.2,
+    "TC": 0.2,
+    "PG": 0.2
+  },
+  "scenarios": [
+    "benchmarks/scenarios/return_after_delay.json",
+    "benchmarks/scenarios/longitudinal_task_progression.json",
+    "benchmarks/scenarios/multi_context_transfer.json",
+    "benchmarks/scenarios/preference_learning.json",
+    "benchmarks/scenarios/identity_stability_over_time.json"
+  ]
+}

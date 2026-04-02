@@ -1,0 +1,17 @@
+{
+  "id": "identity_stability_over_time",
+  "title": "Identity Stability Over Time",
+  "objective": "Evaluate whether the system preserves user identity and role framing across dated checkpoints.",
+  "primary_metrics": ["IC", "MR"],
+  "checkpoints": 4,
+  "inputs": [
+    "Establish user identity markers and working norms.",
+    "Return across multiple sessions.",
+    "Probe user understanding and role continuity."
+  ],
+  "expected_behavior": [
+    "Maintains the same user profile.",
+    "Retains standing collaboration norms.",
+    "Avoids unexplained role drift."
+  ]
+}
