@@ -1,4 +1,4 @@
-name: Harness CI
+name: Benchmark CI
 
 on:
   push:
@@ -7,7 +7,7 @@ on:
     branches: [main]
 
 jobs:
-  harness-ci:
+  benchmark-ci:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
@@ -18,48 +18,60 @@ jobs:
         with:
           python-version: "3.10"
 
-      - name: Install dependencies
-        run: |
-          python -m pip install --upgrade pip
-          pip install -r harness/requirements.txt
-
-      - name: Compile harness sources
-        run: python -m py_compile harness/*.py
+      - name: Compile evaluation scaffold
+        run: python -m py_compile eval/*.py
 
       - name: Runner CLI smoke
-        run: python -m harness.runner --help
+        run: python eval/runner.py --help
 
-      - name: Demo runtime CLI smoke
-        run: python -m harness.demo_runtime_fixture --help
+      - name: Generate reference example artifact
+        run: |
+          python eval/runner.py \
+            --config benchmarks/configs/default.json \
+            --system-name "Reference Example System" \
+            --system-version "1.0.0" \
+            --observations benchmarks/fixtures/reference_observations.json \
+            --output /tmp/reference-example-v1.json
 
-      - name: Build website
-        run: python scripts/build_website.py
-
-      - name: Validate v0.2 result artifact schema
+      - name: Validate TwinBench v1 result schema
         run: |
           python - <<'PY'
           import json
           from pathlib import Path
 
-          p = Path("results/nullalis-v0.2.json")
+          p = Path("/tmp/reference-example-v1.json")
           if not p.exists():
-              raise SystemExit("results/nullalis-v0.2.json not found")
+              raise SystemExit("reference example output not found")
 
           data = json.loads(p.read_text())
           required = [
+              "benchmark_name",
               "benchmark_version",
-              "verified_composite_score",
-              "projected_composite_score",
-              "measured_coverage",
-              "coverage_adjusted_verified_score",
-              "dimension_verified_scores",
-              "dimension_projected_scores",
-              "dimension_measured_coverage",
+              "benchmark_title",
+              "benchmark_subtitle",
+              "system_name",
+              "system_version",
+              "date_evaluated",
+              "scenario_set",
+              "scenarios",
+              "metrics",
+              "total_score",
+              "scenario_coverage",
+              "metric_coverage",
+              "evaluator_notes",
+              "caveats",
           ]
           missing = [k for k in required if k not in data]
           if missing:
               raise SystemExit(f"missing keys: {missing}")
-          if data["benchmark_version"] != "0.2":
-              raise SystemExit("benchmark_version must be 0.2")
-          print("artifact schema ok")
+          if data["benchmark_version"] != "1.0":
+              raise SystemExit("benchmark_version must be 1.0")
+          if len(data["scenarios"]) != 5:
+              raise SystemExit("expected 5 scenarios")
+          if sorted(data["metrics"].keys()) != ["CCC", "IC", "MR", "PG", "TC"]:
+              raise SystemExit("unexpected metric keys")
+          print("twinbench v1 artifact schema ok")
           PY
+
+      - name: Check reference artifact reproducibility
+        run: diff -u results/reference-example-v1.json /tmp/reference-example-v1.json

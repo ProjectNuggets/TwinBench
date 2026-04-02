@@ -26,8 +26,40 @@ jobs:
         with:
           python-version: "3.10"
 
-      - name: Build website
-        run: python scripts/build_website.py
+      - name: Build minimal pages site
+        run: |
+          mkdir -p _site
+          cat > _site/index.html <<'EOF'
+          <!doctype html>
+          <html lang="en">
+          <head>
+            <meta charset="utf-8">
+            <meta name="viewport" content="width=device-width, initial-scale=1">
+            <title>TwinBench: Benchmark for Persistent AI Systems</title>
+            <style>
+              body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; margin: 48px auto; max-width: 760px; padding: 0 20px; line-height: 1.55; color: #1f2937; }
+              h1 { line-height: 1.1; margin-bottom: 12px; }
+              p, li { font-size: 18px; }
+              code { background: #f3f4f6; padding: 2px 6px; border-radius: 4px; }
+              a { color: #0f766e; text-decoration: none; }
+              a:hover { text-decoration: underline; }
+            </style>
+          </head>
+          <body>
+            <h1>TwinBench: Benchmark for Persistent AI Systems</h1>
+            <p>TwinBench evaluates persistent AI behavior over time: memory retention, identity consistency, cross-context coherence, task continuity, and personalization gain.</p>
+            <p>This Pages site is intentionally minimal. The canonical benchmark surface lives in the repository.</p>
+            <ul>
+              <li><a href="https://github.com/ProjectNuggets/TwinBench/blob/main/README.md">README</a></li>
+              <li><a href="https://github.com/ProjectNuggets/TwinBench/blob/main/SPEC.md">Specification</a></li>
+              <li><a href="https://github.com/ProjectNuggets/TwinBench/blob/main/METRICS.md">Metrics</a></li>
+              <li><a href="https://github.com/ProjectNuggets/TwinBench/blob/main/SCENARIOS.md">Scenarios</a></li>
+              <li><a href="https://github.com/ProjectNuggets/TwinBench/blob/main/results/reference-example-v1.json">Reference Example Result</a></li>
+            </ul>
+          </body>
+          </html>
+          EOF
+          touch _site/.nojekyll
 
       - name: Configure Pages
         uses: actions/configure-pages@v5
@@ -35,7 +67,7 @@ jobs:
       - name: Upload Pages artifact
         uses: actions/upload-pages-artifact@v3
         with:
-          path: website
+          path: _site
 
   deploy:
     if: github.ref == 'refs/heads/main'
