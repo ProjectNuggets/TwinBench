@@ -1,69 +1,71 @@
-# TwinBench Specification v1
+# TwinBench Specification
 
-## Status
-
-- Name: `TwinBench`
-- Formal label: `TwinBench: Benchmark for Persistent AI Systems`
-- Version: `v1.0`
-- Status: `Initial public specification`
+**Formal title:** `TwinBench: Benchmark for Persistent AI Systems`  
+**Version:** `1.0`  
+**Status:** `Canonical public specification`
 
 ## 1. Scope
 
-TwinBench specifies a benchmark for evaluating persistent AI systems: systems expected to retain user-relevant information, preserve behavioral identity, continue work over time, transfer context across surfaces, and improve through accumulated personalization.
+TwinBench specifies a benchmark for evaluating persistent AI systems. Its purpose is to measure whether a system preserves useful continuity over time rather than performing well only within isolated sessions.
 
-The benchmark does not attempt to replace model benchmarks, agent-task benchmarks, or safety benchmarks. It sits above them and evaluates the persistence layer that those benchmarks usually leave unmeasured.
+The benchmark covers systems that claim durable user memory, longitudinal task handling, identity stability, cross-context transfer, or personalization that improves with use.
 
-## 2. Benchmark Philosophy
+## 2. Benchmark Object of Evaluation
 
-TwinBench is based on five principles:
+The TwinBench object of evaluation is a system instance, not a model in isolation.
 
-1. Persistence is a systems property, not a single-prompt property.
-2. Longitudinal utility matters more than isolated peak performance.
-3. Identity and continuity should be evaluated behaviorally, not assumed from architecture.
-4. Evidence and caveats should be reported together.
-5. Partial measurement is preferable to inflated certainty.
+The evaluated object may include:
 
-This philosophy intentionally favors benchmark outputs that are legible, reproducible, and falsifiable over outputs that appear more precise than the underlying evidence allows.
+- foundation models
+- memory services
+- orchestration logic
+- tool and channel adapters
+- scheduling systems
+- identity or profile layers
+- retrieval and storage infrastructure
 
-## 3. Evaluation Target
+TwinBench evaluates the externally observable behavior of that full stack.
 
-TwinBench evaluates a system instance that claims some form of persistent intelligence. Examples include:
+## 3. Position Relative to Other Benchmark Types
 
-- personal AI systems
-- long-lived assistants
-- agent runtimes with durable memory
-- digital twin style user representations
-- multi-surface assistants with continuity expectations
+TwinBench is distinct from two common benchmark families:
 
-The evaluation target may include model components, memory infrastructure, orchestration logic, scheduling systems, identity layers, and channel adapters. TwinBench evaluates the observable system behavior produced by that stack.
+- `Model benchmarks` measure model competence, often with fixed prompts and single-run scoring.
+- `Agent-task benchmarks` measure task completion within a bounded workflow or episode.
+
+TwinBench measures a third layer:
+
+- `Persistent intelligence benchmarks` measure whether the system remains coherent, useful, and identity-consistent across time, context changes, and repeated use.
+
+TwinBench therefore should not be interpreted as a replacement for model or agent benchmarks. It complements them by measuring what they usually leave untested.
 
 ## 4. Assumptions
 
-TwinBench v1 assumes the evaluated system:
+TwinBench v1 assumes that the evaluated system:
 
-- can be interacted with across multiple sessions
-- can access or simulate durable state across those sessions
-- exposes enough surface behavior for evaluators to inspect outputs over time
-- can be evaluated with fixed prompts, structured fixtures, and dated checkpoints
+- can be engaged across multiple sessions or checkpoints
+- can access or simulate durable state across those checkpoints
+- exposes enough behavioral evidence for evaluators to inspect continuity claims
+- can be tested with fixed scenario definitions and recorded dates
 
-TwinBench does not assume a specific model family, memory backend, agent framework, or product form factor.
+TwinBench does not assume any particular model family, API design, storage system, or product form factor.
 
 ## 5. Exclusions
 
-TwinBench v1 does not directly measure:
+TwinBench v1 does not directly attempt to measure:
 
-- frontier model capability in isolation
-- raw reasoning depth absent persistence requirements
+- frontier reasoning capability in isolation
 - enterprise security certification
-- economic efficiency at production scale
-- subjective companionship quality
-- broad social alignment claims
+- benchmark-resistant social behavior
+- production cost efficiency at large scale
+- broad product quality outside persistence
+- general intelligence claims
 
-Those may matter in practice, but they are out of scope for the initial benchmark.
+These areas may matter for deployment, but they are outside the benchmark scope of v1.
 
-## 6. Scoring Philosophy
+## 6. Core Metrics
 
-TwinBench v1 reports five core metrics:
+TwinBench v1 defines five metrics:
 
 - `MR` — Memory Retention
 - `IC` — Identity Consistency
@@ -71,65 +73,88 @@ TwinBench v1 reports five core metrics:
 - `TC` — Task Continuity
 - `PG` — Personalization Gain
 
-The default v1 scoring profile assigns equal weight to each metric. This is a deliberate choice. At this stage, the benchmark aims to establish a clean and interpretable baseline rather than encode strong priors about which persistence property should dominate the others.
+Metric definitions are normative in [METRICS.md](METRICS.md).
 
-Scores should be reported with:
+## 7. Scoring Philosophy
 
-- metric-level values
-- total score
-- scenario coverage
-- evaluator notes
-- caveats
+TwinBench favors interpretable scoring over aggressive aggregation.
 
-TwinBench prefers explicit incompleteness over hidden extrapolation. If a metric is only partially observed, that should be stated plainly.
+The v1 default scoring profile:
 
-## 7. Benchmark Lifecycle
+- scores each metric on a `0-100` scale
+- uses equal metric weighting
+- reports scenario coverage
+- reports metric coverage
+- requires caveats and evaluator notes alongside scores
 
-### v1
+TwinBench prefers explicit partial coverage to hidden extrapolation. If a system is only partially observed, the result should show that directly rather than imply complete evidence.
 
-TwinBench v1 defines:
+## 8. Reproducibility Philosophy
 
+TwinBench treats reproducibility as a graded property, not an absolute.
+
+The benchmark is designed to improve reproducibility through:
+
+- fixed scenario definitions
+- explicit metric formulas
+- dated evaluation artifacts
+- disclosed caveats
+- stable result schema
+
+At the same time, persistent-system evaluation remains sensitive to environmental drift, delayed checkpoints, interface changes, and evaluator interpretation. v1 therefore requires transparent reporting instead of pretending full determinism where it does not exist.
+
+## 9. Evaluation Lifecycle
+
+TwinBench v1 defines a minimal but stable public surface:
+
+- one canonical specification
 - five core metrics
 - five reference scenarios
-- a lightweight scoring scaffold
-- a public results template
-- methodological caveats
-
-### Future Expansion
+- a lightweight evaluation scaffold
+- a public result template
+- one reference example artifact
 
 Later versions may add:
 
-- delayed evaluation windows with stronger temporal controls
-- channel-specific transfer tests
-- richer contradiction handling
-- longitudinal multi-user benchmarks
-- system architecture disclosures for reproducibility
-- confidence intervals or evaluator agreement tracking
+- stronger delayed-checkpoint controls
+- richer evidence requirements
+- evaluator agreement procedures
+- contradiction-resolution scenarios
+- multi-user persistence scenarios
 
-Future versions should preserve comparability where possible. Breaking metric definitions should require a new benchmark version.
+## 10. Versioning Policy
 
-## 8. Reporting Requirements
+TwinBench uses benchmark-level versioning.
 
-A TwinBench result should include at minimum:
+- `Patch` changes may clarify wording, examples, or non-normative guidance.
+- `Minor` changes may add optional scenarios or tooling without breaking result comparability.
+- `Major` changes are required when metric definitions, scoring rules, or normative scenario behavior change in ways that break comparability.
 
+The canonical benchmark version must always be recorded in published results.
+
+## 11. Reporting Requirements
+
+A valid TwinBench result should include at minimum:
+
+- benchmark name
+- benchmark version
 - system name
 - system version
 - evaluation date
-- benchmark version
-- scenario set used
-- metric scores
+- scenario-level observations
+- per-metric scores
 - total score
-- notes on evaluator interpretation
-- known limitations or caveats
+- coverage values
+- evaluator notes
+- caveats
+- evidence references, if available
 
-Results without caveats should be treated skeptically.
+## 12. Interpretation Guidance
 
-## 9. Interpretation Guidance
+TwinBench scores are evidence about persistent-system behavior. They are not universal rankings of intelligence, safety, or product quality.
 
-TwinBench scores should be interpreted as evidence about persistent system behavior, not as a universal quality ranking.
+High TwinBench scores suggest that a system behaves more like a coherent persistent intelligence layer. They do not establish superiority outside the benchmark scope.
 
-High scores suggest the system behaves more like a persistent intelligence layer. They do not imply the system is safer in all contexts, more general across all tasks, or better than another system outside the benchmark scope.
+## 13. Architectural Thesis
 
-## 10. Positioning
-
-TwinBench is designed to make persistent AI legible as a benchmarkable systems category. That includes architectures in which persistence depends on memory services, identity representations, orchestration runtimes, and long-horizon state management rather than on prompting alone. This framing is intentionally compatible with systems such as Nullalis without making TwinBench a product-specific benchmark.
+TwinBench is vendor-neutral, but it is grounded in a clear systems thesis: persistence is not reducible to prompting. Durable continuity usually depends on runtime architecture, state management, orchestration, and identity handling. This makes TwinBench especially relevant to persistent AI runtimes while keeping the benchmark independent of any single implementation.

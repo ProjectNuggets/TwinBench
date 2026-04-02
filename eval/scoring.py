@@ -1,4 +1,4 @@
-"""Scoring helpers for TwinBench v1."""
+"""Scoring helpers for TwinBench."""
 
 from __future__ import annotations
 
@@ -39,17 +39,20 @@ def build_metric_scores(
             score = clamp_score(override["score"])
             source = "override"
             note = override.get("note")
+            evidence = override.get("evidence", METRIC_SCENARIO_MAP.get(metric, []))
         else:
             derived = score_from_scenarios(metric, scenario_scores)
             score = derived if derived is not None else None
             source = "scenario_average" if derived is not None else "unscored"
             note = None
+            evidence = METRIC_SCENARIO_MAP.get(metric, []) if derived is not None else []
 
         results[metric] = {
             "score": score,
             "weight": float(weights[metric]),
             "source": source,
             "note": note,
+            "evidence": evidence,
         }
 
     return results

@@ -1,190 +1,194 @@
-# TwinBench Scenarios v1
+# TwinBench Scenarios
 
-TwinBench v1 defines five reference scenarios. Each scenario is designed to be reproducible, legible, and realistic enough to expose persistent behavior rather than one-turn competence.
+TwinBench v1 defines five reference scenarios. Each scenario is intended to be realistic enough to expose persistent behavior, structured enough to reproduce, and distinct enough to support interpretable scoring.
 
 ## 1. Return After Delay
 
 **Objective**
 
-Test whether the system retains key information and context after a defined delay and intervening activity.
+Test whether the system retains key memory and active task state after a defined delay.
 
 **Setup**
 
-- Establish a short profile containing facts, preferences, and one active task.
-- End the session.
-- Re-engage after a fixed delay with unrelated filler interaction in between.
+- establish stable user facts
+- establish one durable preference
+- define one active task with a clear next step
+- pause interaction for a recorded delay
 
-**Input sequence**
+**Sequence**
 
-1. Introduce stable user facts and one preference.
-2. Define an active task with a next step.
-3. Pause interaction for the configured delay.
-4. Resume with a recall and continuation prompt.
+1. Introduce the user facts and preference.
+2. Start an active task and confirm the next step.
+3. End the session.
+4. Resume after delay and ask for both recall and continuation.
 
 **Expected behavior**
 
-- Correct recall of stable facts and the active task state
-- No unnecessary re-onboarding
-- Continuation from prior context rather than restart
-
-**Scoring notes**
-
-- Primary metrics: `MR`, `TC`
-- Delay duration should be recorded explicitly
-- Evaluators should note whether recall required leading hints
+- stable facts are recalled correctly
+- the stored preference is applied without restatement
+- the active task resumes from the prior state
 
 **Failure modes**
 
-- forgetting core facts
-- losing task state
-- inventing unsupported details
-- resuming with incompatible assumptions
+- forgotten facts
+- stale or conflicting recall
+- task restart instead of resumption
+- fabricated details not supported by prior interaction
+
+**Scoring notes**
+
+- primary metrics: `MR`, `TC`
+- delay length should be recorded explicitly
+- note whether successful recall required hints or leading prompts
 
 ## 2. Longitudinal Task Progression
 
 **Objective**
 
-Test whether the system can carry a multi-step task through multiple checkpoints over time.
+Test whether the system can advance a multi-step task across multiple checkpoints rather than treating each session as a reset.
 
 **Setup**
 
-- Provide a task with at least three milestones.
-- Introduce interruptions between milestones.
-- Evaluate whether intermediate outputs are preserved and used.
+- define one task with at least three milestones
+- introduce unrelated interaction between milestones
+- preserve dated checkpoints and milestone outcomes
 
-**Input sequence**
+**Sequence**
 
-1. Start a multi-step task.
-2. Confirm milestone one.
+1. Start the task and define milestone one.
+2. Confirm progress on the first milestone.
 3. Interrupt with unrelated work.
-4. Resume later and request the next milestone.
-5. Complete the task in a final session.
+4. Return later and request the next milestone.
+5. Complete the task in a later session.
 
 **Expected behavior**
 
-- preserved milestone history
-- correct next action selection
-- no duplication of already completed work
-
-**Scoring notes**
-
-- Primary metric: `TC`
-- Secondary metrics: `CCC`, `IC`
-- Tasks should be substantive enough that restarting from scratch is observable
+- milestone history is preserved
+- already completed work is not repeated
+- the next action remains consistent with prior progress
 
 **Failure modes**
 
 - milestone loss
-- duplicated work
+- duplicate work
 - fabricated completion
 - degraded plan structure after interruption
+
+**Scoring notes**
+
+- primary metric: `TC`
+- secondary metrics: `CCC`, `IC`
+- the task should be substantive enough that a reset is visible
 
 ## 3. Multi-Context Transfer
 
 **Objective**
 
-Test whether a task or memory established in one context can be resumed accurately in another.
+Test whether the system can transfer relevant state across contexts such as chat, email, workspace, or other distinct interaction surfaces.
 
 **Setup**
 
-- Use two or more contexts such as chat, email, workspace, or document mode.
-- Seed information in one context and resume in another.
+- choose at least two contexts
+- establish work or memory in context A
+- resume in context B with an explicit transfer point
 
-**Input sequence**
+**Sequence**
 
-1. Start the task in context A.
-2. Introduce a status update or decision.
-3. Switch to context B and ask for continuation or summary.
-4. Optionally switch back to context A for verification.
+1. Start a task or memory-bearing interaction in context A.
+2. Introduce a decision, update, or summary-worthy change.
+3. Switch to context B and request continuation or summary.
+4. Optionally verify alignment in a third context or by returning to context A.
 
 **Expected behavior**
 
-- consistent task framing across contexts
-- correct transfer of the latest status
-- alignment of summaries and next steps
-
-**Scoring notes**
-
-- Primary metric: `CCC`
-- Record whether context transfer is native or evaluator-mediated
-- Context changes should be explicit in the run log
+- the task frame remains consistent across contexts
+- the latest state transfers correctly
+- summaries and next steps remain aligned
 
 **Failure modes**
 
 - contradictory summaries
-- missing updates
-- reversion to stale state
-- context-specific fragmentation
+- stale state after context switch
+- missing decisions or updates
+- context-specific fragmentation of the same task
+
+**Scoring notes**
+
+- primary metric: `CCC`
+- record whether transfer is native or evaluator-mediated
+- context boundaries should be explicit in the evidence log
 
 ## 4. Preference Learning
 
 **Objective**
 
-Test whether the system learns user-specific preferences and applies them later without restatement.
+Test whether the system becomes more useful after learning stable user preferences.
 
 **Setup**
 
-- Define several durable preferences such as formatting, scheduling, tone, or prioritization.
-- Run comparable tasks before and after those preferences are learned.
+- select several durable preferences such as tone, formatting, prioritization, or schedule defaults
+- run one baseline task before learning
+- run a comparable task after the preferences are established
 
-**Input sequence**
+**Sequence**
 
-1. Baseline task with no stored preference.
-2. Provide corrections and explicit preference statements.
-3. End session.
-4. Request a related task later without repeating the preference.
+1. Run a baseline task without relying on stored preferences.
+2. Provide explicit preferences and corrective feedback.
+3. End the session.
+4. Return later and request a comparable task without repeating the preference.
 
 **Expected behavior**
 
-- later output reflects learned preference
-- fewer repeated corrections
-- preference application feels stable rather than accidental
-
-**Scoring notes**
-
-- Primary metric: `PG`
-- Secondary metric: `MR`
-- Pre- and post-learning tasks should be comparable in difficulty
+- learned preferences are applied later without restatement
+- repeated corrections decrease
+- later outputs are more user-specific and operationally useful
 
 **Failure modes**
 
-- preference not applied
-- partial or inconsistent application
+- preferences not applied
+- inconsistent or partial application
 - regression after an apparent improvement
 - overgeneralization of a narrow preference
+
+**Scoring notes**
+
+- primary metric: `PG`
+- secondary metric: `MR`
+- before-and-after tasks should be comparable enough to support a fair gain estimate
 
 ## 5. Identity Stability Over Time
 
 **Objective**
 
-Test whether the system maintains a stable user model and role framing across repeated sessions.
+Test whether the system preserves a stable user model and stable collaboration role across repeated interaction.
 
 **Setup**
 
-- Establish user identity details and working relationship expectations.
-- Revisit the system across dated checkpoints.
+- define user identity markers
+- define standing collaboration norms or commitments
+- revisit the system across multiple dated checkpoints
 
-**Input sequence**
+**Sequence**
 
-1. Define user identity markers and recurring collaboration norms.
-2. Interact across multiple sessions separated by time.
-3. Probe for self-description, user understanding, and standing commitments.
+1. Establish user identity and working norms.
+2. Interact across multiple sessions over time.
+3. Probe for user understanding, system role, and standing commitments.
 
 **Expected behavior**
 
-- consistent user identity representation
-- stable role adherence by the system
-- preserved collaboration norms unless explicitly changed
-
-**Scoring notes**
-
-- Primary metric: `IC`
-- Secondary metrics: `MR`, `CCC`
-- Evaluators should separate acceptable stylistic drift from identity failure
+- the same user profile is preserved
+- the system role remains stable unless explicitly changed
+- standing collaboration norms remain intact
 
 **Failure modes**
 
 - profile confusion
-- role drift
+- unexplained role drift
 - contradiction of prior commitments
-- unexplained resets in working relationship
+- reset of the working relationship without cause
+
+**Scoring notes**
+
+- primary metric: `IC`
+- secondary metrics: `MR`, `CCC`
+- evaluators should distinguish style variation from genuine identity failure

@@ -1,5 +1,5 @@
 # Moved
 
-The canonical specification now lives in [SPEC.md](SPEC.md).
+The canonical specification for **TwinBench: Benchmark for Persistent AI Systems** now lives in [SPEC.md](SPEC.md).
 
-This compatibility file remains so older links do not break.
+This file is a compatibility redirect so older links do not break.

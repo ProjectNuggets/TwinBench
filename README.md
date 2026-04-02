@@ -1,26 +1,28 @@
 # TwinBench
 
-**TwinBench — Benchmarking Persistent AI and Digital Twin as a Service Systems**
+**TwinBench: Benchmark for Persistent AI Systems**
 
-TwinBench is an open benchmark for persistent AI systems. It evaluates whether a system behaves coherently over time: retaining memory across sessions, preserving identity, carrying work forward, transferring context across surfaces, and improving through user-specific knowledge. Existing benchmarks are useful for model quality, task completion, and agent execution, but they mostly evaluate single-session behavior. TwinBench measures the missing layer: whether an AI system functions as a persistent intelligence system rather than a sequence of isolated runs.
+*Benchmarking Persistent AI and Digital Twin as a Service Systems*
 
-## Why TwinBench Exists
+TwinBench is an open benchmark for persistent AI systems. It evaluates whether a system remains coherent over time: whether it retains user-relevant memory, preserves identity, carries work forward across interruptions, transfers context across surfaces, and becomes more useful through durable personalization. Most current benchmarks evaluate models, tasks, or agents within a single session. TwinBench evaluates the systems layer required for persistent intelligence.
 
-Current benchmarks tend to answer one of three questions:
+## Why This Benchmark Exists
+
+Current evaluation practice usually answers one of three questions:
 
 - Can a model solve a task?
 - Can an agent complete a workflow?
-- Can a system retrieve the right fact in the current session?
+- Can a system retrieve the right information in the current context?
 
-They usually do not answer a harder systems question:
+Those are useful questions, but they do not fully answer a more important one for persistent systems:
 
-**Does the system remain coherent, useful, and identifiable across time, context shifts, and repeated interaction?**
+**Does the system behave like a coherent intelligence over time rather than a sequence of isolated interactions?**
 
-TwinBench exists to evaluate that question directly.
+TwinBench exists to evaluate that missing layer.
 
 ## What TwinBench Measures
 
-TwinBench v1 focuses on five benchmark dimensions:
+TwinBench v1 defines five core metrics:
 
 - `MR` — Memory Retention
 - `IC` — Identity Consistency
@@ -28,18 +30,26 @@ TwinBench v1 focuses on five benchmark dimensions:
 - `TC` — Task Continuity
 - `PG` — Personalization Gain
 
-These dimensions are designed to test persistent behavior, not just one-turn correctness.
+Together, these metrics evaluate whether a system can sustain useful continuity across sessions, contexts, and repeated use.
+
+## What TwinBench Does Not Measure
+
+TwinBench is not intended to replace:
+
+- model capability benchmarks
+- agent-task completion benchmarks
+- broad safety or security certifications
+- product UX reviews
+- production-scale infrastructure audits
+
+TwinBench sits above model and task benchmarks. It focuses on persistent behavior that depends on system design, memory policy, orchestration, and runtime architecture.
 
 ## Who It Is For
 
-- Researchers studying persistent or longitudinal AI behavior
-- Builders of AI assistants, memory systems, and agent runtimes
-- Infrastructure teams designing persistent intelligence architectures
-- Evaluators who need a reproducible benchmark above model-only or task-only tests
-
-## Benchmark Thesis
-
-Persistence is not a prompt feature. It is a systems property. A benchmark for persistent intelligence therefore has to evaluate memory policy, identity stability, state transfer, longitudinal task handling, and user-specific adaptation together. This is why TwinBench is relevant to systems such as Nullalis while remaining benchmark-first and vendor-neutral.
+- Engineers building persistent AI products, assistants, and runtimes
+- Researchers studying longitudinal AI behavior
+- Evaluators designing evidence-backed comparisons
+- Teams that need a benchmark surface for continuity, persistence, and personalization
 
 ## Repository Map
 
@@ -51,9 +61,9 @@ Persistence is not a prompt feature. It is a systems property. A benchmark for p
 ├── SCENARIOS.md
 ├── LEADERBOARD.md
 ├── benchmarks/
-│   ├── scenarios/
+│   ├── configs/
 │   ├── fixtures/
-│   └── configs/
+│   └── scenarios/
 ├── eval/
 │   ├── runner.py
 │   ├── scoring.py
@@ -61,61 +71,73 @@ Persistence is not a prompt feature. It is a systems property. A benchmark for p
 ├── examples/
 │   ├── minimal_example.md
 │   └── sample_results.json
+├── results/
+│   ├── README.md
+│   └── reference-example-v1.json
 ├── docs/
-│   └── methodology.md
-└── harness/
-    └── ...
+│   ├── methodology.md
+│   └── submitting-results.md
+└── legacy/
+    ├── docs/
+    ├── results/
+    └── runtime/
 ```
 
-`harness/` contains earlier implementation work and legacy runtime-facing evaluation code. The benchmark-standard v1 surface is defined by the top-level documents and the `benchmarks/` and `eval/` directories.
+The canonical TwinBench v1 surface is the root specification, the `benchmarks/` directory, the `eval/` scaffold, the `results/` example artifact, and the `docs/` methodology and submission notes. Earlier runtime-harness, website, and launch material are preserved in `legacy/`.
 
-## Quick Start
+## Quickstart
 
-Create a baseline result artifact from the v1 scaffold:
+Generate a blank result artifact from the v1 scaffold:
 
 ```bash
 python3 eval/runner.py \
   --config benchmarks/configs/default.json \
   --system-name "Example System" \
   --system-version "0.1.0" \
-  --output results/twinbench-v1-example.json
+  --output results/twinbench-empty-v1.json
 ```
 
-Score a run from structured observations:
+Generate a scored example from the reference observations:
 
 ```bash
 python3 eval/runner.py \
   --config benchmarks/configs/default.json \
-  --system-name "Example System" \
-  --system-version "0.1.0" \
-  --observations benchmarks/fixtures/sample_observations.json \
-  --output results/twinbench-v1-scored.json
+  --system-name "Reference Example System" \
+  --system-version "1.0.0" \
+  --observations benchmarks/fixtures/reference_observations.json \
+  --output results/reference-example-v1.json
 ```
 
-## Roadmap
+The resulting schema is illustrated in [results/reference-example-v1.json](results/reference-example-v1.json).
 
-- Publish v1 metric definitions and reference scenarios
-- Add reference implementations for delayed and multi-session execution
-- Expand scoring guidance for human-in-the-loop and partially observable systems
-- Add reproducibility fixtures for multi-channel and longitudinal evaluations
-- Open public submissions and a filled leaderboard
+## Example Result
+
+The repository includes one benchmark-quality example artifact:
+
+- [results/reference-example-v1.json](results/reference-example-v1.json)
+
+This is a documented reference example for the v1 schema. It is not a public competitive submission and should not be treated as a leaderboard entry.
 
 ## Limitations
 
-- v1 emphasizes benchmark shape and metric rigor over full automation
-- Some persistence behaviors still require evaluator judgment or partial annotation
-- Long-horizon evaluations remain sensitive to environment drift and product updates
-- Cross-channel and personalization tests are easier to specify than to verify perfectly
+- v1 emphasizes clarity and reproducibility over maximal automation
+- several judgments remain evaluator-assisted rather than fully automatic
+- long-delay and multi-context evaluations remain sensitive to environment drift
+- TwinBench can reveal persistence failures more reliably than it can explain their internal cause
 
-These limitations are documented explicitly in [docs/methodology.md](docs/methodology.md).
+Those limitations are discussed directly in [docs/methodology.md](docs/methodology.md).
 
-## Contributing
+## Submitting Results
 
-TwinBench is intended to become a benchmark category, not a closed internal scorecard. Contributions are welcome in four forms:
+TwinBench is ready for external result submission, but no public external submissions are listed yet in the canonical leaderboard template.
 
-- scenario proposals
-- scoring critiques
-- reproducibility improvements
-- result submissions with evidence and caveats
+To prepare a result:
 
-Please read [SPEC.md](SPEC.md), [METRICS.md](METRICS.md), and [SCENARIOS.md](SCENARIOS.md) before proposing benchmark changes.
+1. Run the benchmark scaffold or an equivalent evaluator against the v1 scenario set.
+2. Produce a JSON artifact that matches the documented result schema.
+3. Record caveats, evidence links, and any scenario deviations.
+4. Add the result to the structure described in [LEADERBOARD.md](LEADERBOARD.md) and [docs/submitting-results.md](docs/submitting-results.md).
+
+## Design Position
+
+TwinBench is benchmark-first and vendor-neutral, but it is built around a systems claim: persistence is a systems property. Stronger prompting alone does not reliably produce durable memory, identity stability, context transfer, or long-horizon task continuity. Those behaviors usually depend on architecture, orchestration, and runtime design. That is why TwinBench is relevant to systems such as Nullalis and products such as ZAKI without becoming a product benchmark.

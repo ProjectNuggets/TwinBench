@@ -1,1 +1,1 @@
-"""TwinBench v1 evaluation scaffold."""
+"""TwinBench evaluation scaffold."""

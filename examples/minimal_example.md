@@ -1,29 +1,26 @@
 # Minimal TwinBench Example
 
-This scaffold is intentionally lightweight. It does two things:
+The v1 scaffold is intentionally small. It loads the canonical configuration, applies structured observations, and emits a stable JSON result artifact.
 
-1. loads the v1 benchmark configuration and scenario set
-2. produces a structured results artifact from supplied observations
-
-Generate a blank-ish result scaffold:
+Generate an empty result shell:
 
 ```bash
 python3 eval/runner.py \
   --config benchmarks/configs/default.json \
   --system-name "Example System" \
   --system-version "0.1.0" \
-  --output results/twinbench-v1-example.json
+  --output results/twinbench-empty-v1.json
 ```
 
-Generate a scored example from fixture observations:
+Generate the canonical reference example:
 
 ```bash
 python3 eval/runner.py \
   --config benchmarks/configs/default.json \
-  --system-name "Example System" \
-  --system-version "0.1.0" \
-  --observations benchmarks/fixtures/sample_observations.json \
-  --output results/twinbench-v1-scored.json
+  --system-name "Reference Example System" \
+  --system-version "1.0.0" \
+  --observations benchmarks/fixtures/reference_observations.json \
+  --output results/reference-example-v1.json
 ```
 
-The resulting artifact is compatible with the template in [LEADERBOARD.md](../LEADERBOARD.md).
+The output schema is aligned with [LEADERBOARD.md](../LEADERBOARD.md) and the example artifact in [results/reference-example-v1.json](../results/reference-example-v1.json).

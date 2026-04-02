@@ -4,7 +4,11 @@
   "objective": "Evaluate whether the system preserves user identity and role framing across dated checkpoints.",
   "primary_metrics": ["IC", "MR"],
   "checkpoints": 4,
-  "inputs": [
+  "setup": [
+    "Establish user identity markers and collaboration norms.",
+    "Create multiple dated checkpoints."
+  ],
+  "sequence": [
     "Establish user identity markers and working norms.",
     "Return across multiple sessions.",
     "Probe user understanding and role continuity."
@@ -13,5 +17,14 @@
     "Maintains the same user profile.",
     "Retains standing collaboration norms.",
     "Avoids unexplained role drift."
+  ],
+  "failure_modes": [
+    "Profile confusion.",
+    "Role drift without cause.",
+    "Contradiction of prior commitments."
+  ],
+  "scoring_notes": [
+    "Separate wording drift from behavior drift.",
+    "Record the number and spacing of checkpoints."
   ]
 }

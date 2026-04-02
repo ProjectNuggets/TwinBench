@@ -1,41 +1,51 @@
 # TwinBench Leaderboard
 
-This file is the public template for reported TwinBench results. It is intentionally plain. Benchmark repositories should optimize for comparability, not presentation.
+TwinBench v1 is ready for external result submission. The canonical leaderboard structure is defined here even though no public external submissions are listed yet.
+
+## Current Status
+
+- Public external submissions: `none listed yet`
+- Canonical benchmark version: `1.0`
+- Example artifact: [results/reference-example-v1.json](results/reference-example-v1.json)
+
+The example artifact is a schema and reporting reference, not a competitive leaderboard entry.
 
 ## Reporting Rules
 
-- Benchmark version must be stated explicitly.
-- Scenario deviations must be disclosed in `Notes / Caveats`.
-- Partial runs may be listed, but incomplete coverage should be made visible.
-- Scores are reported on a `0-100` scale.
+- Every row must include the benchmark version used.
+- Scenario deviations must be disclosed.
+- Evidence references should be included whenever available.
+- Coverage shortfalls must remain visible.
+- Evaluator notes and caveats are part of the result, not optional extras.
 
 ## Leaderboard Template
 
-| System Name | Version | Date Evaluated | MR | IC | CCC | TC | PG | Total Score | Notes / Caveats |
-|-------------|---------|----------------|----|----|-----|----|----|-------------|-----------------|
-| Example System | 0.1.0 | 2026-04-03 | 0.0 | 0.0 | 0.0 | 0.0 | 0.0 | 0.0 | Template row |
+| System Name | System Version | Evaluation Date | Benchmark Version | MR | IC | CCC | TC | PG | Total Score | Coverage | Evidence | Evaluator Notes | Caveats |
+|-------------|----------------|-----------------|-------------------|----|----|-----|----|----|-------------|----------|----------|-----------------|---------|
+| No public submissions yet | - | - | 1.0 | - | - | - | - | - | - | - | [Reference example](results/reference-example-v1.json) | Template row only | Not a leaderboard entry |
 
 ## Result Record Template
 
 ```json
 {
   "benchmark_name": "TwinBench",
+  "benchmark_title": "TwinBench: Benchmark for Persistent AI Systems",
   "benchmark_version": "1.0",
   "system_name": "Example System",
   "system_version": "0.1.0",
   "date_evaluated": "2026-04-03",
   "metrics": {
-    "MR": 0.0,
-    "IC": 0.0,
-    "CCC": 0.0,
-    "TC": 0.0,
-    "PG": 0.0
+    "MR": {"score": 0.0},
+    "IC": {"score": 0.0},
+    "CCC": {"score": 0.0},
+    "TC": {"score": 0.0},
+    "PG": {"score": 0.0}
   },
   "total_score": 0.0,
   "scenario_coverage": 0.0,
   "metric_coverage": 0.0,
-  "notes": [
-    "List scenario deviations, evaluator caveats, or partial coverage here."
-  ]
+  "evidence": [],
+  "evaluator_notes": [],
+  "caveats": []
 }
 ```

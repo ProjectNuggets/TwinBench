@@ -4,7 +4,11 @@
   "objective": "Evaluate whether the system preserves and advances multi-step work over multiple checkpoints.",
   "primary_metrics": ["TC", "CCC"],
   "milestones": 3,
-  "inputs": [
+  "setup": [
+    "Define one task with at least three milestones.",
+    "Introduce unrelated work between milestones."
+  ],
+  "sequence": [
     "Initiate a multi-step task.",
     "Interrupt the task with unrelated work.",
     "Resume later and request the next milestone.",
@@ -14,5 +18,14 @@
     "Preserves milestone history.",
     "Avoids repeating already completed work.",
     "Selects the correct next action."
+  ],
+  "failure_modes": [
+    "Milestone loss.",
+    "Duplicated work after interruption.",
+    "Fabricated completion state."
+  ],
+  "scoring_notes": [
+    "Use a task where a reset is observable.",
+    "Preserve milestone checkpoints in evaluator notes."
   ]
 }

@@ -1,4 +1,4 @@
-"""Utility helpers for the TwinBench v1 scaffold."""
+"""Utility helpers for the TwinBench scaffold."""
 
 from __future__ import annotations
 

@@ -4,7 +4,11 @@
   "objective": "Evaluate whether state and plans transfer coherently across contexts.",
   "primary_metrics": ["CCC", "IC"],
   "contexts": ["chat", "email", "workspace"],
-  "inputs": [
+  "setup": [
+    "Choose at least two distinct contexts.",
+    "Seed memory or task state in context A."
+  ],
+  "sequence": [
     "Start work in context A.",
     "Introduce a status update.",
     "Resume in context B and request continuation.",
@@ -14,5 +18,14 @@
     "Maintains consistent task framing.",
     "Carries the latest status across contexts.",
     "Produces aligned summaries and next steps."
+  ],
+  "failure_modes": [
+    "State loss during context change.",
+    "Contradictory summaries.",
+    "Context-specific fragmentation of the plan."
+  ],
+  "scoring_notes": [
+    "Record whether transfer is native or evaluator-mediated.",
+    "Make context boundaries explicit in the evidence log."
   ]
 }

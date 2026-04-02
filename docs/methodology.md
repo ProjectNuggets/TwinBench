@@ -2,57 +2,61 @@
 
 ## What TwinBench Measures Well
 
-TwinBench is strongest when evaluating whether a system behaves like a persistent intelligence layer over repeated interaction. In particular, it measures:
+TwinBench is strongest when the question is whether a system behaves like a persistent intelligence layer over time. In v1, it measures well:
 
-- retention of user-relevant information after delay
-- continuity of task state across sessions
-- stability of identity and role framing
-- transfer of context across surfaces or interaction modes
+- delayed recall of user-relevant facts and preferences
+- continuity of multi-step work across interruptions
+- stability of user identity and system role
+- transfer of task state across contexts
 - practical gains from remembered preferences
 
-These are behavioral properties that many model and agent benchmarks leave under-specified.
+These are the behavioral properties most often missing from model-only and task-only benchmarks.
 
-## What TwinBench Does Not Measure Well Yet
+## What TwinBench Does Not Yet Measure Well
 
-TwinBench v1 does not yet provide strong coverage for:
+TwinBench v1 is intentionally narrower than a full system audit. It does not yet measure well:
 
-- adversarial security testing
-- large-scale operational reliability
-- economic efficiency under production traffic
+- adversarial robustness and security depth
+- production reliability under sustained scale
+- infrastructure cost efficiency
 - open-domain capability breadth
-- emotional or relational quality
-- multi-user contention in shared environments
+- emotional or social interaction quality
+- multi-user persistence under heavy contention
 
-Those areas may matter for deployment, but they are not the focus of the initial benchmark.
+## Where Evaluator Judgment Is Required
 
-## Why Some Scoring Is Approximate
+Evaluator judgment remains necessary in several places:
 
-Several TwinBench metrics require interpretation rather than binary checking. Examples include whether a resumed task is meaningfully coherent, whether role drift is substantive, and whether later outputs represent genuine personalization gain rather than chance alignment.
+- deciding whether a resumed task is genuinely coherent or merely plausible
+- separating stylistic variation from identity drift
+- deciding whether later improvement is true personalization gain or prompt luck
+- judging whether omitted context is harmless compression or a continuity failure
 
-For that reason, v1 allows evaluator notes, partial evidence, and scenario-level caveats. This is a feature, not a defect. False precision would make the benchmark look stronger than it is.
+TwinBench v1 treats that subjectivity honestly. Results should report notes and caveats instead of pretending complete automation where it does not exist.
 
 ## Reproducibility Limits
 
-Persistent-system evaluation is harder to reproduce than single-turn task evaluation because:
+Persistent-system evaluation is less deterministic than single-turn task evaluation because:
 
-- behavior changes over elapsed time
-- product updates may alter memory policy between checkpoints
-- context transfer can depend on channel instrumentation
-- personalization tests are sensitive to task selection
-- some systems expose partial state while others hide it behind interfaces
+- elapsed time affects system state
+- deployments change between checkpoints
+- context transfer may depend on product instrumentation
+- preference-learning scenarios depend on task comparability
+- some systems expose internal state while others expose only outputs
 
-TwinBench addresses this by publishing reference scenarios, dated result artifacts, and explicit caveat reporting. It does not eliminate the problem entirely.
+TwinBench addresses these limits through fixed scenario definitions, stable metric formulas, explicit dates, and artifact-based reporting. It does not fully eliminate drift.
 
-## Why Architecture Matters
+## What “Good Enough v1” Means
 
-TwinBench is intentionally agnostic about implementation, but the benchmark is built around a systems claim: persistence depends on architecture. Durable memory, identity stability, context transfer, and long-horizon task handling usually require runtime support, not just stronger prompting. This is one reason the benchmark is relevant to persistent AI runtimes such as Nullalis without being tied to any single product.
+TwinBench v1 is considered good enough if it does four things reliably:
 
-## Future Work
+1. defines the persistence layer as a benchmarkable object
+2. gives evaluators a stable vocabulary and result schema
+3. makes partial coverage and caveats explicit
+4. supports comparable example runs without overstating certainty
 
-Likely v2 directions include:
+That is a stronger and more trustworthy v1 than a more automated benchmark that hides uncertainty.
 
-- stronger delay-window controls
-- reference annotation protocols for evaluator agreement
-- benchmark packs for channel transfer and contradiction handling
-- improved scoring for partially automated systems
-- richer fixture sets for user preference and identity drift
+## Why the Systems Thesis Matters
+
+TwinBench is benchmark-first and vendor-neutral, but its methodology reflects a clear technical position: persistence is a systems property. Durable memory, identity stability, context transfer, and long-horizon continuity usually depend on architecture and runtime design, not only on prompt quality. This is why persistent runtimes matter to the benchmark without making the benchmark product-specific.

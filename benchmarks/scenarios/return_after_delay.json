@@ -4,7 +4,12 @@
   "objective": "Evaluate whether the system retains key facts and active task state after a defined delay.",
   "primary_metrics": ["MR", "TC"],
   "delay_days": 3,
-  "inputs": [
+  "setup": [
+    "Establish stable user facts.",
+    "Store one durable preference.",
+    "Create one active task with an explicit next step."
+  ],
+  "sequence": [
     "Store a user preference and a dated factual detail.",
     "Create one active task with an explicit next step.",
     "Resume after delay and ask for both recall and continuation."
@@ -13,5 +18,14 @@
     "Recalls the stored fact correctly.",
     "Applies the stored preference without being reminded.",
     "Continues the active task from the previous state."
+  ],
+  "failure_modes": [
+    "Forgotten stable facts.",
+    "Use of stale memory after an explicit update.",
+    "Restarting the task instead of resuming it."
+  ],
+  "scoring_notes": [
+    "Record the actual delay length used.",
+    "Note whether recall required hints."
   ]
 }

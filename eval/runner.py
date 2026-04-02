@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Minimal TwinBench v1 evaluation scaffold."""
+"""Minimal TwinBench evaluation scaffold."""
 
 from __future__ import annotations
 
@@ -15,7 +15,7 @@ except ImportError:
 
 
 def parse_args() -> argparse.Namespace:
-    parser = argparse.ArgumentParser(description="TwinBench v1 scaffold runner")
+    parser = argparse.ArgumentParser(description="TwinBench scaffold runner")
     parser.add_argument("--config", required=True, help="Path to benchmark config JSON")
     parser.add_argument("--system-name", required=True, help="System name under evaluation")
     parser.add_argument("--system-version", required=True, help="System version under evaluation")
@@ -46,8 +46,11 @@ def main() -> None:
     observations = load_json(args.observations) if args.observations else {}
 
     scenario_scores = observations.get("scenario_scores", {})
+    scenario_observations = observations.get("scenario_observations", {})
     metric_overrides = observations.get("metric_overrides", {})
-    notes = observations.get("notes", [])
+    evaluator_notes = observations.get("evaluator_notes", [])
+    caveats = observations.get("caveats", [])
+    evidence = observations.get("evidence", [])
     metric_weights = config.get("metric_weights", {})
     metric_scores = build_metric_scores(metric_weights, scenario_scores, metric_overrides)
     scenario_coverage = round(
@@ -62,17 +65,34 @@ def main() -> None:
 
     payload = {
         "benchmark_name": config.get("benchmark_name", "TwinBench"),
+        "benchmark_title": config.get(
+            "benchmark_title", "TwinBench: Benchmark for Persistent AI Systems"
+        ),
         "benchmark_version": config.get("benchmark_version", "1.0"),
-        "benchmark_subtitle": config.get("subtitle", "Benchmark for Persistent AI Systems"),
+        "benchmark_subtitle": config.get(
+            "benchmark_subtitle",
+            "Benchmarking Persistent AI and Digital Twin as a Service Systems",
+        ),
+        "artifact_type": "benchmark_result",
         "system_name": args.system_name,
         "system_version": args.system_version,
         "date_evaluated": args.date_evaluated,
+        "scenario_set": config.get("scenario_set", "core-v1"),
         "scenarios": [
             {
                 "id": scenario["id"],
                 "title": scenario["title"],
                 "primary_metrics": scenario.get("primary_metrics", []),
                 "observed_score": scenario_scores.get(scenario["id"]),
+                "observations": scenario_observations.get(scenario["id"], {}).get(
+                    "observations", []
+                ),
+                "evidence": scenario_observations.get(scenario["id"], {}).get(
+                    "evidence", []
+                ),
+                "caveats": scenario_observations.get(scenario["id"], {}).get(
+                    "caveats", []
+                ),
             }
             for scenario in scenarios
         ],
@@ -80,7 +100,9 @@ def main() -> None:
         "total_score": total_score(metric_scores),
         "scenario_coverage": scenario_coverage,
         "metric_coverage": metric_coverage,
-        "notes": notes,
+        "evaluator_notes": evaluator_notes,
+        "caveats": caveats,
+        "evidence": evidence,
     }
 
     write_json(args.output, payload)

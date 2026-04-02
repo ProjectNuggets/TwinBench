@@ -1,7 +1,9 @@
 {
   "benchmark_name": "TwinBench",
+  "benchmark_title": "TwinBench: Benchmark for Persistent AI Systems",
   "benchmark_version": "1.0",
-  "subtitle": "Benchmark for Persistent AI Systems",
+  "benchmark_subtitle": "Benchmarking Persistent AI and Digital Twin as a Service Systems",
+  "scenario_set": "core-v1",
   "metric_weights": {
     "MR": 0.2,
     "IC": 0.2,
