@@ -51,6 +51,8 @@ def main() -> None:
     evaluator_notes = observations.get("evaluator_notes", [])
     caveats = observations.get("caveats", [])
     evidence = observations.get("evidence", [])
+    artifact_class = observations.get("artifact_class")
+    confidence_level = observations.get("confidence_level")
     metric_weights = config.get("metric_weights", {})
     metric_scores = build_metric_scores(metric_weights, scenario_scores, metric_overrides)
     scenario_coverage = round(
@@ -74,6 +76,7 @@ def main() -> None:
             "Benchmarking Persistent AI and Digital Twin as a Service Systems",
         ),
         "artifact_type": "benchmark_result",
+        "artifact_class": artifact_class,
         "system_name": args.system_name,
         "system_version": args.system_version,
         "date_evaluated": args.date_evaluated,
@@ -103,6 +106,7 @@ def main() -> None:
         "evaluator_notes": evaluator_notes,
         "caveats": caveats,
         "evidence": evidence,
+        "confidence_level": confidence_level,
     }
 
     write_json(args.output, payload)

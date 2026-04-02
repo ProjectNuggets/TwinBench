@@ -30,6 +30,7 @@ jobs:
             --config benchmarks/configs/default.json \
             --system-name "Reference Example System" \
             --system-version "1.0.0" \
+            --date-evaluated "2026-04-03" \
             --observations benchmarks/fixtures/reference_observations.json \
             --output /tmp/reference-example-v1.json
 

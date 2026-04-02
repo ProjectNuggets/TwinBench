@@ -94,6 +94,7 @@
     "Reference example generated from the documented v1 fixture set.",
     "Suitable as a schema example and smoke test for the v1 scaffold."
   ],
+  "artifact_class": "reference_example",
   "caveats": [
     "This is a reference example artifact, not a competitive public submission.",
     "Some scenario evidence is summarized rather than linked to raw transcripts."
@@ -101,5 +102,6 @@
   "evidence": [
     "benchmarks/fixtures/reference_observations.json",
     "benchmarks/configs/default.json"
-  ]
+  ],
+  "confidence_level": "low"
 }
