@@ -1,0 +1,47 @@
+{
+  "system_name": "OpenClaw-like Agent System",
+  "system_version": "baseline-simulated-v1",
+  "benchmark_version": "TwinBench v1",
+  "artifact_class": "modeled_baseline",
+  "evaluation_date": "2026-04-03",
+  "scores": {
+    "MR": {
+      "score": 0.40,
+      "evidence": "Return After Delay preserves scratchpad and task state better than personal facts or preferences.",
+      "confidence": "medium"
+    },
+    "IC": {
+      "score": 0.35,
+      "evidence": "Identity Stability Over Time shows a stable executor role but shallow persistent user identity.",
+      "confidence": "medium"
+    },
+    "CCC": {
+      "score": 0.33,
+      "evidence": "Multi-Context Transfer preserves operational context through shared state, but user-facing coherence is partial.",
+      "confidence": "medium"
+    },
+    "TC": {
+      "score": 0.56,
+      "evidence": "Longitudinal Task Progression is the strongest area because plan state often survives interruption.",
+      "confidence": "medium-high"
+    },
+    "PG": {
+      "score": 0.20,
+      "evidence": "Preference Learning works when preferences are attached as task parameters, but durable user-specific gain is limited.",
+      "confidence": "medium"
+    }
+  },
+  "aggregate_score": 0.37,
+  "notes": "This profile is better at continuing workflows than at behaving like a persistent personal intelligence system.",
+  "evaluation_notes": [
+    "The baseline assumes an agent system with tools, plans, and partial state persistence.",
+    "Continuity is strongest for tasks and weakest for identity and personalization."
+  ],
+  "known_limitations": [
+    "This score reflects a class of agent systems rather than one verified OpenClaw deployment.",
+    "Actual results may vary depending on memory adapters, planning persistence, and product configuration."
+  ],
+  "confidence_level": "medium",
+  "limitations": "Scoring is approximate because agent systems vary widely in how much state they persist and how user-centric that state is.",
+  "observation_fixture": "benchmarks/fixtures/openclaw_baseline_observations.json"
+}

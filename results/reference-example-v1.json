@@ -4,6 +4,7 @@
   "benchmark_version": "1.0",
   "benchmark_subtitle": "Benchmarking Persistent AI and Digital Twin as a Service Systems",
   "artifact_type": "benchmark_result",
+  "artifact_class": "reference_example",
   "system_name": "Reference Example System",
   "system_version": "1.0.0",
   "date_evaluated": "2026-04-03",
@@ -171,5 +172,6 @@
   "evidence": [
     "benchmarks/fixtures/reference_observations.json",
     "benchmarks/configs/default.json"
-  ]
+  ],
+  "confidence_level": "low"
 }

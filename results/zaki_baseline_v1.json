@@ -1,0 +1,47 @@
+{
+  "system_name": "ZAKI / Nullalis-like Persistent System",
+  "system_version": "baseline-simulated-v1",
+  "benchmark_version": "TwinBench v1",
+  "artifact_class": "modeled_baseline",
+  "evaluation_date": "2026-04-03",
+  "scores": {
+    "MR": {
+      "score": 0.78,
+      "evidence": "Return After Delay and Identity Stability Over Time show durable recall of user facts and prior task state with minor edge-case degradation.",
+      "confidence": "medium"
+    },
+    "IC": {
+      "score": 0.74,
+      "evidence": "Identity Stability Over Time preserves the user profile and collaboration frame, with only mild wording drift in self-description.",
+      "confidence": "medium"
+    },
+    "CCC": {
+      "score": 0.71,
+      "evidence": "Multi-Context Transfer preserves task state and recommendation coherence across surfaces, though low-priority detail may be compressed.",
+      "confidence": "medium"
+    },
+    "TC": {
+      "score": 0.76,
+      "evidence": "Longitudinal Task Progression resumes milestones reliably and generally avoids duplication, with occasional conservative revalidation.",
+      "confidence": "medium"
+    },
+    "PG": {
+      "score": 0.80,
+      "evidence": "Preference Learning shows later application of user preferences without restatement and fewer repeated corrections.",
+      "confidence": "medium"
+    }
+  },
+  "aggregate_score": 0.76,
+  "notes": "This profile reflects a persistent system designed around runtime memory and continuity rather than a single-session prompt loop.",
+  "evaluation_notes": [
+    "The baseline assumes a genuine persistence-oriented architecture with durable user state and long-horizon continuity support.",
+    "The system is intentionally not scored as perfect; benchmark benefit comes from measurable persistence, not idealized behavior."
+  ],
+  "known_limitations": [
+    "This is still a simulated baseline rather than a new live instrumented run.",
+    "Cross-context and long-delay behavior should be validated with real runtime telemetry next."
+  ],
+  "confidence_level": "medium",
+  "limitations": "Scoring is approximate because the result is based on a modeled persistent-system profile informed by the benchmark thesis rather than a fresh live evaluation pass.",
+  "observation_fixture": "benchmarks/fixtures/zaki_baseline_observations.json"
+}

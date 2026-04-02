@@ -1,0 +1,53 @@
+{
+  "system_name": "ChatGPT-like Stateless Conversational AI",
+  "system_version": "baseline-simulated-v1",
+  "benchmark_version": "TwinBench v1",
+  "evaluation_date": "2026-04-03",
+  "assumptions": [
+    "The system has strong conversational competence within a live prompt window.",
+    "The system does not retain durable user state across sessions by default.",
+    "Any continuity after delay requires the user to restate context."
+  ],
+  "observations": [
+    {
+      "scenario": "Return After Delay",
+      "related_metrics": ["MR", "TC"],
+      "system_behavior": "After the delay, the system asks for the prior context again and cannot recover the earlier preference or active task without restatement.",
+      "outcome": "failure",
+      "summary": "No durable recall across sessions.",
+      "evidence_snippet": "I don't have memory of previous chats, so please remind me of your preference and where we left off."
+    },
+    {
+      "scenario": "Longitudinal Task Progression",
+      "related_metrics": ["TC", "CCC", "IC"],
+      "system_behavior": "The system can propose a reasonable next step if the milestone history is pasted back into the prompt, but otherwise restarts the task from first principles.",
+      "outcome": "partial_success",
+      "summary": "Good local reasoning, weak longitudinal continuity.",
+      "evidence_snippet": "If you share the earlier milestones, I can continue from there; otherwise I'd suggest we start by defining the task plan."
+    },
+    {
+      "scenario": "Multi-Context Transfer",
+      "related_metrics": ["CCC", "IC"],
+      "system_behavior": "The system can summarize supplied context cleanly, but it has no native cross-context state and cannot verify that two contexts belong to the same ongoing thread.",
+      "outcome": "failure",
+      "summary": "Transfer depends entirely on user-supplied recap.",
+      "evidence_snippet": "Based on the details you pasted here, the task seems to be in milestone two, but I don't have access to the original conversation."
+    },
+    {
+      "scenario": "Preference Learning",
+      "related_metrics": ["PG", "MR"],
+      "system_behavior": "The system follows preferences well within the active conversation, but does not apply them reliably in a later session unless they are repeated.",
+      "outcome": "failure",
+      "summary": "Session-local adaptation without durable personalization.",
+      "evidence_snippet": "Happy to use bullet summaries and concise tone; please remind me again in future chats if you want that by default."
+    },
+    {
+      "scenario": "Identity Stability Over Time",
+      "related_metrics": ["IC", "MR", "CCC"],
+      "system_behavior": "The assistant persona remains generally stable, but the user model resets and standing collaboration norms are not preserved across sessions.",
+      "outcome": "partial_success",
+      "summary": "Stable generic assistant identity, weak persistent user identity.",
+      "evidence_snippet": "I'm still here to help, but I don't retain personal profile details from previous conversations unless you restate them."
+    }
+  ]
+}

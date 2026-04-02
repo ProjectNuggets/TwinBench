@@ -6,6 +6,17 @@
 
 TwinBench is an open benchmark for persistent AI systems. It evaluates whether a system remains coherent over time: whether it retains user-relevant memory, preserves identity, carries work forward across interruptions, transfers context across surfaces, and becomes more useful through durable personalization. Most current benchmarks evaluate models, tasks, or agents within a single session. TwinBench evaluates the systems layer required for persistent intelligence.
 
+## Benchmark Integrity
+
+TwinBench treats recorded artifacts as the source of truth. Public claims in this repository are intended to follow checked-in results, not outrun them.
+
+The repository currently contains two different evidence classes:
+
+- canonical v1 scaffold artifacts in `results/`, including reference examples and modeled baseline comparisons
+- first-party measured harness artifacts in `legacy/results/`, including multiple real Nullalis runs under the earlier TwinBench v0.2 harness
+
+The strongest measured evidence currently in the repository is the first-party Nullalis harness run at [legacy/results/nullalis-live-2026-03-25-openended.json](legacy/results/nullalis-live-2026-03-25-openended.json). It is a real recorded run, but it uses the earlier v0.2 dimension-based schema rather than the simplified v1 five-metric scaffold.
+
 ## Why This Benchmark Exists
 
 Current evaluation practice usually answers one of three questions:
@@ -118,6 +129,37 @@ The repository includes one benchmark-quality example artifact:
 
 This is a documented reference example for the v1 schema. It is not a public competitive submission and should not be treated as a leaderboard entry.
 
+## Measured Repository Evidence
+
+The repository also contains first-party measured benchmark artifacts from earlier harness-based TwinBench runs. The most important current measured artifact is:
+
+- [legacy/results/nullalis-live-2026-03-25-openended.json](legacy/results/nullalis-live-2026-03-25-openended.json)
+
+That run reports:
+
+- benchmark version: `0.2`
+- coverage-adjusted verified score: `75.9/100`
+- verified raw score: `90.9/100`
+- measured coverage: `83.5%`
+
+This result should be read with its own caveats. It is a real recorded first-party run of Nullalis, not an external submission, and it uses the older 10-dimension harness rather than the current simplified v1 scaffold.
+
+## Baseline Results (v1)
+
+TwinBench now includes an initial baseline validation set for three system profiles:
+
+- stateless conversational AI
+- agentic execution system with limited persistence
+- persistence-oriented runtime system
+
+The purpose of this set is to show what TwinBench distinguishes: not who writes the best local answer, but which systems preserve continuity over time.
+
+- [LEADERBOARD.md](LEADERBOARD.md)
+- [examples/persistence_demo.md](examples/persistence_demo.md)
+
+These baseline comparison entries are reported on a normalized `0.0-1.0` scale for readability.
+They are modeled comparison baselines, not live measured runs.
+
 ## Limitations
 
 - v1 emphasizes clarity and reproducibility over maximal automation
@@ -129,7 +171,7 @@ Those limitations are discussed directly in [docs/methodology.md](docs/methodolo
 
 ## Submitting Results
 
-TwinBench is ready for external result submission, but no public external submissions are listed yet in the canonical leaderboard template.
+TwinBench is ready for external result submission, but no public third-party submissions are listed yet in the canonical leaderboard template.
 
 To prepare a result:
 

@@ -1,0 +1,47 @@
+{
+  "system_name": "ChatGPT-like Stateless Conversational AI",
+  "system_version": "baseline-simulated-v1",
+  "benchmark_version": "TwinBench v1",
+  "artifact_class": "modeled_baseline",
+  "evaluation_date": "2026-04-03",
+  "scores": {
+    "MR": {
+      "score": 0.10,
+      "evidence": "Return After Delay and Preference Learning both fail without user restatement of prior facts or preferences.",
+      "confidence": "high"
+    },
+    "IC": {
+      "score": 0.42,
+      "evidence": "Identity Stability Over Time shows a stable generic assistant role, but little durable user identity continuity.",
+      "confidence": "medium"
+    },
+    "CCC": {
+      "score": 0.22,
+      "evidence": "Multi-Context Transfer works only when the user manually carries context between surfaces.",
+      "confidence": "medium"
+    },
+    "TC": {
+      "score": 0.18,
+      "evidence": "Longitudinal Task Progression restarts unless prior milestones are pasted back into the prompt.",
+      "confidence": "high"
+    },
+    "PG": {
+      "score": 0.08,
+      "evidence": "Preference Learning shows session-local compliance but almost no durable personalization gain.",
+      "confidence": "high"
+    }
+  },
+  "aggregate_score": 0.20,
+  "notes": "Strong conversational quality is not reflected strongly in TwinBench because the benchmark targets persistence rather than local answer quality.",
+  "evaluation_notes": [
+    "This baseline assumes a high-quality conversational model with no durable per-user memory across sessions.",
+    "The system can look better when the user re-supplies context, but TwinBench scores native persistence rather than recap quality."
+  ],
+  "known_limitations": [
+    "This is a simulated benchmark profile rather than a live API run.",
+    "Some deployed products offer optional memory features; this baseline reflects a stateless default."
+  ],
+  "confidence_level": "medium-high",
+  "limitations": "Scoring is approximate because a concrete product configuration was not evaluated live; the profile represents a plausible stateless conversational baseline.",
+  "observation_fixture": "benchmarks/fixtures/chatgpt_baseline_observations.json"
+}

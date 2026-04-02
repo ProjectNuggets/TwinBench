@@ -1,0 +1,53 @@
+{
+  "system_name": "OpenClaw-like Agent System",
+  "system_version": "baseline-simulated-v1",
+  "benchmark_version": "TwinBench v1",
+  "evaluation_date": "2026-04-03",
+  "assumptions": [
+    "The system can execute multi-step tasks through tools, plans, or scratchpads.",
+    "Persistence exists in limited operational state but is not optimized for durable user memory.",
+    "User preferences and identity are secondary to task execution."
+  ],
+  "observations": [
+    {
+      "scenario": "Return After Delay",
+      "related_metrics": ["MR", "TC"],
+      "system_behavior": "The system recovers the task skeleton and prior tool outputs from its scratchpad, but loses some user-specific preference detail after delay.",
+      "outcome": "partial_success",
+      "summary": "Task state partially survives; personal memory is inconsistent.",
+      "evidence_snippet": "I found the previous task plan and the last completed action, but I don't see the formatting preference you mentioned earlier."
+    },
+    {
+      "scenario": "Longitudinal Task Progression",
+      "related_metrics": ["TC", "CCC", "IC"],
+      "system_behavior": "The system resumes a multi-step task better than a stateless chatbot because it persists plan state, but may duplicate completed substeps when checkpoints are noisy.",
+      "outcome": "success",
+      "summary": "Strong task continuation relative to memory depth.",
+      "evidence_snippet": "Milestone two is marked complete; I'll continue with milestone three, though I may rerun the fetch step to verify status."
+    },
+    {
+      "scenario": "Multi-Context Transfer",
+      "related_metrics": ["CCC", "IC"],
+      "system_behavior": "The system transfers operational context through a shared task representation, but summaries are often tool-centric and may omit user-facing rationale.",
+      "outcome": "partial_success",
+      "summary": "Cross-context task coherence is better than conversational coherence.",
+      "evidence_snippet": "The workspace state shows the task is pending final review, but I do not have a strong user-facing summary of why that choice was made."
+    },
+    {
+      "scenario": "Preference Learning",
+      "related_metrics": ["PG", "MR"],
+      "system_behavior": "The system can store explicit configuration-like preferences, but weakly generalizes them and often treats them as task-local parameters rather than durable user defaults.",
+      "outcome": "partial_success",
+      "summary": "Preference handling exists, but personalization gain is limited.",
+      "evidence_snippet": "I used the preferred markdown format for this task because it was in the task state, but I would need it attached again for future workflows."
+    },
+    {
+      "scenario": "Identity Stability Over Time",
+      "related_metrics": ["IC", "MR", "CCC"],
+      "system_behavior": "The agent role stays stable as a task executor, but the system maintains only a shallow user model and does not preserve collaboration norms robustly.",
+      "outcome": "partial_success",
+      "summary": "Stable executor role, weak personal identity continuity.",
+      "evidence_snippet": "I am continuing as the workflow agent for this task, but I don't maintain a rich long-term profile of your preferences or working style."
+    }
+  ]
+}

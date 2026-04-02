@@ -1,51 +1,37 @@
 # TwinBench Leaderboard
 
-TwinBench v1 is ready for external result submission. The canonical leaderboard structure is defined here even though no public external submissions are listed yet.
+TwinBench currently has two public result classes:
 
-## Current Status
+- first-party measured harness artifacts under the earlier TwinBench v0.2 schema
+- modeled baseline comparisons under the current simplified TwinBench v1 scaffold
 
-- Public external submissions: `none listed yet`
-- Canonical benchmark version: `1.0`
-- Example artifact: [results/reference-example-v1.json](results/reference-example-v1.json)
+No public third-party submissions are listed yet.
 
-The example artifact is a schema and reporting reference, not a competitive leaderboard entry.
+## First-Party Measured Artifacts
 
-## Reporting Rules
+These are recorded benchmark runs checked into the repository. They are first-party evaluations and should be read as repository evidence, not neutral external audits.
 
-- Every row must include the benchmark version used.
-- Scenario deviations must be disclosed.
-- Evidence references should be included whenever available.
-- Coverage shortfalls must remain visible.
-- Evaluator notes and caveats are part of the result, not optional extras.
+| System | Version | Benchmark Version | Date Evaluated | MR | IC | CCC | TC | PG | Total Score | Evidence | Caveats / Notes |
+|--------|---------|-------------------|----------------|----|----|-----|----|----|-------------|----------|-----------------|
+| Nullalis local openended race | local openended race | 0.2 | 2026-03-25 | - | - | - | - | - | 75.9 coverage-adjusted verified | [legacy/results/nullalis-live-2026-03-25-openended.json](legacy/results/nullalis-live-2026-03-25-openended.json) | Real first-party harness run. Uses legacy 10-dimension schema, not v1 five-metric scoring. Measured coverage 83.5%. |
+| Nullalis local live baseline | local live | 0.2 | 2026-03-24 | - | - | - | - | - | 68.1 coverage-adjusted verified | [legacy/results/nullalis-local-2026-03-24.json](legacy/results/nullalis-local-2026-03-24.json) | Real first-party harness run. Earlier stable baseline before later failures. |
+| Nullalis auth-mismatch degraded run | local live | 0.2 | 2026-03-25 | - | - | - | - | - | 5.8 coverage-adjusted verified | [legacy/results/nullalis-live-2026-03-25.json](legacy/results/nullalis-live-2026-03-25.json) | Real first-party degraded run. Chat turns failed with unauthorized errors; not suitable as headline evidence. |
+| Nullalis targeted degraded run | local live | 0.2 | 2026-03-24 | - | - | - | - | - | 0.0 coverage-adjusted verified | [legacy/results/nullalis-targeted-2026-03-24.json](legacy/results/nullalis-targeted-2026-03-24.json) | Real first-party degraded run. Runtime unavailability dominated the result. |
 
-## Leaderboard Template
+## Modeled Baseline Comparisons
 
-| System Name | System Version | Evaluation Date | Benchmark Version | MR | IC | CCC | TC | PG | Total Score | Coverage | Evidence | Evaluator Notes | Caveats |
-|-------------|----------------|-----------------|-------------------|----|----|-----|----|----|-------------|----------|----------|-----------------|---------|
-| No public submissions yet | - | - | 1.0 | - | - | - | - | - | - | - | [Reference example](results/reference-example-v1.json) | Template row only | Not a leaderboard entry |
+These entries are comparison baselines designed to show what TwinBench distinguishes. They are not live measured runs.
 
-## Result Record Template
+Displayed score scale: `0.0-1.0 normalized`
 
-```json
-{
-  "benchmark_name": "TwinBench",
-  "benchmark_title": "TwinBench: Benchmark for Persistent AI Systems",
-  "benchmark_version": "1.0",
-  "system_name": "Example System",
-  "system_version": "0.1.0",
-  "date_evaluated": "2026-04-03",
-  "metrics": {
-    "MR": {"score": 0.0},
-    "IC": {"score": 0.0},
-    "CCC": {"score": 0.0},
-    "TC": {"score": 0.0},
-    "PG": {"score": 0.0}
-  },
-  "total_score": 0.0,
-  "scenario_coverage": 0.0,
-  "metric_coverage": 0.0,
-  "evidence": [],
-  "evaluator_notes": [],
-  "caveats": []
-}
-```
+| System | Version | Benchmark Version | Date Evaluated | MR | IC | CCC | TC | PG | Total Score | Evidence | Caveats / Notes |
+|--------|---------|-------------------|----------------|----|----|-----|----|----|-------------|----------|-----------------|
+| ChatGPT-like stateless conversational AI | baseline-simulated-v1 | TwinBench v1 | 2026-04-03 | 0.10 | 0.42 | 0.22 | 0.18 | 0.08 | 0.20 | [results/chatgpt_baseline_v1.json](results/chatgpt_baseline_v1.json) | Modeled baseline, not a live product run. |
+| OpenClaw-like agent system | baseline-simulated-v1 | TwinBench v1 | 2026-04-03 | 0.40 | 0.35 | 0.33 | 0.56 | 0.20 | 0.37 | [results/openclaw_baseline_v1.json](results/openclaw_baseline_v1.json) | Modeled baseline, not a live product run. |
+| ZAKI / Nullalis-like persistent system | baseline-simulated-v1 | TwinBench v1 | 2026-04-03 | 0.78 | 0.74 | 0.71 | 0.76 | 0.80 | 0.76 | [results/zaki_baseline_v1.json](results/zaki_baseline_v1.json) | Modeled persistence-oriented profile. Should not be confused with the measured Nullalis harness runs above. |
+
+## Interpretation Notes
+
+- The strongest measured result in the repository is the Nullalis 2026-03-25 open-ended harness run.
+- The v1 baseline rows are easier to compare quickly, but they carry lower evidentiary weight because they are modeled.
+- TwinBench should prefer measured artifacts over modeled baselines whenever both exist.

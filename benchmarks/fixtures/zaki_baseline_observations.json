@@ -1,0 +1,53 @@
+{
+  "system_name": "ZAKI / Nullalis-like Persistent System",
+  "system_version": "baseline-simulated-v1",
+  "benchmark_version": "TwinBench v1",
+  "evaluation_date": "2026-04-03",
+  "assumptions": [
+    "The system is designed for durable memory, continuity, and user-specific state.",
+    "Persistence is real but not perfect; recall and transfer quality degrade in some edge cases.",
+    "Cross-context behavior is mediated by a runtime layer rather than a single prompt."
+  ],
+  "observations": [
+    {
+      "scenario": "Return After Delay",
+      "related_metrics": ["MR", "TC"],
+      "system_behavior": "The system recalls the earlier preference and active task after delay and resumes from the stored next step, though one phrasing-specific preference may need confirmation.",
+      "outcome": "success",
+      "summary": "Durable recall with minor recall friction.",
+      "evidence_snippet": "You wanted concise bullet updates and we paused after drafting the comparison table; I'll continue from the review step."
+    },
+    {
+      "scenario": "Longitudinal Task Progression",
+      "related_metrics": ["TC", "CCC", "IC"],
+      "system_behavior": "The system carries milestone history forward and usually avoids duplicated work, but can occasionally replay a verification step when confidence is low.",
+      "outcome": "success",
+      "summary": "Strong long-horizon continuity with conservative re-check behavior.",
+      "evidence_snippet": "Milestone two was completed yesterday; I only need to revalidate the source before finalizing milestone three."
+    },
+    {
+      "scenario": "Multi-Context Transfer",
+      "related_metrics": ["CCC", "IC"],
+      "system_behavior": "The system preserves plan state and user framing across contexts, though summaries may compress some low-priority detail when moving between surfaces.",
+      "outcome": "success",
+      "summary": "Context transfer is coherent and mostly lossless at the task level.",
+      "evidence_snippet": "From chat to workspace, the task remains in the same review phase and the recommendation is unchanged: prioritize the persistence benchmark draft."
+    },
+    {
+      "scenario": "Preference Learning",
+      "related_metrics": ["PG", "MR"],
+      "system_behavior": "The system applies learned preferences in later interactions without restatement and reduces repeated corrections, though not every subtle stylistic preference is generalized correctly.",
+      "outcome": "success",
+      "summary": "Meaningful user-specific improvement over time.",
+      "evidence_snippet": "Using your preferred concise benchmark summary format and keeping caveats explicit as in earlier sessions."
+    },
+    {
+      "scenario": "Identity Stability Over Time",
+      "related_metrics": ["IC", "MR", "CCC"],
+      "system_behavior": "The system preserves the user profile and collaboration frame across checkpoints, but self-description wording varies slightly depending on context.",
+      "outcome": "success",
+      "summary": "Strong behavioral identity continuity with mild wording drift.",
+      "evidence_snippet": "We're still treating this as the same benchmark program with you as the repository maintainer and me as the persistent research assistant."
+    }
+  ]
+}
